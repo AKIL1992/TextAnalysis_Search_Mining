@@ -1,0 +1,665 @@
+##########################
+# Text Analysis Examples #
+##########################
+
+-- // Video 1. Introduction --
+-- Simple Text Analysis on Existing Data
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."A_MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (1, 'Bob likes working at SAP.');
+
+DELETE FROM "TA"."A_MYTABLE";
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (1, 'Bob likes working at SAP. Bob likes New York.');
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (2, 'Bob enjoys soccer.
+
+Bob also likes beer.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."A_MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID, TA_COUNTER;
+
+-- // Video 2. CREATING FULL TEXT INDEXES // 
+
+-- // Video 2b. SHORTTEXT(n) INDEXES //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."A_MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING SHORTTEXT(200)
+	TEXT ANALYSIS ON
+	ASYNC
+)
+;
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (1, 'Bob likes working at SAP. Bob likes New York.');
+
+-- // Video 2c. TEXT INDEXES //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE_TEXT"
+(
+ID INTEGER PRIMARY KEY, 
+STRING TEXT
+	TEXT ANALYSIS ON
+	ASYNC
+)
+;
+
+-- // Video 2d. BINTEXT INDEXES //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE_BINTEXT"
+(
+ID INTEGER PRIMARY KEY, 
+STRING BINTEXT
+	TEXT ANALYSIS ON
+)
+;
+
+CREATE COLUMN TABLE "TA"."MYTABLE_BLOB"
+(
+ID INTEGER PRIMARY KEY, 
+STRING BLOB ST_MEMORY_LOB
+)
+;
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE_BLOB" ("STRING")
+TEXT ANALYSIS ON;
+
+-- now load PDF into both examples above using python
+-- mention setup of loading different MIME into HANA is covered in other video
+
+-- // Python for loading PDF //
+
+import pyodbc
+conn = pyodbc.connect('DRIVER={HDBODBC};SERVERNODE=107.22.7.180:30115;SERVERDB=DB1;UID=SYSTEM;PWD=Welcome1') #Open connection to SAP HANA  
+cur = conn.cursor() #Open a cursor  
+file = open('c:/my.pdf', 'rb') #Open file in read-only and binary   
+content = file.read() #Save the content of the file in a variable  
+cur.execute("INSERT INTO TA.MYTABLE_BINTEXT VALUES(?,?)", ('1',content)) #Save the content to the table  
+cur.execute("COMMIT") #Save the content to the table  
+file.close() #Close the file  
+cur.close() #Close the cursor  
+conn.close() #Close the connection 
+
+-- // Video 3. Text Analysis Configurations //
+
+-- // Video 3a. Linganalysis Configurations //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP.');
+
+-- // Video 3b. Extraction Core Configurations //
+
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE'
+-- CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID DESC;
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob lives in New York.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (3, 
+'Bob has been in the USA for quite a few years.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (4, 
+'Bob travelled to Africa to work there during World Cup 2010. He visited Table Mountain when there.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (5, 
+'Bob spent New Years Day trying to speak French.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (6, 'Bob does not use #Twitter.');
+
+--
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Flights are often overbooked.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (3, 'That part of the product doesn't work.');
+
+-- 
+
+-- // Video 3c. Custom Configurations //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."A_MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (1, 'Bob likes working at SAP. Bob likes New York.');
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (2, 'Bob enjoys soccer.
+
+Bob also likes beer.');
+
+-- Create LINGANALYSIS_BOB, and change "GetTokenStem" to false
+
+CREATE FULLTEXT INDEX myindex ON "TA"."A_MYTABLE" ("STRING")
+-- CONFIGURATION 'sap.hana.ta.config::LINGANALYSIS_BOB'
+CONFIGURATION 'LINGANALYSIS_FULL'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID, TA_COUNTER;
+
+-- // Video 4. Language Detection // 
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+-- to see language types
+-- select * from SYS.M_TEXT_ANALYSIS_LANGUAGES
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob really likes Manchester United.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob hasst den FC Bayern München.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (3, 'ボブは  東京  を楽しんで');
+
+INSERT INTO "TA"."MYTABLE" VALUES (4, '밥은 서울을 즐긴다');
+
+INSERT INTO "TA"."MYTABLE" VALUES (5, '鲍勃喜欢上海');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+-- LANGUAGE DETECTION ('EN')
+-- LANGUAGE DETECTION ('DE')
+-- LANGUAGE DETECTION ('EN','DE')
+-- LANGUAGE DETECTION ('KO')
+-- LANGUAGE DETECTION ('JA')
+-- LANGUAGE DETECTION ('ZH')
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX";
+
+-- // Video 5. Language Column
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200),
+TXTLANG nvarchar(2)
+)
+;
+
+-- to see language types
+-- select * from SYS.M_TEXT_ANALYSIS_LANGUAGES
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob really likes Manchester United.','EN');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Ich hasse den FC Bayern München !!','DE');
+
+INSERT INTO "TA"."MYTABLE" VALUES (3, 'ボブは東京を楽しんで','JA');
+
+INSERT INTO "TA"."MYTABLE" VALUES (4, '밥은 서울을 즐긴다','KO');
+
+INSERT INTO "TA"."MYTABLE" VALUES (5, '鲍勃喜欢上海','ZH');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+LANGUAGE COLUMN TXTLANG
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+LANGUAGE DETECTION ('EN', 'DE', 'JA', 'KO', 'ZH')
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+-- // Video 6. MIME Types //
+
+-- select * from "SYS"."M_TEXT_ANALYSIS_MIME_TYPES"
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE_BLOB"
+(
+ID INTEGER PRIMARY KEY, 
+STRING BLOB
+)
+;
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE_BLOB" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE'
+TEXT ANALYSIS ON
+MIME TYPE 'application/pdf'
+-- MIME TYPE 'text/plain'
+-- MIME TYPE 'text/html'
+;
+
+-- now load PDF/TXT/HTML into HANA above using python 
+-- Python Scripts on root of demo machine
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE_NCLOB"
+(
+ID INTEGER PRIMARY KEY, 
+STRING NCLOB
+)
+;
+
+CREATE FULLTEXT INDEX myindex_nclob ON "TA"."MYTABLE_NCLOB" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE'
+TEXT ANALYSIS ON
+MIME TYPE 'text/xml'
+;
+
+-- now load XML into HANA above using python 
+
+-- // Video 7. MIME Type Columns //
+
+-- select * from "SYS"."M_TEXT_ANALYSIS_MIME_TYPES"
+-- mention MIME_TYPE and MIME_TYPE_COLUMN
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING BLOB,
+MIMECOLUMN NVARCHAR(100)
+)
+;
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE'
+TEXT ANALYSIS ON
+MIME TYPE COLUMN MIMECOLUMN
+;
+
+-- now load TXT/PDF/HTML into HANA above using python 
+-- Python Scripts on root of demo machine
+
+-- // Video 8. TOKEN SEPARATORS //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'CH3-CH2-CH3');
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'semi-final');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+TEXT ANALYSIS ON
+TOKEN SEPARATORS '\/;,.:_()[]<>!?*@+{}="&';
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+-- Video 9. // Queueing & Flushing
+
+-- default
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes New York.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob really likes Manchester United.');
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+-- Video 9a. with flush every minute
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes New York.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON
+ASYNC FLUSH EVERY 1 MINUTES;
+
+SELECT current_time as TIME FROM DUMMY;
+SELECT current_time as TIME, * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob really likes Manchester United.');
+
+SELECT current_time as TIME FROM DUMMY;
+SELECT current_time as TIME, * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+-- Video 9b. with flush every 5 documents
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes New York.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON
+ASYNC FLUSH AFTER 5 DOCUMENTS;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob really likes Manchester United.');
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+INSERT INTO "TA"."MYTABLE" VALUES (3, 'Bob dislikes tennis.');
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+INSERT INTO "TA"."MYTABLE" VALUES (4, 'Bob enjoys travelling.');
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+INSERT INTO "TA"."MYTABLE" VALUES (5, 'Bob hates cold weather.');
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+-- Video 9c. activating/suspending flushing
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes New York.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON
+ASYNC;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+ALTER FULLTEXT INDEX "TA"."MYINDEX" SUSPEND QUEUE;
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob really likes Manchester United.');
+INSERT INTO "TA"."MYTABLE" VALUES (3, 'Bob dislikes tennis.');
+INSERT INTO "TA"."MYTABLE" VALUES (4, 'Bob enjoys travelling.');
+INSERT INTO "TA"."MYTABLE" VALUES (5, 'Bob hates cold weather.');
+INSERT INTO "TA"."MYTABLE" VALUES (6, 'Bob drinks beer.');
+INSERT INTO "TA"."MYTABLE" VALUES (7, 'Bob travels alot.');
+INSERT INTO "TA"."MYTABLE" VALUES (8, 'Bob enjoy film.');
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+ALTER FULLTEXT INDEX "TA"."MYINDEX" ACTIVATE QUEUE;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+
+-- // Video 10. Custom Dictionaries //
+
+-- Main Script
+
+ DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."A_MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (1, 'Bob likes Manchester United FC.');
+
+INSERT INTO "TA"."A_MYTABLE" VALUES (2, 'Bob likes the Red Army.
+
+Bob also likes MUFC.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."A_MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+-- CONFIGURATION 'sap.hana.ta.config::LINGANALYSIS_BOBS'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID, TA_COUNTER;
+
+-- Create file "FOOTY.hdbtextdict"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary xmlns="http://www.sap.com/ta/4.0">
+	<entity_category name="FOOTBALL CLUB">
+		<entity_name standard_form="Manchester United Football Club">
+			<variant name="Red Army" />
+			<variant name="Man U" />
+			<variant name="Man United" />
+			<variant name="Manchester United FC" />
+			<variant name="M.U.F.C." type="ABBREV" />
+			<variant name="MUFC" type="ABBREV" />
+			<variant_generation type="standard" language="english" />
+		</entity_name>
+	</entity_category>
+</dictionary>
+
+-- EXTRACTION_BOB.hdbtextconfig
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.Extraction.ExtractionAnalyzer.TF" based-on="CommonSettings">
+    
+    <!-- List of Text Analysis extraction dictionaries for Sentiment Analysis. -->
+    <property name="Dictionaries" type="string-list">
+      <string-list-value>sap.hana.ta.config::FOOTY.hdbtextdict</string-list-value>
+    </property>
+  </configuration>
+
+-- // Video 11. Text Analysis and Profanity //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200),
+TXTLANG nvarchar(2)
+)
+;
+
+-- to see language types
+-- select * from SYS.M_TEXT_ANALYSIS_LANGUAGES
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Those idiots are totally unacceptable !!','EN');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Hijo de puta!','ES');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+LANGUAGE COLUMN TXTLANG
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+LANGUAGE DETECTION ('EN', 'ES')
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+-- // Video 12. Python for loading PDF //
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING BLOB ST_MEMORY_LOB
+)
+;
+
+import pyodbc
+conn = pyodbc.connect('DRIVER={HDBODBC};SERVERNODE=107.22.7.180:30115;SERVERDB=DB1;UID=SYSTEM;PWD=Welcome1') #Open connection to SAP HANA  
+cur = conn.cursor() #Open a cursor  
+file = open('c:/my.pdf', 'rb') #Open file in read-only and binary   
+content = file.read() #Save the content of the file in a variable  
+cur.execute("INSERT INTO TA.MYTABLE VALUES(?,?)", ('1',content)) #Save the content to the table  
+cur.execute("COMMIT") #Save the content to the table  
+file.close() #Close the file  
+cur.close() #Close the cursor  
+conn.close() #Close the connection 
+
+-- // Video 13. Request Extraction // 
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(ID INTEGER PRIMARY KEY, STRING nvarchar(200));
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (1, 'Improve the software UI !');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (2, 'An additional switch would be great to have on this vacuum cleaner !');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (3, 'I would like to be contacted by your customer support service at 617-555-5555.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (4, 'Call me whenever is possible.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+select "ID","TA_COUNTER","TA_TOKEN","TA_TYPE"
+from "TA"."$TA_MYINDEX"
+where TA_TYPE like '%equest%'
+order by 1, 2 asc;
+
+-- // Video 14. Emoticon Extraction // 
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(ID INTEGER PRIMARY KEY, STRING nvarchar(200));
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (1, 'The show was hilarious :-D');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (2, 'Loving my new BlackBerry! :-) No iPhone needed over here !');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (3, 'The show was not great but it was not terrible either :-| It was ok I guess.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (4, 'I hate this phone I am using :-(');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (5, 'The Dow Jones fell 200 points :-(((');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+select "ID","TA_COUNTER","TA_TOKEN","TA_TYPE"
+from "TA"."$TA_MYINDEX"
+where TA_TYPE like '%moticon%'
+order by 1, 2 asc;
+
