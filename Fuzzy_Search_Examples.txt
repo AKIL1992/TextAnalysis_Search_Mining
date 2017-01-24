@@ -1,0 +1,633 @@
+-- ///////////////// Fuzzy_Search_Examples.txt ////////////////
+
+-- // 1: CONTAINS and EXACT Pg 540/3 (also see notes on 546-547 // --
+
+DROP TABLE contains_demo_table;
+
+CREATE COLUMN TABLE contains_demo_table
+(
+id INTEGER PRIMARY KEY, 
+datacolumn1 SHORTTEXT(500), 
+datacolumn2 SHORTTEXT(500), 
+datacolumn3 SHORTTEXT(500) 
+FUZZY SEARCH INDEX ON
+)
+;
+
+INSERT INTO contains_demo_table VALUES (1, '','BusinessObjects','');
+INSERT INTO contains_demo_table VALUES (2, 'SAP Corp','','');
+INSERT INTO contains_demo_table VALUES (3, '','SAP in Walldorf Corp','');
+INSERT INTO contains_demo_table VALUES (4, '','','SAP HANA');
+INSERT INTO contains_demo_table VALUES (5, '','ASAP','');
+INSERT INTO contains_demo_table VALUES (6, 'sap hana','','');
+INSERT INTO contains_demo_table VALUES (7, '','','saphana');
+INSERT INTO contains_demo_table VALUES (8, 'sap','','hana');
+INSERT INTO contains_demo_table VALUES (9, 'sap loves hana','','');
+INSERT INTO contains_demo_table VALUES (10, 'sap loves sap hana','','');
+
+select * from contains_demo_table
+where contains (datacolumn1,'SAP');
+-- where contains (*,'SAP');
+-- where contains (*,'sap');
+-- where contains (*,'sap hana');
+-- where contains (*,'"sap" "hana"');
+-- where contains (*,'"sap hana"');
+-- where contains (*,'"sap" -"sap hana"');
+-- where contains (*,'"sap" OR "hana"');
+
+select *
+from contains_demo_table
+where contains (*,'SAP HANA');
+
+select *
+from contains_demo_table
+where contains (*,'SAP HANA',EXACT);
+
+select *
+from contains_demo_table
+where contains (*,'"SAP HANA"');
+
+select *
+from contains_demo_table
+where contains (*,'%SAP');
+
+-- // 2: SNIPPETS and HIGHLIGHTED pg 541/2 // --
+
+select *, snippets (datacolumn1) as snippets_output 
+from contains_demo_table
+where contains (datacolumn1,'SAP');
+
+select *, snippets (datacolumn1) as snippets_output 
+from contains_demo_table
+where contains (*,'SAP');
+
+select *, snippets (datacolumn1) as snippets_output 
+from contains_demo_table
+where contains (*,'SAP HANA');
+
+select *, snippets (datacolumn1) as snippets_output 
+from contains_demo_table
+where contains (*,'"SAP HANA"');
+
+INSERT INTO contains_demo_table VALUES (11, 'SAP HANA, short for "High-Performance Analytic Appliance" is an in-memory, column-oriented, relational database management system developed and marketed by SAP AG. SAP HANA runs massively parallel, thus exploiting the maximum out of multicore processors and subsequently enabling very fast query execution.','','');
+
+select *, highlighted (datacolumn1) as highlighted_output 
+from contains_demo_table
+where contains (*,'SAP HANA');
+
+select *, snippets (datacolumn1) as snippets_output 
+from contains_demo_table
+where contains (*, 'SAP HANA');
+
+-- // 3: LINGUISTIC Pg 543 // 
+
+drop table linguistic_example_demo cascade;
+create column table linguistic_example_demo (content text fast preprocess off);
+
+-- ? FAST PREPROCESS <on_off> ? --
+-- If set to ON, fast preprocessing is used, i.e. linguistic searches are not possible.
+
+INSERT INTO linguistic_example_demo VALUES('This is a long day.');
+INSERT INTO linguistic_example_demo VALUES('Today was a long day.');
+INSERT INTO linguistic_example_demo VALUES('Tomorrow will be easier.');
+INSERT INTO linguistic_example_demo VALUES('Tomorrow should be easier ...');
+INSERT INTO linguistic_example_demo VALUES('Tomorrow could be easier ...');
+
+SELECT SCORE(), * FROM linguistic_example_demo WHERE CONTAINS(*, 'is', LINGUISTIC);
+
+delete from linguistic_example_demo;
+
+INSERT INTO linguistic_example_demo VALUES('SAP HANA was created by SAP.');
+INSERT INTO linguistic_example_demo VALUES('SAP creates innovative products.');
+
+SELECT SCORE(), * FROM linguistic_example_demo WHERE CONTAINS(*, 'create', LINGUISTIC);
+
+-- // 4: SCORE Pg 542 // 
+
+select * 
+from contains_demo_table
+where contains (*,'SAP');
+
+select score(), * 
+from contains_demo_table
+where contains (*,'SAP')
+order by 1 desc;
+
+-- // 5: FUZZY Pg 544-546 // 
+
+drop table fuzzy_example_demo cascade;
+create column table fuzzy_example_demo (content text);
+
+INSERT INTO fuzzy_example_demo VALUES('Manchester');
+INSERT INTO fuzzy_example_demo VALUES('Manchestar');
+INSERT INTO fuzzy_example_demo VALUES('Menchester');
+INSERT INTO fuzzy_example_demo VALUES('Menchestare');
+
+SELECT SCORE(), CONTENT FROM fuzzy_example_demo WHERE CONTAINS(CONTENT, 'Manchester');
+
+SELECT SCORE(), CONTENT FROM fuzzy_example_demo WHERE CONTAINS(CONTENT, 'Manchester',Fuzzy(0.5)) order by 1 desc;
+
+SELECT SCORE(), CONTENT FROM fuzzy_example_demo WHERE CONTAINS(CONTENT, 'Manchester',Fuzzy(0.9)) order by 1 desc;
+
+INSERT INTO fuzzy_example_demo VALUES('Manchester United');
+select * from fuzzy_example_demo;
+
+SELECT SCORE(), CONTENT FROM fuzzy_example_demo WHERE CONTAINS(CONTENT, 'Manchester',Fuzzy(0.1)) order by 1 desc;
+
+INSERT INTO fuzzy_example_demo VALUES('ManchesterUnited');
+select * from fuzzy_example_demo;
+
+SELECT SCORE(), CONTENT FROM fuzzy_example_demo WHERE CONTAINS(CONTENT, 'Manchester',Fuzzy(0.1)) order by 1 desc;
+
+-- // Fuzzy Search on One Column Pg 549 // 
+
+DROP TABLE companies;
+
+CREATE COLUMN TABLE companies
+(
+id INTEGER PRIMARY KEY, 
+companyname SHORTTEXT(200) FUZZY SEARCH INDEX ON
+)
+;
+
+INSERT INTO companies VALUES (1, 'SAP Corp');
+INSERT INTO companies VALUES (2, 'SAP in Walldorf Corp');
+INSERT INTO companies VALUES (3, 'ASAP');
+INSERT INTO companies VALUES (4, 'ASAP Corp');
+INSERT INTO companies VALUES (5, 'BSAP orp');
+INSERT INTO companies VALUES (6, 'IBM Corp');
+
+SELECT SCORE() AS score, * FROM companies
+WHERE CONTAINS(companyname,'xSAP Corp Walldorf', FUZZY(0.7,'textSearch=compare,bestMatchingTokenWeight=0.7'))
+ORDER BY score DESC;
+
+-- // Fuzzy Search on Two Columns //
+
+DROP TABLE companies2;
+
+CREATE COLUMN TABLE companies2
+( 
+id INTEGER PRIMARY KEY, 
+companyname SHORTTEXT(200) FUZZY SEARCH INDEX ON, 
+contact SHORTTEXT(100) FUZZY SEARCH INDEX ON
+)
+;
+
+INSERT INTO companies2 VALUES (1, 'SAP Corp', 'Mister Master');
+INSERT INTO companies2 VALUES (2, 'SAP in Walldorf Corp', 'Master Mister');
+INSERT INTO companies2 VALUES (3, 'ASAP', 'Nister Naster');
+INSERT INTO companies2 VALUES (4, 'ASAP Corp', 'Mixter Maxter');
+INSERT INTO companies2 VALUES (5, 'BSAP orp', 'Imster Marter');
+INSERT INTO companies2 VALUES (6, 'IBM Corp', 'M. Master');
+
+SELECT SCORE() AS score, * 
+FROM companies2
+WHERE CONTAINS(companyname, 'IBM', 
+FUZZY(0.7,'textSearch=compare,bestMatchingTokenWeight=0.7')) AND 
+CONTAINS(contact, 'Master', FUZZY(0.7,'textSearch=compare,bestMatchingTokenWeight=0.7'))
+ORDER BY score DESC;
+
+-- // Perform a Freestyle Search //
+
+SELECT SCORE() AS score, * FROM companies2
+WHERE CONTAINS((companyname,contact), 'IBM Master', FUZZY(0.7))
+ORDER BY score DESC;
+
+-- Freestyle searches always use TF/IDF to calculate the score and do not support parameters like 'textSearch=compare' or 'bestMatchingTokenWeight=0.7' which influence score calculation. This therefore results in a different score for the same record.
+
+-- // Fuzzy Search 'similarCalculationMode' option prep Pg 553 //
+
+DROP TABLE test_similar_calculation_mode;
+CREATE COLUMN TABLE test_similar_calculation_mode
+(
+id INTEGER PRIMARY KEY, 
+s NVARCHAR(255)
+)
+;
+
+INSERT INTO test_similar_calculation_mode VALUES ('1','stringg');
+INSERT INTO test_similar_calculation_mode VALUES ('2','string theory');
+INSERT INTO test_similar_calculation_mode VALUES ('3','this is a very very very long string');
+INSERT INTO test_similar_calculation_mode VALUES ('4','this is another very long string');
+
+-- // similarCalculationMode compare //
+
+SELECT TO_INT(SCORE()*100)/100 AS score, 
+id, s
+FROM test_similar_calculation_mode
+WHERE CONTAINS(s, 'strongtheory', FUZZY(0.5, 'similarCalculationMode=compare'))
+ORDER BY score DESC;
+
+-- // similarCalculationMode search //
+
+SELECT TO_INT(SCORE()*100)/100 AS score, 
+id, s
+FROM test_similar_calculation_mode
+WHERE CONTAINS(s, 'strongtheory', FUZZY(0.5, 'similarCalculationMode=search'))
+ORDER BY score DESC;
+
+-- // similarCalculationMode symmetricsearch //
+
+SELECT TO_INT(SCORE()*100)/100 AS score, 
+id, s
+FROM test_similar_calculation_mode
+WHERE CONTAINS(s, 'strongtheory', FUZZY(0.5, 'similarCalculationMode=symmetricsearch'))
+ORDER BY score DESC;
+
+-- // similarCalculationMode substringsearch //
+
+SELECT TO_INT(SCORE()*100)/100 AS score, 
+id, s
+FROM test_similar_calculation_mode
+WHERE CONTAINS(s, 'strongtheory', FUZZY(0.5, 'similarCalculationMode=substringsearch'))
+ORDER BY score DESC;
+
+-- // Option spellCheckFactor Pg 555 //
+
+DROP TABLE test_spell_check_factor;
+
+CREATE COLUMN TABLE test_spell_check_factor
+(
+id INTEGER PRIMARY KEY, 
+s NVARCHAR(255)
+)
+;
+
+INSERT INTO test_spell_check_factor VALUES ('1','Muller');
+INSERT INTO test_spell_check_factor VALUES ('2','Mueller');
+INSERT INTO test_spell_check_factor VALUES ('3','Müller');
+INSERT INTO test_spell_check_factor VALUES ('4','Möller');
+
+SELECT SCORE() AS score, 
+id, s
+FROM test_spell_check_factor
+WHERE CONTAINS(s, 'Müller', FUZZY(0.5, 'spellCheckFactor=0.9'))
+ORDER BY score DESC;
+
+-- // Option spellCheckFactor 2nd example //
+
+DROP TABLE test_spell_check_factor;
+
+CREATE COLUMN TABLE test_spell_check_factor
+( 
+id INTEGER PRIMARY KEY, 
+t SHORTTEXT(200) FUZZY SEARCH INDEX ON
+)
+;
+
+INSERT INTO test_spell_check_factor VALUES ('1','Muller');
+INSERT INTO test_spell_check_factor VALUES ('2','Mueller');
+INSERT INTO test_spell_check_factor VALUES ('3','Müller');
+INSERT INTO test_spell_check_factor VALUES ('4','Möller');
+
+SELECT SCORE() AS score, 
+id, t
+FROM test_spell_check_factor
+WHERE CONTAINS(t, 'Müller', FUZZY(0.5, 'spellCheckFactor=0.9,textSearch=compare'))
+ORDER BY score DESC;
+
+-- // Option interScriptMatching Pg 558 //
+
+DROP TABLE interscript;
+
+CREATE COLUMN TABLE interscript
+( 
+str NVARCHAR(100) PRIMARY KEY
+)
+;
+
+INSERT INTO interscript VALUES ('Shanghai');
+INSERT INTO interscript VALUES ('上海');
+INSERT INTO interscript VALUES ('Beijing');
+INSERT INTO interscript VALUES ('北京');
+
+-- without inter-script matching
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, 'shanghai', FUZZY(0.7)) 
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, '上海', FUZZY(0.7)) 
+ORDER BY SCORE() DESC;
+
+-- with inter-script matching
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, 'shanghai', FUZZY(0.7, 'interScriptMatching=on')) 
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, '上海', FUZZY(0.7, 'interScriptMatching=on')) 
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, 'beijing', FUZZY(0.7, 'interScriptMatching=on')) 
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, 'Běijīng', FUZZY(0.7, 'interScriptMatching=on')) 
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, '北京', FUZZY(0.7, 'interScriptMatching=on')) 
+ORDER BY SCORE() DESC;
+
+-- with spelling error
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, 'beijin', FUZZY(0.7, 'interScriptMatching=on')) 
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), * 
+FROM interscript 
+WHERE CONTAINS(str, '被禁', FUZZY(0.7, 'interScriptMatching=on')) 
+ORDER BY SCORE() DESC;
+
+-- For example, the second to last statement (...WHERE CONTAINS(str, 'beijin', FUZZY(0.7, 'interScriptMatching=on'))...) returns the following results.
+
+-- // Option emptyScore Pg 566 //
+
+DROP TABLE test_emptyscore;
+
+CREATE COLUMN TABLE test_emptyscore
+( 
+id INTEGER PRIMARY KEY, 
+t TEXT FUZZY SEARCH INDEX ON
+)
+;
+
+INSERT INTO test_emptyscore VALUES ('1', 'eins');
+INSERT INTO test_emptyscore VALUES ('2', ''); -- empty string
+INSERT INTO test_emptyscore VALUES ('3', ' '); -- n blanks
+INSERT INTO test_emptyscore VALUES ('4', NULL); -- NULL value
+
+-- Select 'eins' without emptyScore
+
+SELECT SCORE() AS score, * 
+FROM test_emptyscore 
+WHERE CONTAINS(T, 'eins', FUZZY(0.5, 'textSearch=compare')) 
+ORDER BY score DESC, id;
+
+-- Select 'eins' with emptyScore
+
+SELECT SCORE() AS score, * 
+FROM test_emptyscore 
+WHERE CONTAINS(T, 'eins', FUZZY(0.5, 'textSearch=compare, emptyScore=0.5')) 
+ORDER BY score DESC, id;
+
+-- Select empty string without emptyScore
+
+SELECT SCORE() AS score, * 
+FROM test_emptyscore 
+WHERE CONTAINS(T, '', FUZZY(0.5, 'textSearch=compare')) 
+ORDER BY score DESC, id;
+
+-- Select empty string with emptyScore
+
+SELECT SCORE() AS score, * 
+FROM test_emptyscore 
+WHERE CONTAINS(T, '', FUZZY(0.5, 'textSearch=compare, emptyScore=0.5')) 
+ORDER BY score DESC, id;
+
+-- Select empty string with emptyScore and minTextScore
+
+SELECT SCORE() AS score, * 
+FROM test_emptyscore 
+WHERE CONTAINS(T, '', FUZZY(0.5, 'textSearch=compare, emptyScore=0.5, mintextscore=0.8')) 
+ORDER BY score DESC, id;
+
+-- When searching with an empty value, for example, records that contain a value in the column are returned and will get the score of the parameter emptyScore. The list will not be shortened, even though the parameter minTextScore is set.
+
+-- // Option returnAll Pg 570 //
+
+DROP TABLE customer;
+
+CREATE COLUMN TABLE customer
+(
+id INTEGER PRIMARY KEY, 
+firstname NVARCHAR(50), 
+lastname NVARCHAR(50), 
+streetname NVARCHAR(50), 
+housenumber NVARCHAR(20), 
+postcode NVARCHAR(20), 
+cityname NVARCHAR(50)
+)
+;
+
+INSERT INTO customer VALUES (1, 'Donna', 'Moore', 'Deer Creek Drive', '3475', '94304', 'Palo Alto, CA');
+INSERT INTO customer VALUES (2, 'Donna', 'More', 'Deer Creek Drive', '1809', '94304', 'Palo Alto, CA');
+INSERT INTO customer VALUES (3, 'Donna', 'Moore', 'Deer Creec Drive', '3477', '94305', 'Palo Alto CA');
+
+
+SELECT TO_DECIMAL(SCORE(),3,2) score, * 
+FROM customer
+WHERE CONTAINS(firstname, 'Dona', FUZZY(0.7)) AND 
+CONTAINS(lastname, 'Moore', FUZZY(0.7)) AND 
+CONTAINS(streetname, 'Deep Creek Drive', FUZZY(0.7)) AND 
+CONTAINS(housenumber, '3475', FUZZY(0.7)) AND 
+CONTAINS(postcode, '94304', FUZZY(0.7)) AND 
+CONTAINS(cityname, 'Palo Alto CA', FUZZY(0.7));
+
+SELECT TO_DECIMAL(SCORE(),3,2) score, * 
+FROM customer
+WHERE CONTAINS(firstname, 'Dona', FUZZY(0.7)) AND 
+CONTAINS(lastname, 'Moore', FUZZY(0.7)) AND 
+CONTAINS(streetname, 'Deep Creek Drive', FUZZY(0.7)) AND 
+CONTAINS(postcode, '94304', FUZZY(0.7)) AND 
+CONTAINS(cityname, 'Palo Alto CA', FUZZY(0.7));
+
+SELECT TO_DECIMAL(SCORE(),3,2) score, * 
+FROM customer
+WHERE CONTAINS(firstname, 'Dona', FUZZY(0.7)) AND 
+CONTAINS(lastname, 'Moore', FUZZY(0.7)) AND 
+CONTAINS(streetname, 'Deep Creek Drive', FUZZY(0.7)) AND 
+CONTAINS(housenumber, '3475', FUZZY(0.7)) AND 
+CONTAINS(postcode, '94304', FUZZY(0.7)) AND 
+CONTAINS(cityname, 'Palo Alto CA', FUZZY(0.7))
+UNION
+SELECT TO_DECIMAL(0.9 * SCORE(),3,2) score, * 
+FROM customer
+WHERE CONTAINS(firstname, 'Dona', FUZZY(0.7)) AND 
+CONTAINS(lastname, 'Moore', FUZZY(0.7)) AND 
+CONTAINS(streetname, 'Deep Creek Drive', FUZZY(0.7)) AND 
+NOT CONTAINS(housenumber, '3475', FUZZY(0.7)) AND 
+CONTAINS(postcode, '94304', FUZZY(0.7)) AND 
+CONTAINS(cityname, 'Palo Alto CA', FUZZY(0.7));
+
+-- The second statement gives the sort order the user expects. It also runs more slowly than the first statement however, because two searches are executed, and the results are combined to the final result set.
+
+-- // Option returnAll=on pg 573 //
+
+-- To obtain the expected behavior in a single search statement, search option returnAll can be used. Because of the high influence of a column with a score of 0 on the overall score, the weight of the column is reduced to 0.2.
+
+SELECT TO_DECIMAL(SCORE(),3,2) score, * 
+FROM customer
+WHERE CONTAINS(firstname, 'Dona', FUZZY(0.7)) AND 
+CONTAINS(lastname, 'Moore', FUZZY(0.7)) AND 
+CONTAINS(streetname, 'Deep Creek Drive', FUZZY(0.7)) AND 
+CONTAINS(housenumber, '3475', FUZZY(0.7, 'returnAll=on'), WEIGHT(0.2)) AND 
+CONTAINS(postcode, '94304', FUZZY(0.7)) AND 
+CONTAINS(cityname, 'Palo Alto CA', FUZZY(0.7))
+ORDER BY score DESC, id;
+
+-- // subStringSearch Pg 575 // 
+
+DROP TABLE tab;
+
+CREATE COLUMN TABLE tab 
+( 
+id INTEGER primary key, 
+str NVARCHAR(120) fuzzy search index on, 
+txt TEXT fuzzy search index on
+)
+;
+
+INSERT INTO tab VALUES (0, 'Albia City', 'Albia City');
+INSERT INTO tab VALUES (1, 'Albia', 'Albia');
+INSERT INTO tab VALUES (2, 'Albia City Hall', 'Albia City Hall');
+INSERT INTO tab VALUES (3, 'City Of Albia', 'City Of Albia');
+INSERT INTO tab VALUES (4, 'Albion City Park', 'Albion City Park');
+INSERT INTO tab VALUES (5, 'Albiacityhall', 'Albiacityhall');
+INSERT INTO tab VALUES (6, 'Albiacity', 'Albiacity');
+INSERT INTO tab VALUES (7, 'Cityalbia', 'Cityalbia');
+
+MERGE DELTA OF tab;
+
+SELECT TO_DECIMAL(SCORE(),3,2) score, txt 
+FROM tab 
+WHERE CONTAINS(txt, 'olbia city',
+FUZZY(0.75, 'textsearch=compare, considernonmatchingtokens=input, 
+composewords=5, decomposewords=5'))
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2) score, str 
+FROM tab 
+WHERE CONTAINS(str, 'olbia city',
+FUZZY(0.75, 'similarcalculationmode=substringsearch')) 
+ORDER BY SCORE() DESC;
+
+-- // Fuzzy Search on House Numbers Pg 578 //
+
+DROP TABLE housenumbers;
+
+CREATE COLUMN TABLE housenumbers
+(
+housenumber NVARCHAR(50) FUZZY SEARCH 
+MODE 'housenumber'
+)
+;
+
+INSERT INTO housenumbers VALUES ('5');
+INSERT INTO housenumbers VALUES ('5a');
+INSERT INTO housenumbers VALUES ('5 a');
+INSERT INTO housenumbers VALUES ('Nr. 5');
+INSERT INTO housenumbers VALUES ('8-12');
+INSERT INTO housenumbers VALUES ('8 - 12');
+INSERT INTO housenumbers VALUES ('8 - 12a');
+INSERT INTO housenumbers VALUES ('Nr. 8-12');
+INSERT INTO housenumbers VALUES ('8 - 12/5');
+INSERT INTO housenumbers VALUES ('8');
+INSERT INTO housenumbers VALUES ('12a');
+INSERT INTO housenumbers VALUES ('8-10');
+INSERT INTO housenumbers VALUES ('10-12a');
+INSERT INTO housenumbers VALUES ('10a');
+INSERT INTO housenumbers VALUES ('10-14');
+INSERT INTO housenumbers VALUES ('9');
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM housenumbers
+WHERE CONTAINS(housenumber, '5', FUZZY(0.8))
+ORDER BY TO_DECIMAL(SCORE(),3,2) DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM housenumbers
+WHERE CONTAINS(housenumber, 'Nr. 5', FUZZY(0.8))
+ORDER BY TO_DECIMAL(SCORE(),3,2) DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM housenumbers
+WHERE CONTAINS(housenumber, '8a-12', FUZZY(0.8))
+ORDER BY TO_DECIMAL(SCORE(),3,2) DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM housenumbers
+WHERE CONTAINS(housenumber, '10-12', FUZZY(0.8))
+ORDER BY TO_DECIMAL(SCORE(),3,2) DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM housenumbers
+WHERE CONTAINS(housenumber, '9 in the BACKYARD', FUZZY(0.8))
+ORDER BY TO_DECIMAL(SCORE(),3,2) DESC;
+
+-- // Fuzzy Search on Post Codes Pg 583 //
+
+DROP TABLE postcodes;
+
+CREATE COLUMN TABLE postcodes
+( 
+postcode NVARCHAR(50) FUZZY SEARCH 
+INDEX ON FUZZY SEARCH 
+MODE 'postcode'
+)
+;
+
+INSERT INTO postcodes VALUES ('71691');
+INSERT INTO postcodes VALUES ('81691');
+INSERT INTO postcodes VALUES ('72691');
+INSERT INTO postcodes VALUES ('71692');
+INSERT INTO postcodes VALUES ('716 91');
+INSERT INTO postcodes VALUES ('A1H 2ZU');
+INSERT INTO postcodes VALUES ('A1H2ZU');
+INSERT INTO postcodes VALUES ('D-71691');
+INSERT INTO postcodes VALUES ('D-71692');
+INSERT INTO postcodes VALUES ('A-71691');
+INSERT INTO postcodes VALUES ('A-71692');
+INSERT INTO postcodes VALUES ('DE-71 691');
+INSERT INTO postcodes VALUES ('D 71691');
+INSERT INTO postcodes VALUES ('GB-A1H 2ZU');
+INSERT INTO postcodes VALUES ('XX-12345');
+INSERT INTO postcodes VALUES ('D-12345');
+INSERT INTO postcodes VALUES ('71234');
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM postcodes
+WHERE CONTAINS(postcode, '71691', 
+FUZZY(0.5, 'spellCheckFactor=1.0'))
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM postcodes
+WHERE CONTAINS(postcode, 'D-71691', 
+FUZZY(0.5, 'spellCheckFactor=1.0'))
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM postcodes
+WHERE CONTAINS(postcode, 'Gb-a1h2zu', 
+FUZZY(0.5, 'spellCheckFactor=1.0'))
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM postcodes
+WHERE CONTAINS(postcode, 'YY-12345', 
+FUZZY(0.5, 'spellCheckFactor=1.0'))
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM postcodes
+WHERE CONTAINS(postcode, '71', 
+FUZZY(0.5, 'spellCheckFactor=1.0'))
+ORDER BY SCORE() DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2), *
+FROM postcodes
+WHERE CONTAINS(postcode, '1234', 
+FUZZY(0.5, 'spellCheckFactor=1.0'))
+ORDER BY SCORE() DESC;
+
