@@ -1,0 +1,108 @@
+----------------------------------------------------
+-- TA PARENT simple example for entity extraction
+----------------------------------------------------
+
+DROP TABLE "TA"."A_TA_VOC_EXAMPLE" CASCADE;
+CREATE COLUMN TABLE "TA"."A_TA_VOC_EXAMPLE"
+(
+ID INTEGER PRIMARY KEY,
+STRING nvarchar(200)
+)
+;
+
+-- insert some data
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (1, 'Bob likes SAP.');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (2, 'Bob dislikes exercise. Bob really likes New York');
+
+-- create index for text analysis
+CREATE FULLTEXT INDEX myindex_voc ON "TA"."A_TA_VOC_EXAMPLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+----------------------------------------------------
+-- VOC IMPROVEMENTS simple example for entity extraction
+----------------------------------------------------
+
+DROP TABLE "TA"."A_TA_VOC_EXAMPLE" CASCADE;
+CREATE COLUMN TABLE "TA"."A_TA_VOC_EXAMPLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+-- insert some data
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (1, 'I am tremendously happy with my purchase.');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (2, 'I am not tremendously happy with my purchase.');
+
+-- create index for text analysis
+CREATE FULLTEXT INDEX myindex_voc ON "TA"."A_TA_VOC_EXAMPLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+-- results
+select 
+"ID",
+"TA_COUNTER",
+"TA_TOKEN",
+"TA_TYPE",
+"TA_OFFSET"
+ from "TA"."$TA_MYINDEX_VOC";
+
+----------------------------------------------------
+ -- CORE_PUBLIC_SECTOR simple example for entity extraction
+----------------------------------------------------
+
+DROP TABLE "TA"."A_TA_VOC_EXAMPLE" CASCADE;
+CREATE COLUMN TABLE "TA"."A_TA_VOC_EXAMPLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+-- insert some data
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (1, 'Tahir Hussain Babar, aka Bob, is a SAP employee.');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (2, 'Bob is a large, 6 ft tall English man.');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (3, 'Bob travelled to Berlin.');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (4, 'Bob is 3500 miles west of Manchester.');
+
+-- create index for text analysis
+CREATE FULLTEXT INDEX myindex_voc ON "TA"."A_TA_VOC_EXAMPLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_PUBLIC_SECTOR'
+-- CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+-- results
+select "ID", "TA_COUNTER", "TA_TYPE", "TA_TOKEN" 
+from "TA"."$TA_MYINDEX_VOC"
+order by 1 desc,2 desc
+
+----------------------------------------------------
+-- CORE_ENTERPRISE simple example for entity extraction
+----------------------------------------------------
+
+DROP TABLE "TA"."A_TA_VOC_EXAMPLE" CASCADE;
+CREATE COLUMN TABLE "TA"."A_TA_VOC_EXAMPLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+-- insert some data
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (1, 'Bernard Liautaud co-founded Business Objects in 1990.');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (2, 'Business Objects introduces WebI thin client in 1997');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (3, 'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.');
+INSERT INTO "TA"."A_TA_VOC_EXAMPLE" VALUES (4, 'SAP AG releases SAP HANA SPS09 in 2014.');
+
+-- create index for text analysis
+CREATE FULLTEXT INDEX myindex_voc ON "TA"."A_TA_VOC_EXAMPLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_ENTERPRISE'
+-- CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+-- results
+select "ID", "TA_COUNTER", "TA_TYPE", "TA_TOKEN" 
+from "TA"."$TA_MYINDEX_VOC"
+order by 1 desc,2 desc
