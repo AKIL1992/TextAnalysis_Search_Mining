@@ -1,0 +1,65 @@
+###############################################################
+# NEW SIMILARITY CALCULATION MODES FOR SEARCH IN HANA 2 SPS00 #
+###############################################################
+
+<--
+The fuzzy search option similarCalculationMode offers two more modes: typeAhead and searchCompare. 
+-->
+
+DROP TABLE SEARCH_SUBSTRINGSEARCH;
+CREATE COLUMN TABLE SEARCH_SUBSTRINGSEARCH (
+  id        INTEGER primary key,
+  str       NVARCHAR(120)
+);
+
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('1','stringg');
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('2','string theory');
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('3','this is a very very very long string');
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('4','this is another very long string');
+
+SELECT * 
+FROM SEARCH_SUBSTRINGSEARCH;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=COMPARE'))
+ORDER BY score DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5, 
+'similarCalculationMode=SEARCH'))
+ORDER BY score DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=SYMMETRICSEARCH'))
+ORDER BY score DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=SUBSTRINGSEARCH'))
+ORDER BY score DESC;
+
+-- The mode typeAhead is used when the user enters the beginning of a string and all strings starting with the user input will be returned. 
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=TYPEAHEAD'))
+ORDER BY score DESC;
+
+-- The mode searchCompare combines the strength of modes compare and search while eliminating some of the shortcomings of search mode search.
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5, 
+'similarCalculationMode=SEARCHCOMPARE'))
+ORDER BY score DESC;
