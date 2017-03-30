@@ -1,0 +1,614 @@
+##############################################
+# TEXT ANALYSIS IN WEB IDE in HANA 2.0 SPS00 #
+##############################################
+
+######################
+# text_test.hdbtable #
+######################
+
+COLUMN TABLE "mytextproj.mytexthdbmod::text_test" 
+(
+   "ID" INTEGER, 
+   "STRING" VARCHAR(200),
+   PRIMARY KEY ("ID") 
+)
+
+######################
+# text_test_data.csv #
+######################
+
+ID,STRING
+1,'Bob really enjoys working at SAP'
+
+###############################
+# text_test_data.hdbtabledata #
+###############################
+
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "mytextproj.mytexthdbmod::text_test",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "mytextproj.mytexthdbmod::text_test_data.csv",
+                "has_header": true
+            },
+            "import_settings": {
+                "import_columns": [
+                    "ID",
+                    "STRING"
+                ]
+            }
+        }
+    ]
+}
+
+######################################
+# text_test_textconfig.hdbtextconfig #
+######################################
+copy from ide
+
+##################################
+# text_test_fti.hdbfulltextindex #
+##################################
+
+mytextproj.mytexthdbmod::english-gra.hdbtextdict
+
+FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
+ON "mytextproj.mytexthdbmod::text_test" ("STRING")
+CONFIGURATION 'mytextproj.mytexthdbmod::text_test_textconfig'
+LANGUAGE DETECTION ('ES')
+TEXT ANALYSIS ON
+
+################
+# .hdbtextdict #
+################
+
+-- mytextdictionary.hdbtextdict --
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary xmlns="http://www.sap.com/ta/4.0">
+<entity_category name="MOVIES">
+  <entity_name standard_form="Godzilla" />
+  <entity_name standard_form="Gravity" />
+  <entity_name standard_form="Rise of the Planet of the Apes" />
+  <entity_name standard_form="The Matrix" />
+  <entity_name standard_form="Sharknado" />
+  <entity_name standard_form="Spiderman" />
+</entity_category>
+<entity_category name="TV_SHOWS">
+  <entity_name standard_form="Breaking Bad" />
+  <entity_name standard_form="Malcolm in the Middle" />
+</entity_category>
+<entity_category name="PART_NUMBER">
+  <entity_name standard_form="AB-654327" />
+  <entity_name standard_form="AH-9876380" />
+  <entity_name standard_form="ZD-8765-987" />
+</entity_category></dictionary>
+
+##################
+## .hdbtextrule ##
+##################
+
+-- rulesrequest.hdbtextrule --
+-- "Please send part AB-654327" -- 
+#group PartRequest: <STEM:ask|send> <>*? [TE PART_NUMBER] <>+ [/TE]
+--
+
+-- Rules to identify credit card numbers -- including the card company --
+-- American Express examples: 371449635398431, 343434343434343, 371144371144376
+#group CREDIT_CARD@AMERICAN_EXPRESS: <3[47][0-9]{13,13}>
+
+-- The extraction process picks this label up as the entity name for the string that is output --
+-- If the input is Mister Clooney, Clooney will be extracted and labeled LastName --
+#group Name: <Sir|Mr|Mister> [OD LastName] <POS: Prop> [/OD]
+
+-- Matches any entity of type PERSON with Bush, Clinton, or Obama as its last element -- S
+#group President: [TE PERSON] < >* <Bush|Clinton|Obama/Trump> [/TE]
+
+-- beers --
+-- Beers in the market this Christmas include Rochefort Trappist Special and Stella Blonde Special. --
+#subgroup Beer: <Stella>|<Jupiler>|<Rochefort>
+#subgroup BeerMod: %(Beer) (<Blonde>|<Trappist>)
+#group BestBeer: %(BeerMod) (<Premium>|<Special>)
+
+################
+## TA_ANALYZE ##
+################
+
+CALL TA_ANALYZE 
+(
+DOCUMENT_TEXT => 'I love that dirty water, Boston, you‘re my home!',
+LANGUAGE_CODE=>?,
+MIME_TYPE =>?,
+TOKEN_SEPARATORS =>' ,',
+LANGUAGE_DETECTION =>'EN, DE, KR',
+CONFIGURATION=>'LINGANALYSIS_FULL',
+RETURN_PLAINTEXT=>1,
+TA_ANNOTATIONS => ?,
+PLAINTEXT => ? 
+);
+
+######################
+## TA_TYPE_EXPANDED ##
+######################
+
+- text_test.hdbtable #
+
+COLUMN TABLE "mytextproj.mytexthdbmod::text_test" 
+(
+   "ID" INTEGER, 
+   "STRING" VARCHAR(200),
+   PRIMARY KEY ("ID") 
+)
+
+- text_test_data.csv #
+
+ID,STRING
+1,'Bob hates running.'
+2,'Bob never runs.'
+3,'Bob cannot run anyway.'
+4,'It is impossible that Bob ran away.'
+
+- text_test_data.hdbtabledata #
+
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "mytextproj.mytexthdbmod::text_test",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "mytextproj.mytexthdbmod::text_test_data.csv",
+                "has_header": true
+            },
+            "import_settings": {
+                "import_columns": [
+                    "ID",
+                    "STRING"
+                ]
+            }
+        }
+    ]
+}
+
+- text_test_textconfig.hdbtextconfig #
+Paste from below ...
+
+<?xml version="1.0" encoding="utf-8" ?>
+<tasdk-configuration xmlns="http://www.sap.com/ta/config/4.0">
+  <configuration name="PreProcessor">
+    <property name="OutputExpandedTypes" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+   </configuration>
+   <configuration name="SAP.TextAnalysis.AnalysisModel.AggregateAnalyzer.Aggregator">
+    <property name="Analyzers" type="string-list">
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX</string-list-value>
+    </property>
+  </configuration>
+  <configuration name="CommonSettings" />
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC" based-on="CommonSettings" />
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA" based-on="CommonSettings" />
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX" based-on="CommonSettings" />
+</tasdk-configuration>
+
+- text_test_fti.hdbfulltextindex #
+FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
+ON "mytextproj.mytexthdbmod::text_test" ("STRING")
+CONFIGURATION 'mytextproj.mytexthdbmod::text_test_textconfig'
+LANGUAGE DETECTION ('EN')
+TEXT ANALYSIS ON
+
+------
+- OR -
+------
+
+CREATE SCHEMA EXPANDED_TEST;
+ 
+CREATE COLUMN TABLE EXPANDED_TEST.TEST
+(ID INTEGER, STRING VARCHAR(200), PRIMARY KEY(ID));
+ 
+INSERT INTO EXPANDED_TEST.TEST 
+VALUES (1, 'Bob hates running.');
+INSERT INTO EXPANDED_TEST.TEST 
+VALUES (2, 'Bob never runs.');
+INSERT INTO EXPANDED_TEST.TEST 
+VALUES (3, 'Bob cannot run anyway.');
+INSERT INTO EXPANDED_TEST.TEST 
+VALUES (4, 'It is impossible that Bob ran away');
+
+SELECT * FROM "SYS"."TEXT_CONFIGURATIONS"
+
+CALL TEXT_CONFIGURATION_CLEAR('EXPANDED_TEST');
+
+CALL TEXT_CONFIGURATION_DROP
+('EXPANDED_TEST', 'expanded_config', 'hdbtextconfig');
+# ('<schema_name>','<name>','hdbtextdict','<dictionary>');
+
+CALL TEXT_CONFIGURATION_CREATE('EXPANDED_TEST', 'expanded_config', 'hdbtextconfig', '<?xml version="1.0" encoding="utf-8" ?>
+                                    <tasdk-configuration xmlns="http://www.sap.com/ta/config/4.0">
+                                        <configuration name="PreProcessor">
+                                            <property name="OutputExpandedTypes" type="boolean">
+                                                <boolean-value>true</boolean-value>
+                                            </property>
+                                        </configuration>
+                                        <configuration name="SAP.TextAnalysis.AnalysisModel.AggregateAnalyzer.Aggregator">
+                                            <property name="Analyzers" type="string-list">
+                                                <string-list-value>SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC</string-list-value>
+                                                <string-list-value>SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA</string-list-value>
+                                                <string-list-value>SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX</string-list-value>
+                                            </property>
+                                        </configuration>
+                                        <configuration name="CommonSettings" />
+                                       <configuration name="SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC" based-on="CommonSettings" />
+                                        <configuration name="SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA" based-on="CommonSettings" />
+                                        <configuration name="SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX" based-on="CommonSettings" />
+                                    </tasdk-configuration>');
+ 
+CREATE FULLTEXT INDEX EXPANDED_TEST.FTI 
+ON EXPANDED_TEST.TEST(STRING) 
+TEXT ANALYSIS ON 
+CONFIGURATION 'expanded_config.hdbtextconfig';
+
+#########################################
+# import ta delivery unit for languages #
+#########################################
+
+DROP SCHEMA DUTEST CASCADE;
+CREATE SCHEMA DUTEST;
+
+DROP TABLE DUTEST.DUTEST CASCADE;
+CREATE COLUMN TABLE DUTEST.DUTEST
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+);
+
+INSERT INTO DUTEST.DUTEST VALUES (1, 'Bob used the product with a smile.');
+INSERT INTO DUTEST.DUTEST VALUES (2, 'Bob used the product with a grin.');
+
+DROP FULLTEXT INDEX "$TA_MYINDEX";
+CREATE FULLTEXT INDEX myindex ON DUTEST.DUTEST ("STRING")
+-- CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER_BOB'
+TEXT ANALYSIS ON;
+
+SELECT * FROM DUTEST."$TA_MYINDEX" ORDER BY ID, TA_COUNTER ASC;
+
+Give SYSTEM sap.hana.xs.lm.roles::Administrator role
+Give SYSTEM sap.hana.ide.roles::Developer role
+
+sudo su -
+find / -name '*HANA_TA_VOC*'
+find / -name 'hdbalm.sh'
+
+su - shaadm
+cd /hana/shared/SHA/hdbclient/
+./hdbalm
+./hdbalm -h localhost -u SYSTEM -p 8000 du list
+./hdbalm -h localhost -u SYSTEM -p 8000 import /hana/shared/SHA/global/hdb/content/HANA_TA_VOC.tgz
+./hdbalm -h localhost -u SYSTEM -p 8000 du list
+./hdbalm -h localhost -u SYSTEM -p 8000 du undeploy HANA_TA_VOC sap.com
+
+SELECT * FROM "SYS"."TEXT_CONFIGURATIONS";
+
+CALL TEXT_CONFIGURATION_CLEAR('DUTEST');
+
+CALL TEXT_CONFIGURATION_DROP
+('DUTEST', 'EXTRACTION_CORE_VOICEOFCUSTOMER_BOB', 'hdbtextconfig');
+# ('<schema_name>','<name>','hdbtextdict','<dictionary>');
+
+CALL TEXT_CONFIGURATION_CREATE('DUTEST', 'EXTRACTION_CORE_VOICEOFCUSTOMER_BOB', 'hdbtextconfig', '<?xml version="1.0" encoding="utf-8" ?>
+<!-- Standard text analysis configuration for comprehensive linguistic analysis
+     plus sentiment analysis ("voice of the customer" extractions).
+-->
+<tasdk-configuration xmlns="http://www.sap.com/ta/config/4.0">
+
+  <configuration name="SAP.TextAnalysis.AnalysisModel.AggregateAnalyzer.Aggregator">
+  
+    <!-- Specify sequence of text analysis steps to perform.
+    
+         Generally speaking, the only change that customers should make to this
+         list is to include or exclude the ExtractionAnalyzer step.
+    -->
+    <property name="Analyzers" type="string-list">
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.Extraction.ExtractionAnalyzer.TF</string-list-value>
+    </property>
+    
+  </configuration>
+
+  <!-- Do not modify or remove. This section must appear exactly as described in the
+       HANA Developer Guide.
+  -->
+  <configuration name="CommonSettings" />
+
+  <!-- Do not modify or remove. This section must appear exactly as described in the
+       HANA Developer Guide.
+  -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC" based-on="CommonSettings" />
+  
+  <!-- Do not remove. This section must be present as described in the HANA Developer Guide. -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA" based-on="CommonSettings">
+  
+    <!-- Minimum input length (in code units) for which automatic language identification
+         will be attempted. (The default language will be assigned to shorter inputs.)
+    -->
+    <property name="MinimumInputLength" type="integer">
+      <integer-value>30</integer-value>
+    </property>
+
+    <!-- Size (in code units) of the input sample used for language identification. -->
+    <property name="EvaluationSampleSize" type="integer">
+        <integer-value>300</integer-value>
+    </property>
+
+    <!-- Minimum confidence level required to accept the result of automatic language
+         detection. (Failing that, the default language will be used.)
+         Values must be in the range from 0 to 100.
+    -->
+    <property name="MinimumConfidence" type="integer">
+        <integer-value>50</integer-value>
+    </property>
+
+  </configuration>
+
+  <!-- Do not remove. This section must be present as described in the HANA Developer Guide. -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX" based-on="CommonSettings">
+
+    <!-- Determine the stems (base forms) for each token?  (default is true) -->
+    <property name="GetTokenStem" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Guess stems for tokens not found in a lexicon?  (default is false) -->
+    <property name="EnableStemGuesser" type="boolean">
+      <boolean-value>false</boolean-value>
+    </property>
+
+    <!-- Determine the part of speech for each token?  (default is true) -->
+    <property name="GetTokenPartOfSpeech" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Disambiguate the part of speech for each token? (default is true) -->
+    <property name="DisambiguatePartOfSpeech" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Disambiguate the stem for each token? (default is false) -->
+    <property name="DisambiguateStem" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Use custom linguistic dictionaries?  (default is false) -->
+    <property name="EnableCustomDictionaries" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Determine whether stemming is standard or expanded? (default is std) -->
+    <property name="VariantString" type="string">
+      <string-value>expanded</string-value>
+    </property>
+
+  </configuration>
+
+  <!-- Configuration settings for entity and relationship extraction. Refer to the
+      HANA Developer Guide for more details.
+  -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.Extraction.ExtractionAnalyzer.TF" based-on="CommonSettings">
+
+    <!-- List of Text Analysis extraction rules for Sentiment Analysis.
+         (This setting is currently for internal SAP use only.)
+    -->
+    <property name="ExtractionRules" type="string-list">
+      <string-list-value>dutch-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>dutch-tf-voc-profanity.fsm</string-list-value>
+      <string-list-value>english-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>english-tf-voc-request.fsm</string-list-value>
+      <string-list-value>english-tf-voc-sentiment.fsm</string-list-value>
+      <string-list-value>french-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>french-tf-voc-request.fsm</string-list-value>
+      <string-list-value>french-tf-voc-sentiment.fsm</string-list-value>
+      <string-list-value>german-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>german-tf-voc-request.fsm</string-list-value>
+      <string-list-value>german-tf-voc-sentiment.fsm</string-list-value>
+      <string-list-value>italian-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>italian-tf-voc-request.fsm</string-list-value>
+      <string-list-value>italian-tf-voc-sentiment.fsm</string-list-value>
+      <string-list-value>portuguese-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>portuguese-tf-voc-request.fsm</string-list-value>
+      <string-list-value>portuguese-tf-voc-sentiment.fsm</string-list-value>
+      <string-list-value>russian-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>russian-tf-voc-request.fsm</string-list-value>
+      <string-list-value>russian-tf-voc-sentiment.fsm</string-list-value>
+      <string-list-value>spanish-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>spanish-tf-voc-request.fsm</string-list-value>
+      <string-list-value>spanish-tf-voc-sentiment.fsm</string-list-value>
+      <string-list-value>chinese-tf-voc-emoticon.fsm</string-list-value>
+      <string-list-value>chinese-tf-voc-request.fsm</string-list-value>
+      <string-list-value>chinese-tf-voc-sentiment.fsm</string-list-value>
+    </property>
+    
+    <!-- List of Text Analysis extraction dictionaries for Sentiment Analysis. -->
+    <property name="Dictionaries" type="string-list">
+      <string-list-value>dutch-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>dutch-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>english-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>english-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>french-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>french-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>german-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>german-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>italian-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>italian-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>portuguese-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>portuguese-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>russian-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>russian-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>spanish-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>spanish-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>chinese-tf-voc-AmbigProfanity.nc</string-list-value>
+      <string-list-value>chinese-tf-voc-UnambigProfanity.nc</string-list-value>
+      <string-list-value>english-tf-voc-thesaurus.nc</string-list-value>
+      <string-list-value>french-tf-voc-thesaurus.nc</string-list-value>
+      <string-list-value>german-tf-voc-thesaurus.nc</string-list-value>
+      <string-list-value>italian-tf-voc-thesaurus.nc</string-list-value>
+      <string-list-value>portuguese-tf-voc-thesaurus.nc</string-list-value>
+      <string-list-value>russian-tf-voc-thesaurus.nc</string-list-value>
+      <string-list-value>spanish-tf-voc-thesaurus.nc</string-list-value>
+    </property>
+  </configuration>
+ 
+</tasdk-configuration>
+');
+
+-- search for "WPS@Noun"
+
+#############################################
+# NEW TEXT MINING OPTIONS IN HANA 2.0 SPS00 #
+#############################################
+
+CREATE TABLE TEXTMINING_AWARDS
+LIKE "TEXTMINING"."TEXTMINING_AWARDS"
+WITH DATA
+
+DROP TABLE TEXTMINING_AWARDS;
+CREATE COLUMN TABLE TEXTMINING_AWARDS 
+(
+"FEDERAL_AWARD_ID_NUMBER" NVARCHAR(10), 
+"PDPI_NAME" NVARCHAR(500), 
+"AWARD_DATE" DAYDATE CS_DAYDATE, 
+"AWARD_YEAR" NVARCHAR(4), 
+"AWARD_AMOUNT" INTEGER CS_INT, 
+"AWARD_TITLE" NVARCHAR(5000), 
+"AWARD_ABSTRACT" NCLOB MEMORY THRESHOLD 1000, 
+"PROGRAM" NVARCHAR(500), 
+"CONST" NVARCHAR(5), 
+"COU" INTEGER CS_INT, 
+"AWARDEE" NVARCHAR(500), 
+"AWARDEE_STREET" NVARCHAR(500), 
+"AWARDEE_CITY" NVARCHAR(500), 
+"AWARDEE_COUNTY" NVARCHAR(500), 
+"AWARDEE_STATE" NVARCHAR(500), 
+"AWARDEE_COUNTRY" NVARCHAR(500), 
+"AWARDEE_NAME" NVARCHAR(500), 
+PRIMARY KEY ("FEDERAL_AWARD_ID_NUMBER")
+);
+
+-- import data from csv
+https://github.com/saphanaacademy/TextAnalysis_Search_Mining/blob/master/miningdata.csv.zip
+
+SELECT UPPER(PROGRAM) AS PROGRAM , COUNT(*) AS COUNT 
+FROM TEXTMINING_AWARDS
+GROUP BY PROGRAM
+ORDER BY 2 DESC;
+
+SELECT AWARD_TITLE, AWARD_ABSTRACT, PROGRAM
+FROM TEXTMINING_AWARDS
+WHERE FEDERAL_AWARD_ID_NUMBER = 1348558;
+
+DROP FULLTEXT INDEX TEXTMINING_INDEX;
+CREATE FULLTEXT INDEX TEXTMINING_INDEX
+ON TEXTMINING_AWARDS (AWARD_ABSTRACT)
+FAST PREPROCESS OFF
+SEARCH ONLY OFF
+TEXT ANALYSIS ON
+TEXT MINING ON;
+
+MERGE DELTA OF TEXTMINING_AWARDS;
+
+SELECT CATEGORY_COLUMN, RANK, CATEGORY_VALUE, NEIGHBOR_COUNT, SCORE
+FROM TM_CATEGORIZE_KNN (
+DOCUMENT IN FULLTEXT INDEX WHERE FEDERAL_AWARD_ID_NUMBER = 1348558
+SEARCH NEAREST NEIGHBORS 20 "AWARD_ABSTRACT" FROM SYSTEM.TEXTMINING_AWARDS
+RETURN
+TOP 10
+PROGRAM FROM SYSTEM.TEXTMINING_AWARDS
+);
+
+-- New DEFAULT Keyword for SQL functions
+
+SELECT CATEGORY_COLUMN, RANK, CATEGORY_VALUE, NEIGHBOR_COUNT, SCORE
+FROM TM_CATEGORIZE_KNN (
+DOCUMENT IN FULLTEXT INDEX WHERE FEDERAL_AWARD_ID_NUMBER = 1348558
+SEARCH NEAREST NEIGHBORS DEFAULT "AWARD_ABSTRACT" FROM SYSTEM.TEXTMINING_AWARDS
+RETURN
+TOP DEFAULT
+PROGRAM FROM SYSTEM.TEXTMINING_AWARDS
+);
+
+<--
+The NEAREST NEIGHBORS and TOP parameters in the SQL functions for text mining can specify the value as DEFAULT, instead of a numeric value. Using DEFAULT causes the function to use the same value that was used at text mining initialization (either the original value from the text mining configuration, or an override value specified using the TEXT MINING CONFIGURATION OVERLAY parameter or the initialize function in the text mining XS classic or advanced APIs).
+-->
+
+###############################################################
+# NEW SIMILARITY CALCULATION MODES FOR SEARCH IN HANA 2 SPS00 #
+###############################################################
+
+<--
+The fuzzy search option similarCalculationMode offers two more modes: typeAhead and searchCompare. 
+-->
+
+DROP TABLE SEARCH_SUBSTRINGSEARCH;
+CREATE COLUMN TABLE SEARCH_SUBSTRINGSEARCH (
+  id        INTEGER primary key,
+  str       NVARCHAR(120)
+);
+
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('1','stringg');
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('2','string theory');
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('3','this is a very very very long string');
+INSERT INTO SEARCH_SUBSTRINGSEARCH VALUES 
+('4','this is another very long string');
+
+SELECT * 
+FROM SEARCH_SUBSTRINGSEARCH;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=COMPARE'))
+ORDER BY score DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5, 
+'similarCalculationMode=SEARCH'))
+ORDER BY score DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=SYMMETRICSEARCH'))
+ORDER BY score DESC;
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=SUBSTRINGSEARCH'))
+ORDER BY score DESC;
+
+-- The mode typeAhead is used when the user enters the beginning of a string and all strings starting with the user input will be returned. 
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5,
+'similarCalculationMode=TYPEAHEAD'))
+ORDER BY score DESC;
+
+-- The mode searchCompare combines the strength of modes compare and search while eliminating some of the shortcomings of search mode search.
+
+SELECT TO_DECIMAL(SCORE(),3,2) AS score, str 
+FROM SEARCH_SUBSTRINGSEARCH 
+WHERE CONTAINS(str, 'strongtheory', FUZZY(0.5, 
+'similarCalculationMode=SEARCHCOMPARE'))
+ORDER BY score DESC;
