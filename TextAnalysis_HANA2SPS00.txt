@@ -174,6 +174,8 @@ TA_ANNOTATIONS => ?,
 PLAINTEXT => ? 
 );
 
+CONFIGURATION=>'EXTRACTION_CORE_VOICEOFCUSTOMER',
+
 ######################
 ## TA_TYPE_EXPANDED ##
 ######################
