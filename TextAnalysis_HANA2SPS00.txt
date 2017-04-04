@@ -152,8 +152,10 @@ ID,STRING
 #group President: [TE PERSON] < >* <Bush|Clinton|Obama|Trump> [/TE]
 
 ID,STRING
-59,'President Bush'
-60,'Idiot Trump'
+59,'George Bush'
+60,'D. Trump'
+61,'Don Trump'
+62,'Madman Trump'
 
 ################
 ## TA_ANALYZE ##
