@@ -47,19 +47,33 @@ ID,STRING
 ######################################
 # text_test_textconfig.hdbtextconfig #
 ######################################
-copy from ide
+copy from WbDW
 
 ##################################
 # text_test_fti.hdbfulltextindex #
 ##################################
 
-mytextproj.mytexthdbmod::english-gra.hdbtextdict
-
 FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
 ON "mytextproj.mytexthdbmod::text_test" ("STRING")
 CONFIGURATION 'mytextproj.mytexthdbmod::text_test_textconfig'
-LANGUAGE DETECTION ('ES')
+LANGUAGE DETECTION ('EN')
 TEXT ANALYSIS ON
+
+#################################
+# Text Analysis Run Batch Tests #
+#################################
+
+- Enterprise
+11, 'Bernard Liautaud co-founded Business Objects in 1990.'
+12, 'Business Objects introduces WebI thin client in 1997'
+13, 'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.'
+14, 'SAP AG releases SAP HANA SPS09 in 2014.'
+
+- Public Sector
+21, 'Tahir Hussain Babar, aka Bob, is a SAP employee.'
+22, 'Bob is a large, 6 ft tall English man.'
+23, 'Bob travelled to Berlin.'
+24, 'Bob is 3500 miles west of Manchester.'
 
 ################
 # .hdbtextdict #
