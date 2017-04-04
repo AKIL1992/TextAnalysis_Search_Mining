@@ -65,11 +65,9 @@ TEXT ANALYSIS ON
 
 - Extraction VOC
 11,'Bob hates working at SAP. Bob likes New York.'
-12,'Bob enjoys soccer.
-
-Bob also likes beer.'
-13,'That part of the product doesn't work.'
-14,'Bob hasst den FC Bayern München.'
+12,'That part of the product doesn't work.'
+13,'Bob hasst den FC Bayern München.'
+14,'Please contact Joe at hanaacademy@sap.com'
 
 - Enterprise
 21,'Bernard Liautaud co-founded Business Objects in 1990.'
