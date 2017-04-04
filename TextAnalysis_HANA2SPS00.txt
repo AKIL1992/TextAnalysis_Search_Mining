@@ -121,9 +121,11 @@ ID,STRING
 ##################
 
 -- rulesrequest.hdbtextrule --
--- "Please send part AB-654327" -- 
 #group PartRequest: <STEM:ask|send> <>*? [TE PART_NUMBER] <>+ [/TE]
---
+
+ID,STRING
+51,'Please send part AB-654327'
+52,'Can you ask about part AB-654327'
 
 -- Rules to identify credit card numbers -- including the card company --
 -- American Express examples: 371449635398431, 343434343434343, 371144371144376
