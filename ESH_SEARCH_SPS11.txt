@@ -35,9 +35,11 @@ CREATE COLUMN TABLE DOCUMENT
 TITLE NVARCHAR(50),
 CONTENT NVARCHAR(50));
 
-INSERT INTO DOCUMENT VALUES (1, 'Football in the 19th Century','This is a document about football...');
-INSERT INTO DOCUMENT VALUES (2, 'Football in Europe','This is a document about european football...');
-INSERT INTO DOCUMENT VALUES (3, 'Europe in the 19th Century','This is a document about Europe...');
+INSERT INTO DOCUMENT VALUES (1, 'Football in the 19th Century','This is a document about football ...');
+INSERT INTO DOCUMENT VALUES (2, 'Football in Europe','This is a document about european football ...');
+INSERT INTO DOCUMENT VALUES (3, 'Europe in the 19th Century','This is a document about Europe ...');
+INSERT INTO DOCUMENT VALUES (4, 'Backgammon','This is a document about playing boardgames such as ...');
+INSERT INTO DOCUMENT VALUES (5, 'SAP HANA','This is a document about in memory databases ...');
 
 SELECT * FROM DOCUMENT;
 
@@ -50,6 +52,8 @@ INSERT INTO DOCUMENT_AUTHORS VALUES (1, 'Franz');
 INSERT INTO DOCUMENT_AUTHORS VALUES (2, 'Franz');
 INSERT INTO DOCUMENT_AUTHORS VALUES (2, 'Erwin');
 INSERT INTO DOCUMENT_AUTHORS VALUES (3, 'Erwin');
+INSERT INTO DOCUMENT_AUTHORS VALUES (4, 'Magriel');
+INSERT INTO DOCUMENT_AUTHORS VALUES (5, 'Plattner');
 
 SELECT * FROM DOCUMENT_AUTHORS;
 
@@ -69,6 +73,9 @@ ON D.ID = A.ID);
 SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'19th century');
 SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'football');
 SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'europe');
+SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'in memory');
+SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'backgammon');
+SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'boardgame');
 
 SELECT COUNT(DISTINCT ID) AS COUNT FROM V_DOCUMENTS WHERE CONTAINS(*,'football');
 SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'football');
@@ -114,6 +121,10 @@ CALL ESH_SEARCH('[ "/$metadata"]', ?);
 
 CALL ESH_SEARCH('[ 
 "/$all?facets=all&$filter=Search.search(query=''football'')"
+]', ?);
+
+CALL ESH_SEARCH('[ 
+"/$all?facets=all&$filter=Search.search(query=''hana'')"
 ]', ?);
 
 CALL ESH_SEARCH('[ 
