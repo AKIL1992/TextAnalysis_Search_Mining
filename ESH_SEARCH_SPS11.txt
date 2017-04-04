@@ -80,6 +80,7 @@ SELECT AUTHOR, COUNT(DISTINCT ID) AS COUNT FROM V_DOCUMENTS WHERE CONTAINS(*,'fo
 
 -- Studio ; change setting preferences so can view JSON (Windows\Preferences; SAP HANA\Runtime\Result; check "Enable zoom of LOB columns")
 -- WbDW ; change options (cog) to specify "Limit for LOB Columns" = 9999
+-- make sure you change ESH_DEMO to the schema where your data is (or username)
 
 CALL ESH_CONFIG('[{
   "uri":    "~/$metadata/EntitySets(ESH_DEMO/V_DOCUMENTS)",
