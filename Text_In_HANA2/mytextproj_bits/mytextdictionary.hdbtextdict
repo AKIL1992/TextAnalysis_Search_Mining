@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary xmlns="http://www.sap.com/ta/4.0">
+<entity_category name="MOVIES">
+  <entity_name standard_form="Godzilla" />
+  <entity_name standard_form="Gravity" />
+  <entity_name standard_form="Rise of the Planet of the Apes" />
+  <entity_name standard_form="The Matrix" />
+  <entity_name standard_form="Sharknado" />
+  <entity_name standard_form="Spiderman" />
+</entity_category>
+<entity_category name="TV_SHOWS">
+  <entity_name standard_form="Breaking Bad" />
+  <entity_name standard_form="Malcolm in the Middle" />
+</entity_category>
+<entity_category name="PART_NUMBER">
+  <entity_name standard_form="AB-654327" />
+  <entity_name standard_form="AH-9876380" />
+  <entity_name standard_form="ZD-8765-987" />
+</entity_category></dictionary>
