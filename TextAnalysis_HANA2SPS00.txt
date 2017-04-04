@@ -100,8 +100,8 @@ ID,STRING
 <entity_category name="TV_SHOWS">
   <entity_name standard_form="The Love Boat" />
   <entity_name standard_form="The Benny Hill Show" />
-    <variant name =”The Complete Benny Hill”/>
-    <variant name =”The Best of Benny Hill”/>
+    <variant name ="The Complete Benny Hill"/>
+    <variant name ="The Best of Benny Hill"/>
 </entity_category>
 <entity_category name="PART_NUMBER">
   <entity_name standard_form="AB-654327" />
