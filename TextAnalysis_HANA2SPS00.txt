@@ -78,7 +78,7 @@ TEXT ANALYSIS ON
 
 - Public Sector
 31,'Tahir Hussain Babar aka Bob is a SAP employee.'
-32,'Bob is a large, 6 ft tall English man.'
+32,'Bob is a large 6 ft tall English man.'
 33,'Bob travelled to Berlin.'
 34,'Bob is 3500 miles west of Manchester.'
 
