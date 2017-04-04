@@ -38,8 +38,8 @@ CONTENT NVARCHAR(50));
 INSERT INTO DOCUMENT VALUES (1, 'Football in the 19th Century','This is a document about football ...');
 INSERT INTO DOCUMENT VALUES (2, 'Football in Europe','This is a document about european football ...');
 INSERT INTO DOCUMENT VALUES (3, 'Europe in the 19th Century','This is a document about Europe ...');
-INSERT INTO DOCUMENT VALUES (4, 'Backgammon','This is a document about playing boardgames such as ...');
-INSERT INTO DOCUMENT VALUES (5, 'SAP HANA','This is a document about in memory databases ...');
+INSERT INTO DOCUMENT VALUES (4, 'Backgammon','This is a document about playing boardgames such as backgammon ...');
+INSERT INTO DOCUMENT VALUES (5, 'SAP Vora','This is a document about how to install Vora ...');
 
 SELECT * FROM DOCUMENT;
 
