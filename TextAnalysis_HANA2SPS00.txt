@@ -64,6 +64,7 @@ TEXT ANALYSIS ON
 #################################
 
 - Extraction VOC
+ID,STRING
 11,'Bob hates working at SAP. Bob likes New York.'
 12,'That part of the product in Oracle doesn't work.'
 13,'Bob hasst den FC Bayern München.'
@@ -71,12 +72,14 @@ TEXT ANALYSIS ON
 15,'You idiot !'
 
 - Enterprise
+ID,STRING
 21,'Bernard Liautaud co-founded Business Objects in 1990.'
 22,'Business Objects introduces WebI thin client in 1997'
 23,'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.'
 24,'SAP AG releases SAP HANA SPS09 in 2014.'
 
 - Public Sector
+ID,STRING
 31,'Tahir Hussain Babar aka Bob is a SAP employee.'
 32,'Bob is a large 6 ft tall English man.'
 33,'Bob travelled to Berlin.'
@@ -106,6 +109,7 @@ TEXT ANALYSIS ON
   <entity_name standard_form="ZD-8765-987" />
 </entity_category></dictionary>
 
+ID,STRING
 41,'The Shining'
 42,'The Benny Hill Show'
 43,'The Complete Benny Hill'
