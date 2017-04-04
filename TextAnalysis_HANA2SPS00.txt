@@ -120,29 +120,40 @@ ID,STRING
 ## .hdbtextrule ##
 ##################
 
--- rulesrequest.hdbtextrule --
+-- basicrulesrequest.hdbtextrule --
 #group PartRequest: <STEM:ask|send> <>*? [TE PART_NUMBER] <>+ [/TE]
 
 ID,STRING
 51,'Please send part AB-654327'
 52,'Can you ask about part AB-654327'
 
+-- anotherrulesrequest.hdbtextrule --
 -- Rules to identify credit card numbers -- including the card company --
 -- American Express examples: 371449635398431, 343434343434343, 371144371144376
 #group CREDIT_CARD@AMERICAN_EXPRESS: <3[47][0-9]{13,13}>
 
+ID,STRING
+53,'371449635398431'
+54,'343434343434343'
+55,'371144371144376'
+56,'676265444256762'
+
+-- yetanotherrulesrequest.hdbtextrule --
 -- The extraction process picks this label up as the entity name for the string that is output --
 -- If the input is Mister Clooney, Clooney will be extracted and labeled LastName --
 #group Name: <Sir|Mr|Mister> [OD LastName] <POS: Prop> [/OD]
 
--- Matches any entity of type PERSON with Bush, Clinton, or Obama as its last element -- S
-#group President: [TE PERSON] < >* <Bush|Clinton|Obama/Trump> [/TE]
+ID,STRING
+57,'Mister Clooney'
+58,'Sir Beckham'
 
--- beers --
--- Beers in the market this Christmas include Rochefort Trappist Special and Stella Blonde Special. --
-#subgroup Beer: <Stella>|<Jupiler>|<Rochefort>
-#subgroup BeerMod: %(Beer) (<Blonde>|<Trappist>)
-#group BestBeer: %(BeerMod) (<Premium>|<Special>)
+-- finalrulesrequest.hdbtextrule --
+-- Matches any entity of type PERSON with Bush, Clinton, Obama & Trump as its last element -- S
+#group President: [TE PERSON] < >* <Bush|Clinton|Obama|Trump> [/TE]
+
+ID,STRING
+59,'President Bush'
+60,'Idiot Trump'
 
 ################
 ## TA_ANALYZE ##
