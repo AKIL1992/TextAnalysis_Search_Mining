@@ -64,24 +64,24 @@ TEXT ANALYSIS ON
 #################################
 
 - Extraction VOC
-11, 'Bob hates working at SAP. Bob likes New York.'
-12, 'Bob enjoys soccer.
+11,'Bob hates working at SAP. Bob likes New York.'
+12,'Bob enjoys soccer.
 
 Bob also likes beer.'
-13, 'That part of the product doesn't work.'
-14, 'Bob hasst den FC Bayern München.'
+13,'That part of the product doesn't work.'
+14,'Bob hasst den FC Bayern München.'
 
 - Enterprise
-21, 'Bernard Liautaud co-founded Business Objects in 1990.'
-22, 'Business Objects introduces WebI thin client in 1997'
-23, 'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.'
-24, 'SAP AG releases SAP HANA SPS09 in 2014.'
+21,'Bernard Liautaud co-founded Business Objects in 1990.'
+22,'Business Objects introduces WebI thin client in 1997'
+23,'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.'
+24,'SAP AG releases SAP HANA SPS09 in 2014.'
 
 - Public Sector
-31, 'Tahir Hussain Babar, aka Bob, is a SAP employee.'
-32, 'Bob is a large, 6 ft tall English man.'
-33, 'Bob travelled to Berlin.'
-34, 'Bob is 3500 miles west of Manchester.'
+31,'Tahir Hussain Babar, aka Bob, is a SAP employee.'
+32,'Bob is a large, 6 ft tall English man.'
+33,'Bob travelled to Berlin.'
+34,'Bob is 3500 miles west of Manchester.'
 
 ################
 # .hdbtextdict #
