@@ -23,6 +23,10 @@ GRANT SELECT ON _SYS_RT.ESH_MODEL_PROPERTY TO ESH_DEMO;
 CONNECT ESH_DEMO PASSWORD SHALive1;
 GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON SCHEMA ESH_DEMO to _SYS_REPO WITH GRANT OPTION;
 
+=================
+=================
+=================
+
 DROP TABLE DOCUMENT CASCADE;
 CREATE COLUMN TABLE DOCUMENT
 (ID INTEGER PRIMARY KEY, 
@@ -60,7 +64,8 @@ SELECT COUNT(DISTINCT ID) AS COUNT FROM V_DOCUMENTS WHERE CONTAINS(*,'football')
 SELECT DISTINCT ID, TITLE, CONTENT FROM V_DOCUMENTS WHERE CONTAINS(*,'football');
 SELECT AUTHOR, COUNT(DISTINCT ID) AS COUNT FROM V_DOCUMENTS WHERE CONTAINS(*,'football') GROUP BY AUTHOR;
 
--- change setting preferences so can view JSON (Windows\Preferences; SAP HANA\Runtime\Result; check "Enable zoom of LOB columns")
+-- Studio ; change setting preferences so can view JSON (Windows\Preferences; SAP HANA\Runtime\Result; check "Enable zoom of LOB columns")
+-- WbDW ; change options (cog) to specify "Limit for LOB Columns" = 9999
 
 CALL ESH_CONFIG('[{
   "uri":    "~/$metadata/EntitySets(ESH_DEMO/V_DOCUMENTS)",
