@@ -97,6 +97,8 @@ TEXT ANALYSIS ON
 <entity_category name="TV_SHOWS">
   <entity_name standard_form="The Love Boat" />
   <entity_name standard_form="The Benny Hill Show" />
+    <variant name =”The Complete Benny Hill”/>
+    <variant name =”The Best of Benny Hill”/>
 </entity_category>
 <entity_category name="PART_NUMBER">
   <entity_name standard_form="AB-654327" />
@@ -104,9 +106,10 @@ TEXT ANALYSIS ON
   <entity_name standard_form="ZD-8765-987" />
 </entity_category></dictionary>
 
-The Shining
-The Benny Hill Show
-AH-9876380
+41,'The Shining'
+42,'The Benny Hill Show'
+43,'The Complete Benny Hill'
+44,'AB-654327'
 
 ##################
 ## .hdbtextrule ##
