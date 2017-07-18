@@ -312,11 +312,7 @@ STRING nvarchar(200)
 )
 ;
 
-INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP. Bob likes New York.');
-
-INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob enjoys soccer.
-
-Bob also likes beer.');
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP.');
 
 -- In Editor, copy LINGANALYSIS_FULL to CC_BOBS
 -- Change "GetTokenStem" to false
