@@ -1,0 +1,406 @@
+##########################
+# Text Analysis Examples #
+##########################
+
+########################
+# Simple Text Analysis #
+########################
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP.');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX";
+
+################################
+# Another Simple Text Analysis #
+################################
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP. Bob likes New York.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob enjoys soccer.
+
+Bob also likes beer.');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID, TA_COUNTER;
+
+##############################################################
+# Text Analysis Configurations : Linganalysis Configurations #
+##############################################################
+
+DELETE FROM "TA"."MYTABLE";
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP.');
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'LINGANALYSIS_FULL'
+TEXT ANALYSIS ON;
+
+#############################
+# Grammatical Role Analysis #
+#############################
+
+DELETE FROM "TA"."MYTABLE";
+INSERT INTO "TA"."MYTABLE"
+VALUES (1, 'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.');
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'GRAMMATICAL_ROLE_ANALYSIS'
+TEXT ANALYSIS ON;
+
+select "ID", "TA_COUNTER", "TA_TYPE", "TA_TOKEN", "TA_RULE", "TA_PARENT", "TA_COUNTER"
+from "TA"."$TA_MYINDEX"
+order by 1,2;
+
+##################################
+# Extraction Core Configurations #
+##################################
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (1, 'Bob likes working at SAP.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (2, 'Bob lives in New York.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (3, 'Bob has been in the USA for quite a few years.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (4, 'Bob travelled to Africa to work there during World Cup 2010. He visited Table Mountain when there.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (5, 'Bob spent New Years Day trying to speak French.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (6, 'Bob does not use #Twitter.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (7, 'Flights are often overbooked.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (8, 'That part of the product doesn''t work.');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE'
+-- CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID DESC;
+
+######################
+# Request Extraction #
+######################
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (1, 'Improve the software UI !');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (2, 'An additional switch would be great to have on this vacuum cleaner !');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (3, 'I would like to be contacted by your customer support service at 617-555-5555.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (4, 'Call me whenever is possible.');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+select "ID","TA_COUNTER","TA_TOKEN","TA_TYPE"
+from "TA"."$TA_MYINDEX"
+where TA_TYPE like '%equest%'
+order by 1, 2 asc;
+
+#######################
+# Emoticon Extraction #
+#######################
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (1, 'The show was hilarious :-D');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (2, 'Loving my new BlackBerry! :-) No iPhone needed over here !');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (3, 'The show was not great but it was not terrible either :-| It was ok I guess.');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (4, 'I hate this phone I am using :-(');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (5, 'The Dow Jones fell 200 points :-(((');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+select "ID","TA_COUNTER","TA_TOKEN","TA_TYPE"
+from "TA"."$TA_MYINDEX"
+where TA_TYPE like '%moticon%'
+order by 1, 2 asc;
+
+#############
+# Profanity #
+#############
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (1, 'Those idiots are totally unacceptable !!');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+#############################
+# Enterprise Configurations #
+#############################
+
+DELETE FROM "TA"."MYTABLE";
+INSERT INTO "TA"."MYTABLE" 
+VALUES (11, 'Bernard Liautaud co-founded Business Objects in 1990.');
+INSERT INTO "TA"."MYTABLE" 
+VALUES (12, 'Business Objects introduces WebI thin client in 1997.');
+INSERT INTO "TA"."MYTABLE" 
+VALUES (13, 'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.');
+INSERT INTO "TA"."MYTABLE" 
+VALUES (14, 'SAP AG releases SAP HANA SPS09 in 2014.');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_ENTERPRISE'
+TEXT ANALYSIS ON;
+
+################################
+# Public Sector Configurations #
+################################
+
+DELETE FROM "TA"."MYTABLE";
+INSERT INTO "TA"."MYTABLE" 
+VALUES (21, 'Tahir Hussain Babar aka Bob is a SAP employee.');
+INSERT INTO "TA"."MYTABLE" 
+VALUES (22, 'Bob is a large 6 ft tall English man.');
+INSERT INTO "TA"."MYTABLE" 
+VALUES (23, 'Bob travelled to Berlin.');
+INSERT INTO "TA"."MYTABLE" 
+VALUES (24, 'Bob is 3500 miles west of Manchester.');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_PUBLIC_SECTOR'
+TEXT ANALYSIS ON;
+
+######################
+# Language Detection #
+######################
+
+-- to see language types
+select * from SYS.M_TEXT_ANALYSIS_LANGUAGES
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob really likes Manchester United.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob hasst den FC Bayern München.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (3, 'ボブは  東京  を楽しんで');
+
+INSERT INTO "TA"."MYTABLE" VALUES (4, '밥은 서울을 즐긴다');
+
+INSERT INTO "TA"."MYTABLE" VALUES (5, '鲍勃喜欢上海');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+-- LANGUAGE DETECTION ('EN')
+-- LANGUAGE DETECTION ('DE')
+LANGUAGE DETECTION ('EN','DE')
+-- LANGUAGE DETECTION ('KO')
+-- LANGUAGE DETECTION ('JA')
+-- LANGUAGE DETECTION ('ZH')
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX";
+
+###################
+# Language Column #
+###################
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200),
+TXTLANG nvarchar(2)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob really likes Manchester United.','EN');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Ich hasse den FC Bayern München !!','DE');
+
+INSERT INTO "TA"."MYTABLE" VALUES (3, 'ボブは東京を楽しんで','JA');
+
+INSERT INTO "TA"."MYTABLE" VALUES (4, '밥은 서울을 즐긴다','KO');
+
+INSERT INTO "TA"."MYTABLE" VALUES (5, '鲍勃喜欢上海','ZH');
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+LANGUAGE COLUMN TXTLANG
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+LANGUAGE DETECTION ('EN', 'DE', 'JA', 'KO', 'ZH')
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID;
+
+#########################
+# Custom Configurations #
+#########################
+
+DROP SCHEMA "TA" CASCADE;
+
+CREATE SCHEMA "TA";
+
+CREATE COLUMN TABLE "TA"."MYTABLE"
+(
+ID INTEGER PRIMARY KEY, 
+STRING nvarchar(200)
+)
+;
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes working at SAP. Bob likes New York.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob enjoys soccer.
+
+Bob also likes beer.');
+
+-- In Editor, copy LINGANALYSIS_FULL to CC_BOBS
+-- Change "GetTokenStem" to false
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+-- CONFIGURATION 'sap.hana.ta.config::CC_BOBS'
+CONFIGURATION 'LINGANALYSIS_FULL'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID, TA_COUNTER;
+
+#######################
+# Custom Dictionaries #
+#######################
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" VALUES (1, 'Bob likes Manchester United FC.');
+
+INSERT INTO "TA"."MYTABLE" VALUES (2, 'Bob likes the Red Army.
+
+Bob also likes MUFC.');
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+-- CONFIGURATION 'sap.hana.ta.config::CC_BOBS'
+TEXT ANALYSIS ON;
+
+SELECT * FROM "TA"."$TA_MYINDEX" ORDER BY ID, TA_COUNTER;
+
+-- Create file "BOBS_DICT.hdbtextdict"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary xmlns="http://www.sap.com/ta/4.0">
+	<entity_category name="FOOTBALL CLUB">
+		<entity_name standard_form="Manchester United Football Club">
+			<variant name="Red Army" />
+			<variant name="Man U" />
+			<variant name="Man United" />
+			<variant name="Manchester United FC" />
+			<variant name="M.U.F.C." type="ABBREV" />
+			<variant name="MUFC" type="ABBREV" />
+			<variant_generation type="standard" language="english" />
+		</entity_name>
+	</entity_category>
+</dictionary>
+
+-- copy VOICEOFCUSTOMER config to CC_BOBS
+-- add following to Dictionaries
+
+<string-list-value>sap.hana.ta.dict::BOBS_DICT.hdbtextdict</string-list-value>
+
+################
+# Custom Rules #
+################
+
+DELETE FROM "TA"."MYTABLE";
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (1, 'Please send part AB-654327');
+
+INSERT INTO "TA"."MYTABLE" 
+VALUES (2, 'Can you ask about part AB-654327');
+
+-- edit file "BOBS_DICT.hdbtextdict"
+	<entity_category name="PART_NUMBER">
+        <entity_name standard_form="AB-654327" />
+        <entity_name standard_form="AH-9876380" />
+        <entity_name standard_form="ZD-8765-987" />
+    </entity_category>
+
+-- Create file "BOBS_RULE.hdbtextrule"
+#group PartRequest: <STEM:ask|send> <>*? [TE PART_NUMBER] <>+ [/TE]
+
+-- add following to "extraction rules" in CC_BOBS
+<string-list-value>sap.hana.ta.config::BOBS_RULE.hdbtextrule</string-list-value>
+
+DROP FULLTEXT INDEX "TA"."MYINDEX";
+
+CREATE FULLTEXT INDEX myindex ON "TA"."MYTABLE" ("STRING")
+CONFIGURATION 'sap.hana.ta.config::CC_BOBS'
+TEXT ANALYSIS ON;
+
