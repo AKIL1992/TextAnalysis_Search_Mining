@@ -1,6 +1,6 @@
-##############################################
-# TEXT ANALYSIS IN WEB IDE in HANA 2.0 SPS00 #
-##############################################
+####################################################
+# TEXT ANALYSIS IN WEB IDE in HANA 2.0 SPS00/01/02 #
+####################################################
 
 ######################
 # text_test.hdbtable #
@@ -47,7 +47,8 @@ ID,STRING
 ######################################
 # text_test_textconfig.hdbtextconfig #
 ######################################
-copy from WbDW
+copy from WbDW (if using SPS00/01)
+create a copy from a the VOICE_OF_CUSTOMER template using "New Text Configuration" (if using SPS02)
 
 ##################################
 # text_test_fti.hdbfulltextindex #
