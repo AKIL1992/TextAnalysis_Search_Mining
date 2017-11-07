@@ -257,10 +257,11 @@ CALL TEXT_CONFIGURATION_CREATE('MYTEXTPROJ_HDI_CONTAINER_2_1', 'expanded_config'
                                         <configuration name="SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX" based-on="CommonSettings" />
                                     </tasdk-configuration>');
  
-CREATE FULLTEXT INDEX EXPANDED_TEST.FTI 
-ON EXPANDED_TEST.TEST(STRING) 
+DROP FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti";
+CREATE FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti" 
+ON "mytextproj.mytexthdbmod::text_test" ("STRING")
 TEXT ANALYSIS ON 
-CONFIGURATION 'expanded_config.hdbtextconfig';
+CONFIGURATION 'expanded_config';
 
 #########################################
 # import ta delivery unit for languages #
