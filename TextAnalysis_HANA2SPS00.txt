@@ -64,38 +64,36 @@ TEXT ANALYSIS ON
 # Text Analysis Run Batch Tests #
 #################################
 
-- Extraction VOC
+- Extraction VOC (using Batch Test)
 ID,STRING
 11,'Bob hates working at SAP. Bob likes New York.'
-12,'That part of the product in Oracle doesn't work.'
-13,'Bob hasst den FC Bayern München.'
-14,'Please contact Joe at hanaacademy@sap.com'
-15,'You idiot !'
+12,'Bob likes football, but Deborah likes art.'
+13,'That part of the product in Oracle doesn't work.'
+14,'Bob hasst den FC Bayern München.'
+15,'Please contact Joe at hanaacademy@sap.com'
+16,'You idiot !'
 
-- Multi-lingual VOC
+- Multi-lingual VOC  (using TA Index)
 ID,STRING
-16,'ボブは  東京  を楽しんで'
-17,'밥은 서울을 즐긴다'
-18,'鲍勃喜欢上海'
+17,'ボブは  東京  を楽しんで'
+18,'밥은 서울을 즐긴다'
+19,'鲍勃喜欢上海'
 
--- Parent
-Bob likes football, but Deborah likes art.
-
-- Enterprise
+- Enterprise (using Batch Test)
 ID,STRING
 21,'Bernard Liautaud co-founded Business Objects in 1990.'
 22,'Business Objects introduces WebI thin client in 1997'
 23,'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.'
 24,'SAP AG releases SAP HANA SPS09 in 2014.'
 
-- Public Sector
+- Public Sector (using Batch Test)
 ID,STRING
 31,'Tahir Hussain Babar aka Bob is a SAP employee.'
 32,'Bob is a large 6 ft tall English man.'
 33,'Bob travelled to Berlin.'
 34,'Bob is 3500 miles west of Manchester.'
 
-- Grammatical Role Analysis
+- Grammatical Role Analysis (using TA Index)
 40,'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.'
 
 ######################
@@ -108,7 +106,7 @@ ID,STRING
 3,'Bob cannot run anyway.'
 4,'It is impossible that Bob ran away.'
 
-- paste code from below into a linguistic configuration ...
+- paste code from below into a linguistic configuration under header ...
 
   <configuration name="PreProcessor">
     <property name="OutputExpandedTypes" type="boolean">
@@ -207,9 +205,9 @@ PLAINTEXT => ?
 
 CONFIGURATION=>'EXTRACTION_CORE_VOICEOFCUSTOMER',
 
------------------------------------
-- SQL Example of TA_TYPE_EXPANDED -
------------------------------------
+###################################
+# SQL Example of TA_TYPE_EXPANDED #
+###################################
 
 CREATE SCHEMA EXPANDED_TEST;
  
