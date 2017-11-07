@@ -69,11 +69,14 @@ ID,STRING
 11,'Bob hates working at SAP. Bob likes New York.'
 12,'That part of the product in Oracle doesn't work.'
 13,'Bob hasst den FC Bayern München.'
-14,'ボブは  東京  を楽しんで'
-15,'밥은 서울을 즐긴다'
-16,'鲍勃喜欢上海'
-17,'Please contact Joe at hanaacademy@sap.com'
-18,'You idiot !'
+14,'Please contact Joe at hanaacademy@sap.com'
+15,'You idiot !'
+
+- Multi-lingual VOC
+ID,STRING
+16,'ボブは  東京  を楽しんで'
+17,'밥은 서울을 즐긴다'
+18,'鲍勃喜欢上海'
 
 - Enterprise
 ID,STRING
