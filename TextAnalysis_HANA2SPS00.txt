@@ -78,6 +78,9 @@ ID,STRING
 17,'밥은 서울을 즐긴다'
 18,'鲍勃喜欢上海'
 
+-- Parent
+Bob likes football, but Deborah likes art.
+
 - Enterprise
 ID,STRING
 21,'Bernard Liautaud co-founded Business Objects in 1990.'
