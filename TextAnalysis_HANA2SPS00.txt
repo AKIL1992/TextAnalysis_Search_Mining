@@ -60,11 +60,10 @@ CONFIGURATION 'mytextproj.mytexthdbmod::text_test_textconfig'
 LANGUAGE DETECTION ('EN')
 TEXT ANALYSIS ON
 
-#################################
-# Text Analysis Run Batch Tests #
-#################################
+#####################################
+# Extraction VOC (using Batch Test) #
+#####################################
 
-- Extraction VOC (using Batch Test)
 ID,STRING
 11,'Bob hates working at SAP. Bob likes New York.'
 12,'Bob likes football\, but Deborah likes art.'
@@ -73,31 +72,65 @@ ID,STRING
 15,'Please contact Joe at hanaacademy@sap.com'
 16,'You idiot !'
 
-- Multi-lingual VOC  (using TA Index)
+#########################################
+# import ta delivery unit for languages #
+#########################################
+
+Give SYSTEM sap.hana.xs.lm.roles::Administrator role
+Give SYSTEM sap.hana.ide.roles::Developer role
+
+sudo su -
+find / -name '*HANA_TA_VOC*'
+find / -name 'hdbalm.sh'
+
+su - hxeadm
+cd /hana/shared/SHA/hdbclient/
+./hdbalm
+./hdbalm -h localhost -u SYSTEM -p 8090 du list
+./hdbalm -h localhost -u SYSTEM -p 8090 import /hana/shared/SHA/global/hdb/content/HANA_TA_VOC.tgz
+./hdbalm -h localhost -u SYSTEM -p 8090 du list
+./hdbalm -h localhost -u SYSTEM -p 8090 du undeploy HANA_TA_VOC sap.com
+
+#######################################
+# Multi-lingual VOC  (using TA Index) #
+#######################################
+
 ID,STRING
 17,'ボブは  東京  を楽しんで'
 18,'밥은 서울을 즐긴다'
 19,'鲍勃喜欢上海'
 
-- Enterprise (using Batch Test)
+#################################
+# Enterprise (using Batch Test) #
+#################################
+
 ID,STRING
 21,'Bernard Liautaud co-founded Business Objects in 1990.'
 22,'Business Objects introduces WebI thin client in 1997'
 23,'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.'
 24,'SAP AG releases SAP HANA SPS09 in 2014.'
 
-- Public Sector (using Batch Test)
+####################################
+# Public Sector (using Batch Test) #
+####################################
+
 ID,STRING
 31,'Tahir Hussain Babar aka Bob is a SAP employee.'
 32,'Bob is a large 6 ft tall English man.'
 33,'Bob travelled to Berlin.'
 34,'Bob is 3500 miles west of Manchester.'
 
-- Grammatical Role Analysis (using TA Index)
+##############################################
+# Grammatical Role Analysis (using TA Index) #
+##############################################
+
 ID,STRING
 41,'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.'
 
-- Linguistic Analysis (using TA Index)
+########################################
+# Linguistic Analysis (using TA Index) #
+########################################
+
 ID,STRING
 51,'Bob used to live just off Kantstraße in Berlin'
 52,'Bobs loves Herrenhäuser Gärten in Hannover'
@@ -263,219 +296,4 @@ ON "mytextproj.mytexthdbmod::text_test" ("STRING")
 TEXT ANALYSIS ON 
 CONFIGURATION 'expanded_config';
 
-#########################################
-# import ta delivery unit for languages #
-#########################################
 
-DROP SCHEMA DUTEST CASCADE;
-CREATE SCHEMA DUTEST;
-
-DROP TABLE DUTEST.DUTEST CASCADE;
-CREATE COLUMN TABLE DUTEST.DUTEST
-(
-ID INTEGER PRIMARY KEY, 
-STRING nvarchar(200)
-);
-
-INSERT INTO DUTEST.DUTEST VALUES (1, 'Bob used the product with a smile.');
-INSERT INTO DUTEST.DUTEST VALUES (2, 'Bob used the product with a grin.');
-
-DROP FULLTEXT INDEX "$TA_MYINDEX";
-CREATE FULLTEXT INDEX myindex ON DUTEST.DUTEST ("STRING")
--- CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER'
-CONFIGURATION 'EXTRACTION_CORE_VOICEOFCUSTOMER_BOB'
-TEXT ANALYSIS ON;
-
-SELECT * FROM DUTEST."$TA_MYINDEX" ORDER BY ID, TA_COUNTER ASC;
-
-Give SYSTEM sap.hana.xs.lm.roles::Administrator role
-Give SYSTEM sap.hana.ide.roles::Developer role
-
-sudo su -
-find / -name '*HANA_TA_VOC*'
-find / -name 'hdbalm.sh'
-
-su - shaadm
-cd /hana/shared/SHA/hdbclient/
-./hdbalm
-./hdbalm -h localhost -u SYSTEM -p 8000 du list
-./hdbalm -h localhost -u SYSTEM -p 8000 import /hana/shared/SHA/global/hdb/content/HANA_TA_VOC.tgz
-./hdbalm -h localhost -u SYSTEM -p 8000 du list
-./hdbalm -h localhost -u SYSTEM -p 8000 du undeploy HANA_TA_VOC sap.com
-
-SELECT * FROM "SYS"."TEXT_CONFIGURATIONS";
-
-CALL TEXT_CONFIGURATION_CLEAR('DUTEST');
-
-CALL TEXT_CONFIGURATION_DROP
-('DUTEST', 'EXTRACTION_CORE_VOICEOFCUSTOMER_BOB', 'hdbtextconfig');
-# ('<schema_name>','<name>','hdbtextdict','<dictionary>');
-
-CALL TEXT_CONFIGURATION_CREATE('DUTEST', 'EXTRACTION_CORE_VOICEOFCUSTOMER_BOB', 'hdbtextconfig', '<?xml version="1.0" encoding="utf-8" ?>
-<!-- Standard text analysis configuration for comprehensive linguistic analysis
-     plus sentiment analysis ("voice of the customer" extractions).
--->
-<tasdk-configuration xmlns="http://www.sap.com/ta/config/4.0">
-
-  <configuration name="SAP.TextAnalysis.AnalysisModel.AggregateAnalyzer.Aggregator">
-  
-    <!-- Specify sequence of text analysis steps to perform.
-    
-         Generally speaking, the only change that customers should make to this
-         list is to include or exclude the ExtractionAnalyzer step.
-    -->
-    <property name="Analyzers" type="string-list">
-      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC</string-list-value>
-      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA</string-list-value>
-      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX</string-list-value>
-      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.Extraction.ExtractionAnalyzer.TF</string-list-value>
-    </property>
-    
-  </configuration>
-
-  <!-- Do not modify or remove. This section must appear exactly as described in the
-       HANA Developer Guide.
-  -->
-  <configuration name="CommonSettings" />
-
-  <!-- Do not modify or remove. This section must appear exactly as described in the
-       HANA Developer Guide.
-  -->
-  <configuration name="SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC" based-on="CommonSettings" />
-  
-  <!-- Do not remove. This section must be present as described in the HANA Developer Guide. -->
-  <configuration name="SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA" based-on="CommonSettings">
-  
-    <!-- Minimum input length (in code units) for which automatic language identification
-         will be attempted. (The default language will be assigned to shorter inputs.)
-    -->
-    <property name="MinimumInputLength" type="integer">
-      <integer-value>30</integer-value>
-    </property>
-
-    <!-- Size (in code units) of the input sample used for language identification. -->
-    <property name="EvaluationSampleSize" type="integer">
-        <integer-value>300</integer-value>
-    </property>
-
-    <!-- Minimum confidence level required to accept the result of automatic language
-         detection. (Failing that, the default language will be used.)
-         Values must be in the range from 0 to 100.
-    -->
-    <property name="MinimumConfidence" type="integer">
-        <integer-value>50</integer-value>
-    </property>
-
-  </configuration>
-
-  <!-- Do not remove. This section must be present as described in the HANA Developer Guide. -->
-  <configuration name="SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX" based-on="CommonSettings">
-
-    <!-- Determine the stems (base forms) for each token?  (default is true) -->
-    <property name="GetTokenStem" type="boolean">
-      <boolean-value>true</boolean-value>
-    </property>
-
-    <!-- Guess stems for tokens not found in a lexicon?  (default is false) -->
-    <property name="EnableStemGuesser" type="boolean">
-      <boolean-value>false</boolean-value>
-    </property>
-
-    <!-- Determine the part of speech for each token?  (default is true) -->
-    <property name="GetTokenPartOfSpeech" type="boolean">
-      <boolean-value>true</boolean-value>
-    </property>
-
-    <!-- Disambiguate the part of speech for each token? (default is true) -->
-    <property name="DisambiguatePartOfSpeech" type="boolean">
-      <boolean-value>true</boolean-value>
-    </property>
-
-    <!-- Disambiguate the stem for each token? (default is false) -->
-    <property name="DisambiguateStem" type="boolean">
-      <boolean-value>true</boolean-value>
-    </property>
-
-    <!-- Use custom linguistic dictionaries?  (default is false) -->
-    <property name="EnableCustomDictionaries" type="boolean">
-      <boolean-value>true</boolean-value>
-    </property>
-
-    <!-- Determine whether stemming is standard or expanded? (default is std) -->
-    <property name="VariantString" type="string">
-      <string-value>expanded</string-value>
-    </property>
-
-  </configuration>
-
-  <!-- Configuration settings for entity and relationship extraction. Refer to the
-      HANA Developer Guide for more details.
-  -->
-  <configuration name="SAP.TextAnalysis.DocumentAnalysis.Extraction.ExtractionAnalyzer.TF" based-on="CommonSettings">
-
-    <!-- List of Text Analysis extraction rules for Sentiment Analysis.
-         (This setting is currently for internal SAP use only.)
-    -->
-    <property name="ExtractionRules" type="string-list">
-      <string-list-value>dutch-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>dutch-tf-voc-profanity.fsm</string-list-value>
-      <string-list-value>english-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>english-tf-voc-request.fsm</string-list-value>
-      <string-list-value>english-tf-voc-sentiment.fsm</string-list-value>
-      <string-list-value>french-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>french-tf-voc-request.fsm</string-list-value>
-      <string-list-value>french-tf-voc-sentiment.fsm</string-list-value>
-      <string-list-value>german-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>german-tf-voc-request.fsm</string-list-value>
-      <string-list-value>german-tf-voc-sentiment.fsm</string-list-value>
-      <string-list-value>italian-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>italian-tf-voc-request.fsm</string-list-value>
-      <string-list-value>italian-tf-voc-sentiment.fsm</string-list-value>
-      <string-list-value>portuguese-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>portuguese-tf-voc-request.fsm</string-list-value>
-      <string-list-value>portuguese-tf-voc-sentiment.fsm</string-list-value>
-      <string-list-value>russian-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>russian-tf-voc-request.fsm</string-list-value>
-      <string-list-value>russian-tf-voc-sentiment.fsm</string-list-value>
-      <string-list-value>spanish-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>spanish-tf-voc-request.fsm</string-list-value>
-      <string-list-value>spanish-tf-voc-sentiment.fsm</string-list-value>
-      <string-list-value>chinese-tf-voc-emoticon.fsm</string-list-value>
-      <string-list-value>chinese-tf-voc-request.fsm</string-list-value>
-      <string-list-value>chinese-tf-voc-sentiment.fsm</string-list-value>
-    </property>
-    
-    <!-- List of Text Analysis extraction dictionaries for Sentiment Analysis. -->
-    <property name="Dictionaries" type="string-list">
-      <string-list-value>dutch-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>dutch-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>english-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>english-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>french-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>french-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>german-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>german-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>italian-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>italian-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>portuguese-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>portuguese-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>russian-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>russian-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>spanish-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>spanish-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>chinese-tf-voc-AmbigProfanity.nc</string-list-value>
-      <string-list-value>chinese-tf-voc-UnambigProfanity.nc</string-list-value>
-      <string-list-value>english-tf-voc-thesaurus.nc</string-list-value>
-      <string-list-value>french-tf-voc-thesaurus.nc</string-list-value>
-      <string-list-value>german-tf-voc-thesaurus.nc</string-list-value>
-      <string-list-value>italian-tf-voc-thesaurus.nc</string-list-value>
-      <string-list-value>portuguese-tf-voc-thesaurus.nc</string-list-value>
-      <string-list-value>russian-tf-voc-thesaurus.nc</string-list-value>
-      <string-list-value>spanish-tf-voc-thesaurus.nc</string-list-value>
-    </property>
-  </configuration>
- 
-</tasdk-configuration>
-');
-
--- search for "WPS@Noun"
