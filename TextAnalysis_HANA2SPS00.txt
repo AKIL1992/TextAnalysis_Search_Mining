@@ -94,9 +94,11 @@ ID,STRING
 34,'Bob is 3500 miles west of Manchester.'
 
 - Grammatical Role Analysis (using TA Index)
+ID,STRING
 40,'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.'
 
 - Linguistic Analysis (using TA Index)
+ID,STRING
 50,'Bob used to live just off Kantstraße in Berlin'
 51,'Bobs loves Herrenhäuser Gärten in Hannover'
 
