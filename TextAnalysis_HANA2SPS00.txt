@@ -98,6 +98,24 @@ ID,STRING
 - Grammatical Role Analysis
 40,'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.'
 
+######################
+## TA_TYPE_EXPANDED ##
+######################
+
+ID,STRING
+1,'Bob hates running.'
+2,'Bob never runs.'
+3,'Bob cannot run anyway.'
+4,'It is impossible that Bob ran away.'
+
+- paste code from below into a linguistic configuration ...
+
+  <configuration name="PreProcessor">
+    <property name="OutputExpandedTypes" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+   </configuration>
+
 ################
 # .hdbtextdict #
 ################
@@ -188,24 +206,6 @@ PLAINTEXT => ?
 );
 
 CONFIGURATION=>'EXTRACTION_CORE_VOICEOFCUSTOMER',
-
-######################
-## TA_TYPE_EXPANDED ##
-######################
-
-ID,STRING
-1,'Bob hates running.'
-2,'Bob never runs.'
-3,'Bob cannot run anyway.'
-4,'It is impossible that Bob ran away.'
-
-- paste code from below into a linguistic configuration ...
-
-  <configuration name="PreProcessor">
-    <property name="OutputExpandedTypes" type="boolean">
-      <boolean-value>true</boolean-value>
-    </property>
-   </configuration>
 
 -----------------------------------
 - SQL Example of TA_TYPE_EXPANDED -
