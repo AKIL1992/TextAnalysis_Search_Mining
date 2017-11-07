@@ -193,78 +193,23 @@ CONFIGURATION=>'EXTRACTION_CORE_VOICEOFCUSTOMER',
 ## TA_TYPE_EXPANDED ##
 ######################
 
-- text_test.hdbtable #
-
-COLUMN TABLE "mytextproj.mytexthdbmod::text_test" 
-(
-   "ID" INTEGER, 
-   "STRING" VARCHAR(200),
-   PRIMARY KEY ("ID") 
-)
-
-- text_test_data.csv #
-
 ID,STRING
 1,'Bob hates running.'
 2,'Bob never runs.'
 3,'Bob cannot run anyway.'
 4,'It is impossible that Bob ran away.'
 
-- text_test_data.hdbtabledata #
+- paste code from below into a linguistic configuration ...
 
-{
-    "format_version": 1,
-    "imports": [
-        {
-            "target_table": "mytextproj.mytexthdbmod::text_test",
-            "source_data": {
-                "data_type": "CSV",
-                "file_name": "mytextproj.mytexthdbmod::text_test_data.csv",
-                "has_header": true
-            },
-            "import_settings": {
-                "import_columns": [
-                    "ID",
-                    "STRING"
-                ]
-            }
-        }
-    ]
-}
-
-- text_test_textconfig.hdbtextconfig #
-Paste from below ...
-
-<?xml version="1.0" encoding="utf-8" ?>
-<tasdk-configuration xmlns="http://www.sap.com/ta/config/4.0">
   <configuration name="PreProcessor">
     <property name="OutputExpandedTypes" type="boolean">
       <boolean-value>true</boolean-value>
     </property>
    </configuration>
-   <configuration name="SAP.TextAnalysis.AnalysisModel.AggregateAnalyzer.Aggregator">
-    <property name="Analyzers" type="string-list">
-      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC</string-list-value>
-      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA</string-list-value>
-      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX</string-list-value>
-    </property>
-  </configuration>
-  <configuration name="CommonSettings" />
-  <configuration name="SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC" based-on="CommonSettings" />
-  <configuration name="SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA" based-on="CommonSettings" />
-  <configuration name="SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX" based-on="CommonSettings" />
-</tasdk-configuration>
 
-- text_test_fti.hdbfulltextindex #
-FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
-ON "mytextproj.mytexthdbmod::text_test" ("STRING")
-CONFIGURATION 'mytextproj.mytexthdbmod::text_test_textconfig'
-LANGUAGE DETECTION ('EN')
-TEXT ANALYSIS ON
-
-------
-- OR -
-------
+-----------------------------------
+- SQL Example of TA_TYPE_EXPANDED -
+-----------------------------------
 
 CREATE SCHEMA EXPANDED_TEST;
  
