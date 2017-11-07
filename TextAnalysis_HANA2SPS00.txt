@@ -96,6 +96,10 @@ ID,STRING
 - Grammatical Role Analysis (using TA Index)
 40,'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.'
 
+- Linguistic Analysis (using TA Index)
+50,'Bob used to live just off Kantstraße in Berlin'
+51,'Bobs loves Herrenhäuser Gärten in Hannover'
+
 ######################
 ## TA_TYPE_EXPANDED ##
 ######################
