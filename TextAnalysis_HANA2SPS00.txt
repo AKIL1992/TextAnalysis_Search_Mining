@@ -89,6 +89,9 @@ ID,STRING
 33,'Bob travelled to Berlin.'
 34,'Bob is 3500 miles west of Manchester.'
 
+- Grammatical Role Analysis
+40,'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.'
+
 ################
 # .hdbtextdict #
 ################
