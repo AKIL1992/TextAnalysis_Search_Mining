@@ -237,7 +237,7 @@ CALL TEXT_CONFIGURATION_DROP
 ('EXPANDED_TEST', 'expanded_config', 'hdbtextconfig');
 # ('<schema_name>','<name>','hdbtextdict','<dictionary>');
 
-CALL TEXT_CONFIGURATION_CREATE('EXPANDED_TEST', 'expanded_config', 'hdbtextconfig', '<?xml version="1.0" encoding="utf-8" ?>
+CALL TEXT_CONFIGURATION_CREATE('MYTEXTPROJ_HDI_CONTAINER_2_1', 'expanded_config', 'hdbtextconfig', '<?xml version="1.0" encoding="utf-8" ?>
                                     <tasdk-configuration xmlns="http://www.sap.com/ta/config/4.0">
                                         <configuration name="PreProcessor">
                                             <property name="OutputExpandedTypes" type="boolean">
