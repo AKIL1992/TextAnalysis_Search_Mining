@@ -76,13 +76,16 @@ ID,STRING
 # import ta delivery unit for languages #
 #########################################
 
+sudo su -
+find / -name '*HANA_TA_VOC*'
+/hana/shared/HXE/global/hdb/content/HANA_TA_VOC.tgz
+
+http://hxehost:8090/sap/hana/xs/ide/
+
 Give SYSTEM sap.hana.xs.lm.roles::Administrator role
 Give SYSTEM sap.hana.ide.roles::Developer role
 
-sudo su -
-find / -name '*HANA_TA_VOC*'
-
-/hana/shared/HXE/global/hdb/content/HANA_TA_VOC.tgz
+http://hxehost:8090/sap/hana/xs/lm/
 
 == OR ==
 
