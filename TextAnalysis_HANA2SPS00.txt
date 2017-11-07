@@ -81,7 +81,10 @@ Give SYSTEM sap.hana.ide.roles::Developer role
 
 sudo su -
 find / -name '*HANA_TA_VOC*'
-find / -name 'hdbalm.sh'
+
+/hana/shared/HXE/global/hdb/content/HANA_TA_VOC.tgz
+
+== OR ==
 
 su - hxeadm
 cd /hana/shared/SHA/hdbclient/
