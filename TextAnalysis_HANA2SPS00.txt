@@ -83,6 +83,14 @@ ID,STRING
 18,'밥은 서울을 즐긴다'
 19,'鲍勃喜欢上海'
 
+FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
+ON "mytextproj.mytexthdbmod::text_test" ("STRING")
+CONFIGURATION 'mytextproj.mytexthdbmod::voc'
+LANGUAGE DETECTION ('JA')
+-- LANGUAGE DETECTION ('KO')
+-- LANGUAGE DETECTION ('ZH')
+TEXT ANALYSIS ON
+
 #################################
 # Enterprise (using Batch Test) #
 #################################
