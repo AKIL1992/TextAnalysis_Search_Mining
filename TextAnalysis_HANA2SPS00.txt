@@ -101,6 +101,8 @@ cd /hana/shared/SHA/hdbclient/
 # Multi-lingual VOC  (using TA Index) #
 #######################################
 
+select * from SYS.M_TEXT_ANALYSIS_LANGUAGES
+
 ID,STRING
 17,'ボブは  東京  を楽しんで'
 18,'밥은 서울을 즐긴다'
