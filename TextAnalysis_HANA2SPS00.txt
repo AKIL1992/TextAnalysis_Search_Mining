@@ -72,31 +72,6 @@ ID,STRING
 15,'Please contact Joe at hanaacademy@sap.com'
 16,'You idiot !'
 
-#########################################
-# import ta delivery unit for languages #
-#########################################
-
-sudo su -
-find / -name '*HANA_TA_VOC*'
-/hana/shared/HXE/global/hdb/content/HANA_TA_VOC.tgz
-
-http://hxehost:8090/sap/hana/xs/ide/
-
-Give SYSTEM sap.hana.xs.lm.roles::Administrator role
-Give SYSTEM sap.hana.ide.roles::Developer role
-
-http://hxehost:8090/sap/hana/xs/lm/
-
-== OR ==
-
-su - hxeadm
-cd /hana/shared/SHA/hdbclient/
-./hdbalm
-./hdbalm -h localhost -u SYSTEM -p 8090 du list
-./hdbalm -h localhost -u SYSTEM -p 8090 import /hana/shared/SHA/global/hdb/content/HANA_TA_VOC.tgz
-./hdbalm -h localhost -u SYSTEM -p 8090 du list
-./hdbalm -h localhost -u SYSTEM -p 8090 du undeploy HANA_TA_VOC sap.com
-
 #######################################
 # Multi-lingual VOC  (using TA Index) #
 #######################################
@@ -304,4 +279,27 @@ ON "mytextproj.mytexthdbmod::text_test" ("STRING")
 TEXT ANALYSIS ON 
 CONFIGURATION 'expanded_config';
 
+#########################################
+# import ta delivery unit for languages #
+#########################################
 
+sudo su -
+find / -name '*HANA_TA_VOC*'
+/hana/shared/HXE/global/hdb/content/HANA_TA_VOC.tgz
+
+http://hxehost:8090/sap/hana/xs/ide/
+
+Give SYSTEM sap.hana.xs.lm.roles::Administrator role
+Give SYSTEM sap.hana.ide.roles::Developer role
+
+http://hxehost:8090/sap/hana/xs/lm/
+
+== OR ==
+
+su - hxeadm
+cd /hana/shared/SHA/hdbclient/
+./hdbalm
+./hdbalm -h localhost -u SYSTEM -p 8090 du list
+./hdbalm -h localhost -u SYSTEM -p 8090 import /hana/shared/SHA/global/hdb/content/HANA_TA_VOC.tgz
+./hdbalm -h localhost -u SYSTEM -p 8090 du list
+./hdbalm -h localhost -u SYSTEM -p 8090 du undeploy HANA_TA_VOC sap.com
