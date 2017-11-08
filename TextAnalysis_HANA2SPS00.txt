@@ -18,7 +18,7 @@ COLUMN TABLE "mytextproj.mytexthdbmod::text_test"
 ######################
 
 ID,STRING
-1,'Bob really enjoys working at SAP'
+1,Bob really enjoys working at SAP
 
 ###############################
 # text_test_data.hdbtabledata #
@@ -65,12 +65,12 @@ TEXT ANALYSIS ON
 #####################################
 
 ID,STRING
-11,'Bob hates working at SAP. Bob likes New York.'
-12,'Bob likes football\, but Deborah likes art.'
-13,'That part of the product in Oracle doesn't work.'
-14,'Bob hasst den FC Bayern München.'
-15,'Please contact Joe at hanaacademy@sap.com'
-16,'You idiot !'
+11,Bob hates working at SAP. Bob likes New York.
+12,Bob likes football\, but Deborah likes art.
+13,That part of the product in Oracle doesnt work.
+14,Bob hasst den FC Bayern München.
+15,Please contact Joe at hanaacademy@sap.com
+16,You idiot !
 
 #######################################
 # Multi-lingual VOC  (using TA Index) #
@@ -130,45 +130,45 @@ ID,STRING,LANG
 #################################
 
 ID,STRING
-21,'Bernard Liautaud co-founded Business Objects in 1990.'
-22,'Business Objects introduces WebI thin client in 1997'
-23,'SAP AG announced that it would acquire Business Objects for $6.8B in 2007.'
-24,'SAP AG releases SAP HANA SPS09 in 2014.'
+21,Bernard Liautaud co-founded Business Objects in 1990.
+22,Business Objects introduces WebI thin client in 1997
+23,SAP AG announced that it would acquire Business Objects for $6.8B in 2007.
+24,SAP AG releases SAP HANA SPS09 in 2014.
 
 ####################################
 # Public Sector (using Batch Test) #
 ####################################
 
 ID,STRING
-31,'Tahir Hussain Babar aka Bob is a SAP employee.'
-32,'Bob is a large 6 ft tall English man.'
-33,'Bob travelled to Berlin.'
-34,'Bob is 3500 miles west of Manchester.'
+31,Tahir Hussain Babar aka Bob is a SAP employee.
+32,Bob is a large 6 ft tall English man.
+33,Bob travelled to Berlin.
+34,Bob is 3500 miles west of Manchester.
 
 ##############################################
 # Grammatical Role Analysis (using TA Index) #
 ##############################################
 
 ID,STRING
-41,'Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.'
+41,Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.
 
 ########################################
 # Linguistic Analysis (using TA Index) #
 ########################################
 
 ID,STRING
-51,'Bob used to live just off Kantstraße in Berlin'
-52,'Bobs loves Herrenhäuser Gärten in Hannover'
+51,Bob used to live just off Kantstraße in Berlin
+52,Bobs loves Herrenhäuser Gärten in Hannover
 
 ######################
 ## TA_TYPE_EXPANDED ##
 ######################
 
 ID,STRING
-61,'Bob hates running.'
-62,'Bob never runs.'
-63,'Bob cannot run anyway.'
-64,'It is impossible that Bob ran away.'
+61,Bob hates running.
+62,Bob never runs.
+63,Bob cannot run anyway.
+64,It is impossible that Bob ran away.
 
 - paste code from below into a linguistic configuration under header ...
 
@@ -204,10 +204,10 @@ ID,STRING
 </entity_category></dictionary>
 
 ID,STRING
-101,'The Shining'
-102,'The Benny Hill Show'
-103,'The Complete Benny Hill'
-104,'AB-654327'
+101,The Shining
+102,The Benny Hill Show
+103,The Complete Benny Hill
+104,AB-654327
 
 ##################
 ## .hdbtextrule ##
@@ -217,8 +217,8 @@ ID,STRING
 #group PartRequest: <STEM:ask|send> <>*? [TE PART_NUMBER] <>+ [/TE]
 
 ID,STRING
-111,'Please send part AB-654327'
-112,'Can you ask about part AB-654327'
+111,Please send part AB-654327
+112,Can you ask about part AB-654327
 
 -- anotherrulesrequest.hdbtextrule --
 -- Rules to identify credit card numbers -- including the card company --
@@ -226,10 +226,10 @@ ID,STRING
 #group CREDIT_CARD@AMERICAN_EXPRESS: <3[47][0-9]{13,13}>
 
 ID,STRING
-121,'371449635398431'
-122,'343434343434343'
-123,'371144371144376'
-124,'676265444256762'
+121,371449635398431
+122,343434343434343
+123,371144371144376
+124,676265444256762
 
 -- yetanotherrulesrequest.hdbtextrule --
 -- The extraction process picks this label up as the entity name for the string that is output --
@@ -237,18 +237,18 @@ ID,STRING
 #group Name: <Sir|Mr|Mister> [OD LastName] <POS: Prop> [/OD]
 
 ID,STRING
-131,'Mister Clooney'
-132,'Sir Beckham'
+131,Mister Clooney
+132,Sir Beckham
 
 -- finalrulesrequest.hdbtextrule --
 -- Matches any entity of type PERSON with Bush, Clinton, Obama & Trump as its last element -- S
 #group President: [TE PERSON] < >* <Bush|Clinton|Obama|Trump> [/TE]
 
 ID,STRING
-141,'George Bush'
-142,'D. Trump'
-143,'Don Trump'
-144,'Madman Trump'
+141,George Bush
+142,D. Trump
+143,Don Trump
+144,Madman Trump
 
 ################
 ## TA_ANALYZE ##
