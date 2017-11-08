@@ -85,7 +85,7 @@ COLUMN TABLE "mytextproj.mytexthdbmod::text_test"
 (
    "ID" INTEGER, 
    "STRING" VARCHAR(200),
-   "LANG" VARCHAR(20),
+   "LANG" VARCHAR(2),
    PRIMARY KEY ("ID") 
 )
 
