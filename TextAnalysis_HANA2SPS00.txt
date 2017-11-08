@@ -78,18 +78,52 @@ ID,STRING
 
 select * from SYS.M_TEXT_ANALYSIS_LANGUAGES
 
-ID,STRING
-17,'ボブは  東京  を楽しんで'
-18,'밥은 서울을 즐긴다'
-19,'鲍勃喜欢上海'
+https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
+-- text_test_data.hdbtable
+COLUMN TABLE "mytextproj.mytexthdbmod::text_test" 
+(
+   "ID" INTEGER, 
+   "STRING" VARCHAR(200),
+   "LANG" VARCHAR(20),
+   PRIMARY KEY ("ID") 
+)
+
+-- text_test_fti.hdbfulltextindex
 FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
 ON "mytextproj.mytexthdbmod::text_test" ("STRING")
-CONFIGURATION 'mytextproj.mytexthdbmod::voc'
-LANGUAGE DETECTION ('JA')
--- LANGUAGE DETECTION ('KO')
--- LANGUAGE DETECTION ('ZH')
+CONFIGURATION 'mytextproj.mytexthdbmod::voc2'
+LANGUAGE COLUMN "LANG"
 TEXT ANALYSIS ON
+
+-- text_test_data.csv
+ID,STRING,LANG
+17,Ο Μπομπ αγαπά τη Μάντσεστερ Γιουνάιτε,el
+18,بوب يحب مانشستر يونايتد,ar
+19,鮑勃喜歡曼聯,zh
+20,บ๊อบรักแมนฯ ยูไนเต็ด,th
+
+-- text_test_data.hdbtabledata
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "mytextproj.mytexthdbmod::text_test",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "mytextproj.mytexthdbmod::text_test_data.csv",
+                "has_header": true
+            },
+            "import_settings": {
+                "import_columns": [
+                    "ID",
+                    "STRING",
+                    "LANG"
+                ]
+            }
+        }
+    ]
+}
 
 #################################
 # Enterprise (using Batch Test) #
