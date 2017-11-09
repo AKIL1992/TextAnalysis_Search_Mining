@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary xmlns="http://www.sap.com/ta/4.0">
+<entity_category name="MOVIES">
+  <entity_name standard_form="The Shining" />
+  <entity_name standard_form="Its a Wonderful Life" />
+  <entity_name standard_form="Clockwork Orange" />
+</entity_category>
+<entity_category name="TV_SHOWS">
+  <entity_name standard_form="The Love Boat" />
+  <entity_name standard_form="The Benny Hill Show">
+    <variant name ="The Complete Benny Hill"/>
+    <variant name ="The Best of Benny Hill"/>
+    </entity_name>
+</entity_category>
+<entity_category name="PART_NUMBER">
+  <entity_name standard_form="AB-654327" />
+  <entity_name standard_form="AH-9876380" />
+  <entity_name standard_form="ZD-8765-987" />
+</entity_category>
+</dictionary>

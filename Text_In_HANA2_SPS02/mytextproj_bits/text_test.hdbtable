@@ -1,0 +1,6 @@
+COLUMN TABLE "mytextproj.mytexthdbmod::text_test" 
+(
+   "ID" INTEGER, 
+   "STRING" VARCHAR(200),
+   PRIMARY KEY ("ID") 
+)

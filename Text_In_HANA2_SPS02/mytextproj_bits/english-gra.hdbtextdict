@@ -1,0 +1,1965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--(c) Copyright 2015 SAP AG. All rights reserved.
+
+SAP and the SAP logo are registered trademarks of SAP AG in Germany and other countries. Business Objects and the Business Objects logo are registered trademarks of Business Objects S.A., which is an SAP company.
+-->
+<dictionary xmlns="http://www.sap.com/ta/4.0">
+
+  <entity_category name="MWT_ADV">
+    <entity_name standard_form="at least">
+    </entity_name>
+    <entity_name standard_form="at most">
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="MWT_CONJ_COORD">
+    <!-- positive -->
+    <entity_name standard_form="as well as">
+    </entity_name>
+    <entity_name standard_form="not to mention">
+    </entity_name>
+    <entity_name standard_form="but also">
+    </entity_name>
+    <entity_name standard_form="but not">
+    </entity_name>
+    <!-- negative -->
+    <entity_name standard_form="instead of">
+    </entity_name>
+    <entity_name standard_form="rather than">
+    </entity_name>
+    <entity_name standard_form="but rather">
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="MWT_DET_INDEF">
+    <entity_name standard_form="such a">
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="MWT_PREP">
+    <!-- two-word preps -->
+    <entity_name standard_form="according to">
+    </entity_name>
+    <entity_name standard_form="across from">
+    </entity_name>
+    <entity_name standard_form="ahead of">
+    </entity_name>
+    <entity_name standard_form="as per">
+    </entity_name>
+    <entity_name standard_form="along with">
+    </entity_name>
+    <entity_name standard_form="alongside of">
+    </entity_name>
+    <entity_name standard_form="apart from">
+    </entity_name>
+    <entity_name standard_form="as for">
+    </entity_name>
+    <entity_name standard_form="as from">
+    </entity_name>
+    <entity_name standard_form="as of">
+    </entity_name>
+    <entity_name standard_form="as per">
+    </entity_name>
+    <entity_name standard_form="as to">
+    </entity_name>
+    <entity_name standard_form="aside from">
+    </entity_name>
+    <entity_name standard_form="away from">
+    </entity_name>
+    <entity_name standard_form="based on">
+    </entity_name>
+    <entity_name standard_form="because of">
+    </entity_name>
+    <entity_name standard_form="close by">
+    </entity_name>
+    <entity_name standard_form="close to">
+    </entity_name>
+    <entity_name standard_form="contraty to">
+    </entity_name>
+    <entity_name standard_form="compared to">
+    </entity_name>
+    <entity_name standard_form="compared with">
+    </entity_name>
+    <entity_name standard_form="due to">
+    </entity_name>
+    <entity_name standard_form="depending on">
+    </entity_name>
+    <entity_name standard_form="except for">
+    </entity_name>
+    <entity_name standard_form="exclusive of">
+    </entity_name>
+    <entity_name standard_form="contrary to">
+    </entity_name>
+    <entity_name standard_form="followed by">
+    </entity_name>
+    <entity_name standard_form="inside of">
+    </entity_name>
+    <entity_name standard_form="instead of">
+    </entity_name>
+    <entity_name standard_form="irrespective of">
+    </entity_name>
+    <entity_name standard_form="next to">
+    </entity_name>
+    <entity_name standard_form="near to">
+    </entity_name>
+    <entity_name standard_form="off of">
+    </entity_name>
+    <entity_name standard_form="out of">
+    </entity_name>
+    <entity_name standard_form="outside of">
+    </entity_name>
+    <entity_name standard_form="owing to">
+    </entity_name>
+    <entity_name standard_form="preliminary to">
+    </entity_name>
+    <entity_name standard_form="preparatory to">
+    </entity_name>
+    <entity_name standard_form="previous to">
+    </entity_name>
+    <entity_name standard_form="prior to">
+    </entity_name>
+    <entity_name standard_form="pursuant to">
+    </entity_name>
+    <entity_name standard_form="regardless of">
+    </entity_name>
+    <entity_name standard_form="subsequent to">
+    </entity_name>
+    <entity_name standard_form="such as">
+    </entity_name>
+    <entity_name standard_form="thanks to">
+    </entity_name>
+    <entity_name standard_form="together with">
+    </entity_name>
+    <!-- three-word preps -->
+    <entity_name standard_form="by means of">
+    </entity_name>
+    <entity_name standard_form="in accordance with">
+    </entity_name>
+    <entity_name standard_form="in addition to">
+    </entity_name>
+    <entity_name standard_form="in case of">
+    </entity_name>
+    <entity_name standard_form="in front of">
+    </entity_name>
+    <entity_name standard_form="in lieu of">
+    </entity_name>
+    <entity_name standard_form="in place of">
+    </entity_name>
+    <entity_name standard_form="in spite of">
+    </entity_name>
+    <entity_name standard_form="on account of">
+    </entity_name>
+    <entity_name standard_form="on behalf of">
+    </entity_name>
+    <entity_name standard_form="on top of">
+    </entity_name>
+    <entity_name standard_form="with regard to">
+    </entity_name>
+    <entity_name standard_form="with respect to">
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="MWT_NN_SG">
+    <entity_name standard_form="brand name">
+    </entity_name>
+    <entity_name standard_form="trading halt">
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="MWT_NN_PL">
+    <entity_name standard_form="brand names">
+    </entity_name>
+    <!--
+    <entity_name standard_form="trading halts">
+    </entity_name>
+    -->
+  </entity_category>
+
+  <entity_category name="MWT_PRON_INT">
+    <entity_name standard_form="how many">
+    </entity_name>
+    <entity_name standard_form="how much">
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="MWT_AUX">
+    <entity_name standard_form="gotta">
+      <variant name ="'s gotta"/>
+      <variant name ="'ve gotta"/>
+      <variant name ="got ta"/>
+      <variant name ="'s got ta"/>
+      <variant name ="'ve got ta"/>
+    </entity_name>
+    <entity_name standard_form="got to">
+      <variant name ="'s got to"/>
+      <variant name ="'ve got to"/>
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="MWT_VERB">
+    <entity_name standard_form="act up">
+      <variant name ="acts up"/>
+      <variant name ="acted up"/>
+      <variant name ="acting up"/>
+    </entity_name>
+    <entity_name standard_form="back out">
+      <variant name ="backs out"/>
+      <variant name ="backed out"/>
+      <variant name ="backing out"/>
+    </entity_name>
+    <entity_name standard_form="bad mouth">
+      <variant name ="bad mouths"/>
+      <variant name ="bad mouthed"/>
+      <variant name ="bad mouthing"/>
+    </entity_name>
+    <entity_name standard_form="bear down">
+      <variant name ="bears down"/>
+      <variant name ="bore down"/>
+      <variant name ="bearing down"/>
+      <variant name ="borne down"/>
+    </entity_name>
+    <entity_name standard_form="bear up">
+      <variant name ="bears up"/>
+      <variant name ="bore up"/>
+      <variant name ="bearing up"/>
+      <variant name ="borne up"/>
+    </entity_name>
+    <entity_name standard_form="beat down">
+      <variant name ="beats down"/>
+      <variant name ="beating down"/>
+      <variant name ="beaten down"/>
+    </entity_name>
+    <entity_name standard_form="bench mark">
+      <variant name ="bench marks"/>
+      <variant name ="bench marked"/>
+      <variant name ="bench marking"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="bethink oneself">
+      <variant name ="bethinks oneself"/>
+      <variant name ="bethought oneself"/>
+      <variant name ="bethinking oneself"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="blot out">
+      <variant name ="blots out"/>
+      <variant name ="blotted out"/>
+      <variant name ="blotting out"/>
+    </entity_name>
+    <entity_name standard_form="blow up">
+      <variant name ="blows up"/>
+      <variant name ="blew up"/>
+      <variant name ="blowing up"/>
+      <variant name ="blown up"/>
+    </entity_name>
+    <entity_name standard_form="break up">
+      <variant name ="breaks up"/>
+      <variant name ="broke up"/>
+      <variant name ="breaking up"/>
+      <variant name ="broken up"/>
+    </entity_name>
+    <entity_name standard_form="breast feed">
+      <variant name ="breast feeds"/>
+      <variant name ="breast fed"/>
+      <variant name ="breast feeding"/>
+    </entity_name>
+    <entity_name standard_form="bring about">
+      <variant name ="brings about"/>
+      <variant name ="brought about"/>
+      <variant name ="bringing about"/>
+    </entity_name>
+    <entity_name standard_form="bring forth">
+      <variant name ="brings forth"/>
+      <variant name ="brought forth"/>
+      <variant name ="bringing forth"/>
+    </entity_name>
+    <entity_name standard_form="bring together">
+      <variant name ="brings together"/>
+      <variant name ="brought together"/>
+      <variant name ="bringing together"/>
+    </entity_name>
+    <entity_name standard_form="bring up">
+      <variant name ="brings up"/>
+      <variant name ="brought up"/>
+      <variant name ="bringing up"/>
+    </entity_name>
+    <entity_name standard_form="build up">
+      <variant name ="builds up"/>
+      <variant name ="built up"/>
+      <variant name ="building up"/>
+    </entity_name>
+    <entity_name standard_form="bump off">
+      <variant name ="bumps off"/>
+      <variant name ="bumped off"/>
+      <variant name ="bumping off"/>
+    </entity_name>
+    <entity_name standard_form="butt in">
+      <variant name ="butts in"/>
+      <variant name ="butted in"/>
+      <variant name ="butting in"/>
+    </entity_name>
+    <entity_name standard_form="call off">
+      <variant name ="calls off"/>
+      <variant name ="called off"/>
+      <variant name ="calling off"/>
+    </entity_name>
+    <entity_name standard_form="call up">
+      <variant name ="calls up"/>
+      <variant name ="called up"/>
+      <variant name ="calling up"/>
+    </entity_name>
+    <entity_name standard_form="carry on">
+      <variant name ="carries on"/>
+      <variant name ="carried on"/>
+      <variant name ="carrying on"/>
+    </entity_name>
+    <entity_name standard_form="carry out">
+      <variant name ="carries out"/>
+      <variant name ="carried out"/>
+      <variant name ="carrying out"/>
+    </entity_name>
+    <entity_name standard_form="carry through">
+      <variant name ="carries through"/>
+      <variant name ="carried through"/>
+      <variant name ="carrying through"/>
+    </entity_name>
+    <entity_name standard_form="cast down">
+      <variant name ="casts down"/>
+      <variant name ="casting down"/>
+    </entity_name>
+    <entity_name standard_form="cast off">
+      <variant name ="casts off"/>
+      <variant name ="casting off"/>
+    </entity_name>
+    <entity_name standard_form="catch on">
+      <variant name ="catches on"/>
+      <variant name ="caught on"/>
+      <variant name ="catching on"/>
+    </entity_name>
+    <entity_name standard_form="chalk up">
+      <variant name ="chalks up"/>
+      <variant name ="chalked up"/>
+      <variant name ="chalking up"/>
+    </entity_name>
+    <entity_name standard_form="cheer up">
+      <variant name ="cheers up"/>
+      <variant name ="cheered up"/>
+      <variant name ="cheering up"/>
+    </entity_name>
+    <entity_name standard_form="chew out">
+      <variant name ="chews out"/>
+      <variant name ="chewed out"/>
+      <variant name ="chewing out"/>
+    </entity_name>
+    <entity_name standard_form="clean up">
+      <variant name ="cleans up"/>
+      <variant name ="cleaned up"/>
+      <variant name ="cleaning up"/>
+    </entity_name>
+    <entity_name standard_form="clear off">
+      <variant name ="clears off"/>
+      <variant name ="cleared off"/>
+      <variant name ="clearing off"/>
+    </entity_name>
+    <entity_name standard_form="clear up">
+      <variant name ="clears up"/>
+      <variant name ="cleared up"/>
+      <variant name ="clearing up"/>
+    </entity_name>
+    <entity_name standard_form="come about">
+      <variant name ="comes about"/>
+      <variant name ="came about"/>
+      <variant name ="coming about"/>
+    </entity_name>
+    <entity_name standard_form="come along">
+      <variant name ="comes along"/>
+      <variant name ="came along"/>
+      <variant name ="coming along"/>
+    </entity_name>
+    <entity_name standard_form="come apart">
+      <variant name ="comes apart"/>
+      <variant name ="came apart"/>
+      <variant name ="coming apart"/>
+    </entity_name>
+    <entity_name standard_form="come clean">
+      <variant name ="comes clean"/>
+      <variant name ="came clean"/>
+      <variant name ="coming clean"/>
+    </entity_name>
+    <entity_name standard_form="come forth">
+      <variant name ="comes forth"/>
+      <variant name ="came forth"/>
+      <variant name ="coming forth"/>
+    </entity_name>
+    <entity_name standard_form="come in">
+      <variant name ="comes in"/>
+      <variant name ="came in"/>
+      <variant name ="coming in"/>
+    </entity_name>
+    <entity_name standard_form="come off">
+      <variant name ="comes off"/>
+      <variant name ="came off"/>
+      <variant name ="coming off"/>
+    </entity_name>
+    <entity_name standard_form="come on">
+      <variant name ="comes on"/>
+      <variant name ="came on"/>
+      <variant name ="coming on"/>
+    </entity_name>
+    <entity_name standard_form="come onto">
+      <variant name ="comes onto"/>
+      <variant name ="came onto"/>
+      <variant name ="coming onto"/>
+    </entity_name>
+    <entity_name standard_form="come round">
+      <variant name ="comes round"/>
+      <variant name ="came round"/>
+      <variant name ="coming round"/>
+    </entity_name>
+    <entity_name standard_form="come through">
+      <variant name ="comes through"/>
+      <variant name ="came through"/>
+      <variant name ="coming through"/>
+    </entity_name>
+    <entity_name standard_form="come together">
+      <variant name ="comes together"/>
+      <variant name ="came together"/>
+      <variant name ="coming together"/>
+    </entity_name>
+    <entity_name standard_form="come upon">
+      <variant name ="comes upon"/>
+      <variant name ="came upon"/>
+      <variant name ="coming upon"/>
+    </entity_name>
+    <entity_name standard_form="commit to memory">
+      <variant name ="commits to memory"/>
+      <variant name ="cammitted to memory"/>
+      <variant name ="committing to memory"/>
+    </entity_name>
+    <entity_name standard_form="conjure up">
+      <variant name ="conjures up"/>
+      <variant name ="conjured up"/>
+      <variant name ="conjuring up"/>
+    </entity_name>
+    <entity_name standard_form="cook up">
+      <variant name ="cooks up"/>
+      <variant name ="cooked up"/>
+      <variant name ="cooking up"/>
+    </entity_name>
+    <entity_name standard_form="cover up">
+      <variant name ="covers up"/>
+      <variant name ="covered up"/>
+      <variant name ="covering up"/>
+    </entity_name>
+    <entity_name standard_form="cut off">
+      <variant name ="cuts off"/>
+      <variant name ="cutting off"/>
+    </entity_name>
+    <entity_name standard_form="die down">
+      <variant name ="dies down"/>
+      <variant name ="died down"/>
+      <variant name ="dying down"/>
+    </entity_name>
+    <entity_name standard_form="dish out">
+      <variant name ="dishes out"/>
+      <variant name ="dished out"/>
+      <variant name ="dishing out"/>
+    </entity_name>
+    <entity_name standard_form="drag out">
+      <variant name ="drags out"/>
+      <variant name ="dragged out"/>
+      <variant name ="dragging out"/>
+    </entity_name>
+    <entity_name standard_form="draw down">
+      <variant name ="draws down"/>
+      <variant name ="drew down"/>
+      <variant name ="drawing down"/>
+      <variant name ="drawn down"/>
+    </entity_name>
+    <entity_name standard_form="dress up">
+      <variant name ="dresses up"/>
+      <variant name ="dressed up"/>
+      <variant name ="dressing up"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="drop in">
+      <variant name ="drops in"/>
+      <variant name ="dropped in"/>
+      <variant name ="dropping in"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="drop off">
+      <variant name ="drops off"/>
+      <variant name ="dropped off"/>
+      <variant name ="dropping off"/>
+    </entity_name>
+    <entity_name standard_form="drum up">
+      <variant name ="drums up"/>
+      <variant name ="drummed up"/>
+      <variant name ="drumming up"/>
+    </entity_name>
+    <entity_name standard_form="dry off">
+      <variant name ="dries off"/>
+      <variant name ="dried off"/>
+      <variant name ="drying off"/>
+    </entity_name>
+    <entity_name standard_form="dry out">
+      <variant name ="dries out"/>
+      <variant name ="dried out"/>
+      <variant name ="drying out"/>
+    </entity_name>
+    <entity_name standard_form="dry up">
+      <variant name ="dries up"/>
+      <variant name ="dried up"/>
+      <variant name ="drying up"/>
+    </entity_name>
+    <entity_name standard_form="dwindle down">
+      <variant name ="dwindles down"/>
+      <variant name ="dwindled down"/>
+      <variant name ="dwindling down"/>
+    </entity_name>
+    <entity_name standard_form="end up">
+      <variant name ="ends up"/>
+      <variant name ="ended up"/>
+      <variant name ="ending up"/>
+    </entity_name>
+    <entity_name standard_form="ease off">
+      <variant name ="eases off"/>
+      <variant name ="eased off"/>
+      <variant name ="easesing off"/>
+    </entity_name>
+    <entity_name standard_form="explain away">
+      <variant name ="explains away"/>
+      <variant name ="explained away"/>
+      <variant name ="explaining away"/>
+    </entity_name>
+    <entity_name standard_form="fall apart">
+      <variant name ="falls apart"/>
+      <variant name ="fell apart"/>
+      <variant name ="falling apart"/>
+      <variant name ="fallen apart"/>
+    </entity_name>
+    <entity_name standard_form="fall away">
+      <variant name ="falls away"/>
+      <variant name ="fell away"/>
+      <variant name ="falling away"/>
+      <variant name ="fallen away"/>
+    </entity_name>
+    <entity_name standard_form="fall back">
+      <variant name ="falls back"/>
+      <variant name ="fell back"/>
+      <variant name ="falling back"/>
+      <variant name ="fallen back"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="feel like">
+      <variant name ="feels like"/>
+      <variant name ="felt like"/>
+      <variant name ="feeling like"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="feel out">
+      <variant name ="feels out"/>
+      <variant name ="felt out"/>
+      <variant name ="feeling out"/>
+    </entity_name>
+    <entity_name standard_form="fend off">
+      <variant name ="fends off"/>
+      <variant name ="fended off"/>
+      <variant name ="fending off"/>
+    </entity_name>
+    <entity_name standard_form="fess up">
+      <variant name ="fesses off"/>
+      <variant name ="fessed off"/>
+      <variant name ="fessing off"/>
+    </entity_name>
+    <entity_name standard_form="file suit">
+      <variant name ="files suite"/>
+      <variant name ="filed suite"/>
+      <variant name ="filing suite"/>
+    </entity_name>
+    <entity_name standard_form="fill in">
+      <variant name ="fills in"/>
+      <variant name ="filled in"/>
+      <variant name ="filling in"/>
+    </entity_name>
+    <entity_name standard_form="find out">
+      <variant name ="finds out"/>
+      <variant name ="found out"/>
+      <variant name ="finding out"/>
+    </entity_name>
+    <entity_name standard_form="fine tune">
+      <variant name ="fine tunes"/>
+      <variant name ="fine tuned"/>
+      <variant name ="fine tuning"/>
+    </entity_name>
+    <entity_name standard_form="fire up">
+      <variant name ="fires up"/>
+      <variant name ="fired up"/>
+      <variant name ="firing up"/>
+    </entity_name>
+    <entity_name standard_form="fit in">
+      <variant name ="fits in"/>
+      <variant name ="fitted in"/>
+      <variant name ="fitting in"/>
+    </entity_name>
+    <entity_name standard_form="flare up">
+      <variant name ="flares up"/>
+      <variant name ="flared up"/>
+      <variant name ="flaring up"/>
+    </entity_name>
+    <entity_name standard_form="fold up">
+      <variant name ="folds up"/>
+      <variant name ="folded up"/>
+      <variant name ="folding up"/>
+    </entity_name>
+    <entity_name standard_form="fool around">
+      <variant name ="fools around"/>
+      <variant name ="fooled around"/>
+      <variant name ="fooling around"/>
+    </entity_name>
+    <entity_name standard_form="foul up">
+      <variant name ="folds up"/>
+      <variant name ="folded up"/>
+      <variant name ="folding up"/>
+    </entity_name>
+    <entity_name standard_form="free lance">
+      <variant name ="free lances"/>
+      <variant name ="free lanced"/>
+      <variant name ="free lancing"/>
+    </entity_name>
+    <entity_name standard_form="french fry">
+      <variant name ="french fries"/>
+      <variant name ="french fried"/>
+      <variant name ="french frying"/>
+    </entity_name>
+    <entity_name standard_form="fuck up">
+      <variant name ="fucks up"/>
+      <variant name ="fucked up"/>
+      <variant name ="fucking up"/>
+    </entity_name>
+    <entity_name standard_form="gang together">
+      <variant name ="gangs together"/>
+      <variant name ="ganged together"/>
+      <variant name ="ganging together"/>
+    </entity_name>
+    <entity_name standard_form="gather up">
+      <variant name ="gathers up"/>
+      <variant name ="gathered up"/>
+      <variant name ="gathering up"/>
+    </entity_name>
+    <entity_name standard_form="get ahead">
+      <variant name ="gets ahead"/>
+      <variant name ="got ahead"/>
+      <variant name ="getting ahead"/>
+      <variant name ="gotten ahead"/>
+    </entity_name>
+    <entity_name standard_form="get along">
+      <variant name ="gets along"/>
+      <variant name ="got along"/>
+      <variant name ="getting along"/>
+      <variant name ="gotten along"/>
+    </entity_name>
+    <entity_name standard_form="get away">
+      <variant name ="gets away"/>
+      <variant name ="got away"/>
+      <variant name ="getting away"/>
+      <variant name ="gotten away"/>
+    </entity_name>
+    <entity_name standard_form="get back">
+      <variant name ="gets back"/>
+      <variant name ="got back"/>
+      <variant name ="getting back"/>
+      <variant name ="gotten back"/>
+    </entity_name>
+    <entity_name standard_form="get by">
+      <variant name ="gets by"/>
+      <variant name ="got by"/>
+      <variant name ="getting by"/>
+      <variant name ="gotten by"/>
+    </entity_name>
+    <entity_name standard_form="get even">
+      <variant name ="gets even"/>
+      <variant name ="got even"/>
+      <variant name ="getting even"/>
+      <variant name ="gotten even"/>
+    </entity_name>
+    <entity_name standard_form="give away">
+      <variant name ="gives away"/>
+      <variant name ="gave away"/>
+      <variant name ="giving away"/>
+      <variant name ="given away"/>
+    </entity_name>
+    <entity_name standard_form="give in">
+      <variant name ="gives in"/>
+      <variant name ="gave in"/>
+      <variant name ="giving in"/>
+      <variant name ="given in"/>
+    </entity_name>
+    <entity_name standard_form="give out">
+      <variant name ="gives out"/>
+      <variant name ="gave out"/>
+      <variant name ="giving out"/>
+      <variant name ="given out"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="give the slip">
+      <variant name ="gives the slip"/>
+      <variant name ="gave the slip"/>
+      <variant name ="giving the slip"/>
+      <variant name ="given the slip"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="give up">
+      <variant name ="gives up"/>
+      <variant name ="gave up"/>
+      <variant name ="giving up"/>
+      <variant name ="given up"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="give voice">
+      <variant name ="gives voice"/>
+      <variant name ="gave voice"/>
+      <variant name ="giving voice"/>
+      <variant name ="given voice"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="go ahead">
+      <variant name ="goes ahead"/>
+      <variant name ="went ahead"/>
+      <variant name ="going ahead"/>
+      <variant name ="gone ahead"/>
+    </entity_name>
+    <entity_name standard_form="go on">
+      <variant name ="goes on"/>
+      <variant name ="went on"/>
+      <variant name ="going on"/>
+      <variant name ="gone on"/>
+    </entity_name>
+    <entity_name standard_form="goof off">
+      <variant name ="goofs off"/>
+      <variant name ="goofed off"/>
+      <variant name ="goofing off"/>
+    </entity_name>
+    <entity_name standard_form="grab hold">
+      <variant name ="grabs hold"/>
+      <variant name ="grabbed hold"/>
+      <variant name ="grabbing hold"/>
+    </entity_name>
+    <entity_name standard_form="grow up">
+      <variant name ="grows up"/>
+      <variant name ="grew up"/>
+      <variant name ="growing up"/>
+      <variant name ="grown up"/>
+    </entity_name>
+    <entity_name standard_form="hand in">
+      <variant name ="hands in"/>
+      <variant name ="handed in"/>
+      <variant name ="handing in"/>
+    </entity_name>
+    <entity_name standard_form="hand out">
+      <variant name ="hands out"/>
+      <variant name ="handed out"/>
+      <variant name ="handing out"/>
+    </entity_name>
+    <entity_name standard_form="hand over">
+      <variant name ="hands over"/>
+      <variant name ="handed over"/>
+      <variant name ="handing over"/>
+    </entity_name>
+    <entity_name standard_form="hang out">
+      <variant name ="hangs out"/>
+      <variant name ="hanged out"/>
+      <variant name ="hung out"/>
+      <variant name ="hanging out"/>
+    </entity_name>
+    <entity_name standard_form="hang up">
+      <variant name ="hangs up"/>
+      <variant name ="hanged up"/>
+      <variant name ="hung up"/>
+      <variant name ="hanging up"/>
+    </entity_name>
+    <entity_name standard_form="head out">
+      <variant name ="heads out"/>
+      <variant name ="headed out"/>
+      <variant name ="heading out"/>
+    </entity_name>
+    <entity_name standard_form="hightail it">
+      <variant name ="hightails it"/>
+      <variant name ="hightailed it"/>
+      <variant name ="hightailing it"/>
+    </entity_name>
+    <entity_name standard_form="hold back">
+      <variant name ="holds back"/>
+      <variant name ="held back"/>
+      <variant name ="holding back"/>
+    </entity_name>
+    <entity_name standard_form="hold down">
+      <variant name ="holds down"/>
+      <variant name ="held down"/>
+      <variant name ="holding down"/>
+    </entity_name>
+    <entity_name standard_form="hold off">
+      <variant name ="holds off"/>
+      <variant name ="held off"/>
+      <variant name ="holding off"/>
+    </entity_name>
+    <entity_name standard_form="hold up">
+      <variant name ="holds up"/>
+      <variant name ="held up"/>
+      <variant name ="holding up"/>
+    </entity_name>
+    <entity_name standard_form="hook up">
+      <variant name ="hooks up"/>
+      <variant name ="hooked up"/>
+      <variant name ="hooking up"/>
+    </entity_name>
+    <entity_name standard_form="horn in">
+      <variant name ="horns in"/>
+      <variant name ="horned in"/>
+      <variant name ="horning in"/>
+    </entity_name>
+    <entity_name standard_form="hunch up">
+      <variant name ="hunches up"/>
+      <variant name ="hunched up"/>
+      <variant name ="hunching up"/>
+    </entity_name>
+    <entity_name standard_form="hush up">
+      <variant name ="hushes up"/>
+      <variant name ="hushed up"/>
+      <variant name ="hushing up"/>
+    </entity_name>
+    <entity_name standard_form="jack up">
+      <variant name ="jacks up"/>
+      <variant name ="jacked up"/>
+      <variant name ="jacking up"/>
+    </entity_name>
+    <entity_name standard_form="jot down">
+      <variant name ="jots down"/>
+      <variant name ="jotted down"/>
+      <variant name ="jotting down"/>
+    </entity_name>
+    <entity_name standard_form="keel over">
+      <variant name ="keels over"/>
+      <variant name ="keeled over"/>
+      <variant name ="keeling over"/>
+    </entity_name>
+    <entity_name standard_form="keep back">
+      <variant name ="keeps back"/>
+      <variant name ="kept back"/>
+      <variant name ="keeping back"/>
+    </entity_name>
+    <entity_name standard_form="keep in mind">
+      <variant name ="keeps in mind"/>
+      <variant name ="kept in mind"/>
+      <variant name ="keeping in mind"/>
+    </entity_name>
+    <entity_name standard_form="keep out">
+      <variant name ="keeps out"/>
+      <variant name ="kept out"/>
+      <variant name ="keeping out"/>
+    </entity_name>
+    <entity_name standard_form="keep the faith">
+      <variant name ="keeps the faith"/>
+      <variant name ="kept the faith"/>
+      <variant name ="keeping the faith"/>
+    </entity_name>
+    <entity_name standard_form="keep up">
+      <variant name ="keeps up"/>
+      <variant name ="kept up"/>
+      <variant name ="keeping up"/>
+    </entity_name>
+    <entity_name standard_form="kick ass">
+      <variant name ="kicks ass"/>
+      <variant name ="kicked ass"/>
+      <variant name ="kicking ass"/>
+    </entity_name>
+    <entity_name standard_form="kick off">
+      <variant name ="kicks off"/>
+      <variant name ="kicked off"/>
+      <variant name ="kicking off"/>
+    </entity_name>
+    <entity_name standard_form="kick out">
+      <variant name ="kicks out"/>
+      <variant name ="kicked out"/>
+      <variant name ="kicking out"/>
+    </entity_name>
+    <entity_name standard_form="kneel down">
+      <variant name ="kneels down"/>
+      <variant name ="kneeled down"/>
+      <variant name ="kneeling down"/>
+    </entity_name>
+    <entity_name standard_form="kneel up">
+      <variant name ="kneels up"/>
+      <variant name ="kneeled up"/>
+      <variant name ="kneeling up"/>
+    </entity_name>
+    <entity_name standard_form="knock down">
+      <variant name ="knocks down"/>
+      <variant name ="knocked down"/>
+      <variant name ="knocking down"/>
+    </entity_name>
+    <entity_name standard_form="knock off">
+      <variant name ="knocks off"/>
+      <variant name ="knocked off"/>
+      <variant name ="knocking off"/>
+    </entity_name>
+    <entity_name standard_form="knock over">
+      <variant name ="knocks over"/>
+      <variant name ="knocked over"/>
+      <variant name ="knocking over"/>
+    </entity_name>
+    <entity_name standard_form="lay away">
+      <variant name ="lays away"/>
+      <variant name ="laid away"/>
+      <variant name ="laying away"/>
+    </entity_name>
+    <entity_name standard_form="lay by">
+      <variant name ="lays by"/>
+      <variant name ="laid by"/>
+      <variant name ="laying by"/>
+    </entity_name>
+    <entity_name standard_form="lay down">
+      <variant name ="lays down"/>
+      <variant name ="laid down"/>
+      <variant name ="laying down"/>
+    </entity_name>
+    <entity_name standard_form="lay into">
+      <variant name ="lays into"/>
+      <variant name ="laid into"/>
+      <variant name ="laying into"/>
+    </entity_name>
+    <entity_name standard_form="lay open">
+      <variant name ="lays open"/>
+      <variant name ="laid open"/>
+      <variant name ="laying open"/>
+    </entity_name>
+    <entity_name standard_form="lay out">
+      <variant name ="lays out"/>
+      <variant name ="laid out"/>
+      <variant name ="laying out"/>
+    </entity_name>
+    <entity_name standard_form="lay over">
+      <variant name ="lays over"/>
+      <variant name ="laid over"/>
+      <variant name ="laying over"/>
+    </entity_name>
+    <entity_name standard_form="lay up">
+      <variant name ="lays up"/>
+      <variant name ="laid up"/>
+      <variant name ="laying up"/>
+    </entity_name>
+    <entity_name standard_form="lead off">
+      <variant name ="leads off"/>
+      <variant name ="leaded off"/>
+      <variant name ="led off"/>
+      <variant name ="leading off"/>
+    </entity_name>
+    <entity_name standard_form="lead on">
+      <variant name ="leads on"/>
+      <variant name ="leaded on"/>
+      <variant name ="led on"/>
+      <variant name ="leading on"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="lead to">
+      <variant name ="leads to"/>
+      <variant name ="leaded to"/>
+      <variant name ="led to"/>
+      <variant name ="leading to"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="leave out">
+      <variant name ="leaves out"/>
+      <variant name ="leaved out"/>
+      <variant name ="left out"/>
+      <variant name ="leaving out"/>
+    </entity_name>
+    <entity_name standard_form="let down">
+      <variant name ="lets down"/>
+      <variant name ="letting down"/>
+    </entity_name>
+    <entity_name standard_form="let go">
+      <variant name ="lets go"/>
+      <variant name ="letting go"/>
+    </entity_name>
+    <entity_name standard_form="let up">
+      <variant name ="lets up"/>
+      <variant name ="letting up"/>
+    </entity_name>
+    <entity_name standard_form="lie down">
+      <variant name ="lies down"/>
+      <variant name ="lied down"/>
+      <variant name ="lying down"/>
+    </entity_name>
+    <entity_name standard_form="light up">
+      <variant name ="lights up"/>
+      <variant name ="lighted up"/>
+      <variant name ="lit up"/>
+      <variant name ="lighting up"/>
+    </entity_name>
+    <entity_name standard_form="line up">
+      <variant name ="lines up"/>
+      <variant name ="lined up"/>
+      <variant name ="lining up"/>
+    </entity_name>
+    <entity_name standard_form="lip sync">
+      <variant name ="lip syncs"/>
+      <variant name ="lip synced"/>
+      <variant name ="lip syncing"/>
+    </entity_name>
+    <entity_name standard_form="lip synch">
+      <variant name ="lip synchs"/>
+      <variant name ="lip synched"/>
+      <variant name ="lip synching"/>
+    </entity_name>
+    <entity_name standard_form="lock up">
+      <variant name ="locks up"/>
+      <variant name ="locked up"/>
+      <variant name ="locking up"/>
+    </entity_name>
+    <entity_name standard_form="look forward to">
+      <variant name ="looks forward to"/>
+      <variant name ="looked forward to"/>
+      <variant name ="looking forward to"/>
+    </entity_name>
+    <entity_name standard_form="look out">
+      <variant name ="looks out"/>
+      <variant name ="looked out"/>
+      <variant name ="looking out"/>
+    </entity_name>
+    <entity_name standard_form="loop up">
+      <variant name ="loops up"/>
+      <variant name ="looped up"/>
+      <variant name ="looping up"/>
+    </entity_name>
+    <entity_name standard_form="make do">
+      <variant name ="makes do"/>
+      <variant name ="made do"/>
+      <variant name ="making do"/>
+    </entity_name>
+    <entity_name standard_form="make eyes">
+      <variant name ="makes eyes"/>
+      <variant name ="made eyes"/>
+      <variant name ="making eyes"/>
+    </entity_name>
+    <entity_name standard_form="make merry">
+      <variant name ="makes merry"/>
+      <variant name ="made merry"/>
+      <variant name ="making merry"/>
+    </entity_name>
+    <entity_name standard_form="make out">
+      <variant name ="makes out"/>
+      <variant name ="made out"/>
+      <variant name ="making out"/>
+    </entity_name>
+    <entity_name standard_form="make up">
+      <variant name ="makes up"/>
+      <variant name ="made up"/>
+      <variant name ="making up"/>
+    </entity_name>
+    <entity_name standard_form="mark down">
+      <variant name ="marks down"/>
+      <variant name ="marked down"/>
+      <variant name ="marking down"/>
+    </entity_name>
+    <entity_name standard_form="measure up">
+      <variant name ="measures up"/>
+      <variant name ="measured up"/>
+      <variant name ="measuring up"/>
+    </entity_name>
+    <entity_name standard_form="mellow out">
+      <variant name ="mellows out"/>
+      <variant name ="mellowed out"/>
+      <variant name ="mellowing out"/>
+    </entity_name>
+    <entity_name standard_form="mess around">
+      <variant name ="messes around"/>
+      <variant name ="messed around"/>
+      <variant name ="messing around"/>
+    </entity_name>
+    <entity_name standard_form="mess up">
+      <variant name ="messes up"/>
+      <variant name ="messed up"/>
+      <variant name ="messing up"/>
+    </entity_name>
+    <entity_name standard_form="mix up">
+      <variant name ="mixes up"/>
+      <variant name ="mixed up"/>
+      <variant name ="mixing up"/>
+    </entity_name>
+    <entity_name standard_form="mock up">
+      <variant name ="mocks up"/>
+      <variant name ="mocked up"/>
+      <variant name ="mocking up"/>
+    </entity_name>
+    <entity_name standard_form="move along">
+      <variant name ="moves along"/>
+      <variant name ="moved along"/>
+      <variant name ="moving along"/>
+    </entity_name>
+    <entity_name standard_form="mush up">
+      <variant name ="mushes up"/>
+      <variant name ="mushed up"/>
+      <variant name ="mushing up"/>
+    </entity_name>
+    <entity_name standard_form="nip in the bud">
+      <variant name ="nips in the bud"/>
+      <variant name ="nipped in the bud"/>
+      <variant name ="nipping in the bud"/>
+    </entity_name>
+    <entity_name standard_form="nit pick">
+      <variant name ="nit picks"/>
+      <variant name ="nit picked"/>
+      <variant name ="nit picking"/>
+    </entity_name>
+    <entity_name standard_form="out wear">
+      <variant name ="out wears"/>
+      <variant name ="out wore"/>
+      <variant name ="out wearing"/>
+      <variant name ="out worn"/>
+    </entity_name>
+    <entity_name standard_form="own up">
+      <variant name ="owns up"/>
+      <variant name ="owned up"/>
+      <variant name ="owning up"/>
+    </entity_name>
+    <entity_name standard_form="pan out">
+      <variant name ="pans out"/>
+      <variant name ="panned out"/>
+      <variant name ="panning out"/>
+    </entity_name>
+    <entity_name standard_form="pass away">
+      <variant name ="passes away"/>
+      <variant name ="passed away"/>
+      <variant name ="passing away"/>
+    </entity_name>
+    <entity_name standard_form="pass out">
+      <variant name ="passes out"/>
+      <variant name ="passed out"/>
+      <variant name ="passing out"/>
+    </entity_name>
+    <entity_name standard_form="pay up">
+      <variant name ="pays up"/>
+      <variant name ="paid up"/>
+      <variant name ="paying up"/>
+    </entity_name>
+    <entity_name standard_form="peel off">
+      <variant name ="peels off"/>
+      <variant name ="peeled off"/>
+      <variant name ="peeling off"/>
+    </entity_name>
+    <entity_name standard_form="pick up">
+      <variant name ="picks up"/>
+      <variant name ="picked up"/>
+      <variant name ="picking up"/>
+    </entity_name>
+    <entity_name standard_form="piece together">
+      <variant name ="pieces together"/>
+      <variant name ="pieced together"/>
+      <variant name ="piecing together"/>
+    </entity_name>
+    <entity_name standard_form="pig out">
+      <variant name ="pigs out"/>
+      <variant name ="pigged out"/>
+      <variant name ="pigging out"/>
+    </entity_name>
+    <entity_name standard_form="piss off">
+      <variant name ="piss off"/>
+      <variant name ="pissed off"/>
+      <variant name ="pissing off"/>
+    </entity_name>
+    <entity_name standard_form="play down">
+      <variant name ="plays down"/>
+      <variant name ="played down"/>
+      <variant name ="playing down"/>
+    </entity_name>
+    <entity_name standard_form="point out">
+      <variant name ="points out"/>
+      <variant name ="pointed out"/>
+      <variant name ="pointing out"/>
+    </entity_name>
+    <entity_name standard_form="poke about">
+      <variant name ="pokes about"/>
+      <variant name ="poked about"/>
+      <variant name ="poking about"/>
+    </entity_name>
+    <entity_name standard_form="polish off">
+      <variant name ="polishes off"/>
+      <variant name ="polished off"/>
+      <variant name ="polishing off"/>
+    </entity_name>
+    <entity_name standard_form="print out">
+      <variant name ="prints out"/>
+      <variant name ="printed out"/>
+      <variant name ="printing out"/>
+    </entity_name>
+    <entity_name standard_form="prove out">
+      <variant name ="proves out"/>
+      <variant name ="proved out"/>
+      <variant name ="proving out"/>
+    </entity_name>
+    <entity_name standard_form="pull away">
+      <variant name ="pulls away"/>
+      <variant name ="pulled away"/>
+      <variant name ="pulling away"/>
+    </entity_name>
+    <entity_name standard_form="pull off">
+      <variant name ="pulls off"/>
+      <variant name ="pulled off"/>
+      <variant name ="pulling off"/>
+    </entity_name>
+    <entity_name standard_form="pull on">
+      <variant name ="pulls on"/>
+      <variant name ="pulled on"/>
+      <variant name ="pulling on"/>
+    </entity_name>
+    <entity_name standard_form="pull out">
+      <variant name ="pulls out"/>
+      <variant name ="pulled out"/>
+      <variant name ="pulling out"/>
+    </entity_name>
+    <entity_name standard_form="pull through">
+      <variant name ="pulls through"/>
+      <variant name ="pulled through"/>
+      <variant name ="pulling through"/>
+    </entity_name>
+    <entity_name standard_form="push off">
+      <variant name ="pushes off"/>
+      <variant name ="pushed off"/>
+      <variant name ="pushing off"/>
+    </entity_name>
+    <entity_name standard_form="push on">
+      <variant name ="pushes on"/>
+      <variant name ="pushed on"/>
+      <variant name ="pushing on"/>
+    </entity_name>
+    <entity_name standard_form="put by">
+      <variant name ="puts by"/>
+      <variant name ="putting by"/>
+    </entity_name>
+    <entity_name standard_form="put down">
+      <variant name ="puts down"/>
+      <variant name ="putting down"/>
+    </entity_name>
+    <entity_name standard_form="put forth">
+      <variant name ="puts forth"/>
+      <variant name ="putting forth"/>
+    </entity_name>
+    <entity_name standard_form="put off">
+      <variant name ="puts off"/>
+      <variant name ="putting off"/>
+    </entity_name>
+    <entity_name standard_form="put on">
+      <variant name ="puts on"/>
+      <variant name ="putting on"/>
+    </entity_name>
+    <entity_name standard_form="put out">
+      <variant name ="puts out"/>
+      <variant name ="putting out"/>
+    </entity_name>
+    <entity_name standard_form="put up">
+      <variant name ="puts up"/>
+      <variant name ="putting up"/>
+    </entity_name>
+    <entity_name standard_form="quiet down">
+      <variant name ="quiets down"/>
+      <variant name ="quieted down"/>
+      <variant name ="quieting down"/>
+    </entity_name>
+    <entity_name standard_form="rack up">
+      <variant name ="racks up"/>
+      <variant name ="racked up"/>
+      <variant name ="racking up"/>
+    </entity_name>
+    <entity_name standard_form="rip off">
+      <variant name ="rips off"/>
+      <variant name ="ripped off"/>
+      <variant name ="ripping off"/>
+    </entity_name>
+    <entity_name standard_form="rip up">
+      <variant name ="rips up"/>
+      <variant name ="ripped up"/>
+      <variant name ="ripping up"/>
+    </entity_name>
+    <entity_name standard_form="root out">
+      <variant name ="roots out"/>
+      <variant name ="rooted out"/>
+      <variant name ="rooting out"/>
+    </entity_name>
+    <entity_name standard_form="round out">
+      <variant name ="rounds out"/>
+      <variant name ="rounded out"/>
+      <variant name ="rounding out"/>
+    </entity_name>
+    <entity_name standard_form="round up">
+      <variant name ="rounds up"/>
+      <variant name ="rounded up"/>
+      <variant name ="rounding up"/>
+    </entity_name>
+    <entity_name standard_form="rub down">
+      <variant name ="rubs down"/>
+      <variant name ="rubbed down"/>
+      <variant name ="rubbing down"/>
+    </entity_name>
+    <entity_name standard_form="rub out">
+      <variant name ="rubs out"/>
+      <variant name ="rubbed out"/>
+      <variant name ="rubbing out"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="rub through">
+      <variant name ="rubs through"/>
+      <variant name ="rubbed through"/>
+      <variant name ="rubbing through"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="salt away">
+      <variant name ="salts away"/>
+      <variant name ="salted away"/>
+      <variant name ="salting away"/>
+    </entity_name>
+    <entity_name standard_form="screw up">
+      <variant name ="screws up"/>
+      <variant name ="screwed up"/>
+      <variant name ="screwing up"/>
+    </entity_name>
+    <entity_name standard_form="seek penance">
+      <variant name ="seeks penance"/>
+      <variant name ="sought penance"/>
+      <variant name ="seeking penance"/>
+    </entity_name>
+    <entity_name standard_form="sell out">
+      <variant name ="sells out"/>
+      <variant name ="sold out"/>
+      <variant name ="selling out"/>
+    </entity_name>
+    <entity_name standard_form="sell short">
+      <variant name ="sells short"/>
+      <variant name ="sold short"/>
+      <variant name ="selling short"/>
+    </entity_name>
+    <entity_name standard_form="set at">
+      <variant name ="sets at"/>
+      <variant name ="setting at"/>
+    </entity_name>
+    <entity_name standard_form="set back">
+      <variant name ="sets back"/>
+      <variant name ="setting back"/>
+    </entity_name>
+    <entity_name standard_form="set off">
+      <variant name ="sets off"/>
+      <variant name ="setting off"/>
+    </entity_name>
+    <entity_name standard_form="set on">
+      <variant name ="sets on"/>
+      <variant name ="setting on"/>
+    </entity_name>
+    <entity_name standard_form="set out">
+      <variant name ="sets out"/>
+      <variant name ="setting out"/>
+    </entity_name>
+    <entity_name standard_form="set type">
+      <variant name ="set types"/>
+      <variant name ="set typed"/>
+      <variant name ="set typing"/>
+    </entity_name>
+    <entity_name standard_form="set up">
+      <variant name ="sets up"/>
+      <variant name ="setting up"/>
+    </entity_name>
+    <entity_name standard_form="shake down">
+      <variant name ="shakes down"/>
+      <variant name ="shook down"/>
+      <variant name ="shaking down"/>
+      <variant name ="shaken down"/>
+    </entity_name>
+    <entity_name standard_form="shake up">
+      <variant name ="shakes up"/>
+      <variant name ="shook up"/>
+      <variant name ="shaking up"/>
+      <variant name ="shaken up"/>
+    </entity_name>
+    <entity_name standard_form="shape up">
+      <variant name ="shapes up"/>
+      <variant name ="shaped up"/>
+      <variant name ="shaping up"/>
+    </entity_name>
+    <entity_name standard_form="shove off">
+      <variant name ="shoves off"/>
+      <variant name ="shoved off"/>
+      <variant name ="shoving off"/>
+    </entity_name>
+    <entity_name standard_form="show off">
+      <variant name ="shows off"/>
+      <variant name ="showed off"/>
+      <variant name ="showing off"/>
+    </entity_name>
+    <entity_name standard_form="show up">
+      <variant name ="shows up"/>
+      <variant name ="showed up"/>
+      <variant name ="showing up"/>
+    </entity_name>
+    <entity_name standard_form="shut up">
+      <variant name ="shuts up"/>
+      <variant name ="shut up"/>
+      <variant name ="shutting up"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="sign on">
+      <variant name ="signs on"/>
+      <variant name ="signed on"/>
+      <variant name ="signing on"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="sign up">
+      <variant name ="signs up"/>
+      <variant name ="signed up"/>
+      <variant name ="signing up"/>
+    </entity_name>
+    <entity_name standard_form="single out">
+      <variant name ="singles out"/>
+      <variant name ="singled out"/>
+      <variant name ="singling out"/>
+    </entity_name>
+    <entity_name standard_form="sit down">
+      <variant name ="sits down"/>
+      <variant name ="sat down"/>
+      <variant name ="sitting down"/>
+    </entity_name>
+    <entity_name standard_form="sit up">
+      <variant name ="sits up"/>
+      <variant name ="sat up"/>
+      <variant name ="sitting up"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="sleep over">
+      <variant name ="sleeps over"/>
+      <variant name ="slept over"/>
+      <variant name ="sleeping over"/>
+    </entity_name>
+    -->
+    <!--
+    <entity_name standard_form="slip on">
+      <variant name ="slips on"/>
+      <variant name ="slipped on"/>
+      <variant name ="slipping on"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="snap back">
+      <variant name ="snaps back"/>
+      <variant name ="snapped back"/>
+      <variant name ="snapping back"/>
+    </entity_name>
+    <entity_name standard_form="snarl up">
+      <variant name ="snarls up"/>
+      <variant name ="snarled up"/>
+      <variant name ="snarling up"/>
+    </entity_name>
+    <entity_name standard_form="soak up">
+      <variant name ="soaks up"/>
+      <variant name ="soaked up"/>
+      <variant name ="soaking up"/>
+    </entity_name>
+    <entity_name standard_form="spell out">
+      <variant name ="spells out"/>
+      <variant name ="spelled out"/>
+      <variant name ="spelling out"/>
+    </entity_name>
+    <entity_name standard_form="spiff up">
+      <variant name ="spiff up"/>
+      <variant name ="spiffed up"/>
+      <variant name ="spiffing up"/>
+    </entity_name>
+    <entity_name standard_form="sprawl out">
+      <variant name ="sprawls out"/>
+      <variant name ="sprawled out"/>
+      <variant name ="sprawling out"/>
+    </entity_name>
+    <entity_name standard_form="squat down">
+      <variant name ="squats down"/>
+      <variant name ="squatted down"/>
+      <variant name ="squatting down"/>
+    </entity_name>
+    <entity_name standard_form="spur on">
+      <variant name ="spurs on"/>
+      <variant name ="spurred on"/>
+      <variant name ="spurring on"/>
+    </entity_name>
+    <entity_name standard_form="squirrel away">
+      <variant name ="squirrels away"/>
+      <variant name ="squirreled away"/>
+      <variant name ="squirrelled away"/>
+      <variant name ="squirreling away"/>
+      <variant name ="squirrelling away"/>
+    </entity_name>
+    <entity_name standard_form="stamp out">
+      <variant name ="stamps out"/>
+      <variant name ="stamped out"/>
+      <variant name ="stamping out"/>
+    </entity_name>
+    <entity_name standard_form="stand out">
+      <variant name ="stands out"/>
+      <variant name ="stood out"/>
+      <variant name ="standing out"/>
+    </entity_name>
+    <entity_name standard_form="stand up">
+      <variant name ="stands up"/>
+      <variant name ="stood up"/>
+      <variant name ="standing up"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="stay over">
+      <variant name ="stays over"/>
+      <variant name ="stayed over"/>
+      <variant name ="staid over"/>
+      <variant name ="staying over"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="stave off">
+      <variant name ="staves off"/>
+      <variant name ="staved off"/>
+      <variant name ="staving off"/>
+    </entity_name>
+    <entity_name standard_form="step up">
+      <variant name ="steps up"/>
+      <variant name ="stepped up"/>
+      <variant name ="stepping up"/>
+    </entity_name>
+    <entity_name standard_form="stick around">
+      <variant name ="sticks around"/>
+      <variant name ="stuck around"/>
+      <variant name ="sticking around"/>
+    </entity_name>
+    <entity_name standard_form="stick out">
+      <variant name ="sticks out"/>
+      <variant name ="stuck out"/>
+      <variant name ="sticking out"/>
+    </entity_name>
+    <entity_name standard_form="stop up">
+      <variant name ="stops up"/>
+      <variant name ="stopped up"/>
+      <variant name ="stopping up"/>
+    </entity_name>
+    <entity_name standard_form="store up">
+      <variant name ="stores up"/>
+      <variant name ="stored up"/>
+      <variant name ="storing up"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="stow it">
+      <variant name ="stows it"/>
+      <variant name ="stowed it"/>
+      <variant name ="stowing it"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="string along">
+      <variant name ="strings along"/>
+      <variant name ="strung along"/>
+      <variant name ="stringing along"/>
+    </entity_name>
+    <entity_name standard_form="strip off">
+      <variant name ="strips off"/>
+      <variant name ="stripped off"/>
+      <variant name ="stripping off"/>
+    </entity_name>
+    <entity_name standard_form="sugar coat">
+      <variant name ="sugar coats"/>
+      <variant name ="sugar coated"/>
+      <variant name ="sugar coating"/>
+    </entity_name>
+    <entity_name standard_form="sum up">
+      <variant name ="sums up"/>
+      <variant name ="summed up"/>
+      <variant name ="summing up"/>
+    </entity_name>
+    <entity_name standard_form="sun bathe">
+      <variant name ="sun bathes"/>
+      <variant name ="sun bathed"/>
+      <variant name ="sun bathing"/>
+    </entity_name>
+    <entity_name standard_form="take advantage">
+      <variant name ="takes advantage"/>
+      <variant name ="took advantage"/>
+      <variant name ="taking advantage"/>
+      <variant name ="taken advantage"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="take after">
+      <variant name ="takes after"/>
+      <variant name ="took after"/>
+      <variant name ="taking after"/>
+      <variant name ="taken after"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="take away">
+      <variant name ="takes away"/>
+      <variant name ="took away"/>
+      <variant name ="taking away"/>
+      <variant name ="taken away"/>
+    </entity_name>
+    <entity_name standard_form="take caution">
+      <variant name ="takes caution"/>
+      <variant name ="took caution"/>
+      <variant name ="taking caution"/>
+      <variant name ="taken caution"/>
+    </entity_name>
+    <entity_name standard_form="take hold">
+      <variant name ="takes hold"/>
+      <variant name ="took hold"/>
+      <variant name ="taking hold"/>
+      <variant name ="taken hold"/>
+    </entity_name>
+    <entity_name standard_form="take in">
+      <variant name ="takes in"/>
+      <variant name ="took in"/>
+      <variant name ="taking in"/>
+      <variant name ="taken in"/>
+    </entity_name>
+    <entity_name standard_form="take off">
+      <variant name ="takes off"/>
+      <variant name ="took off"/>
+      <variant name ="taking off"/>
+      <variant name ="taken off"/>
+    </entity_name>
+    <entity_name standard_form="take on">
+      <variant name ="takes on"/>
+      <variant name ="took on"/>
+      <variant name ="taking on"/>
+      <variant name ="taken on"/>
+    </entity_name>
+    <entity_name standard_form="take out">
+      <variant name ="takes out"/>
+      <variant name ="took out"/>
+      <variant name ="taking out"/>
+      <variant name ="taken out"/>
+    </entity_name>
+    <entity_name standard_form="take over">
+      <variant name ="takes over"/>
+      <variant name ="took over"/>
+      <variant name ="taking over"/>
+      <variant name ="taken over"/>
+    </entity_name>
+    <entity_name standard_form="take place">
+      <variant name ="takes place"/>
+      <variant name ="took place"/>
+      <variant name ="taking place"/>
+      <variant name ="taken place"/>
+    </entity_name>
+    <entity_name standard_form="take up">
+      <variant name ="takes up"/>
+      <variant name ="took up"/>
+      <variant name ="taking up"/>
+      <variant name ="taken up"/>
+    </entity_name>
+    <entity_name standard_form="taper off">
+      <variant name ="tapers off"/>
+      <variant name ="tapered off"/>
+      <variant name ="tapering off"/>
+    </entity_name>
+    <entity_name standard_form="team up">
+      <variant name ="teams up"/>
+      <variant name ="teamed up"/>
+      <variant name ="teaming up"/>
+    </entity_name>
+    <entity_name standard_form="tear down">
+      <variant name ="tears down"/>
+      <variant name ="tore down"/>
+      <variant name ="tearing down"/>
+      <variant name ="torn down"/>
+    </entity_name>
+    <entity_name standard_form="tear up">
+      <variant name ="tears up"/>
+      <variant name ="tore up"/>
+      <variant name ="tearing up"/>
+      <variant name ="torn up"/>
+    </entity_name>
+    <entity_name standard_form="tee off">
+      <variant name ="tees off"/>
+      <variant name ="teed off"/>
+      <variant name ="teeing off"/>
+    </entity_name>
+    <entity_name standard_form="tell off">
+      <variant name ="tells off"/>
+      <variant name ="told off"/>
+      <variant name ="telling off"/>
+    </entity_name>
+    <entity_name standard_form="thin out">
+      <variant name ="thins out"/>
+      <variant name ="thinned out"/>
+      <variant name ="thinning out"/>
+    </entity_name>
+    <entity_name standard_form="throw away">
+      <variant name ="throws away"/>
+      <variant name ="threw away"/>
+      <variant name ="throwing away"/>
+      <variant name ="thrown away"/>
+    </entity_name>
+    <entity_name standard_form="throw back">
+      <variant name ="throws back"/>
+      <variant name ="threw back"/>
+      <variant name ="throwing back"/>
+      <variant name ="thrown back"/>
+    </entity_name>
+    <entity_name standard_form="throw off">
+      <variant name ="throws off"/>
+      <variant name ="threw off"/>
+      <variant name ="throwing off"/>
+      <variant name ="thrown off"/>
+    </entity_name>
+    <entity_name standard_form="throw on">
+      <variant name ="throws on"/>
+      <variant name ="threw on"/>
+      <variant name ="throwing on"/>
+      <variant name ="thrown on"/>
+    </entity_name>
+    <entity_name standard_form="throw out">
+      <variant name ="throws out"/>
+      <variant name ="threw out"/>
+      <variant name ="throwing out"/>
+      <variant name ="thrown out"/>
+    </entity_name>
+    <entity_name standard_form="throw up">
+      <variant name ="throws up"/>
+      <variant name ="threw up"/>
+      <variant name ="throwing up"/>
+      <variant name ="thrown up"/>
+    </entity_name>
+    <entity_name standard_form="tie the knot">
+      <variant name ="ties the knot"/>
+      <variant name ="tied the knot"/>
+      <variant name ="tying the knot"/>
+    </entity_name>
+    <entity_name standard_form="tie up">
+      <variant name ="ties up"/>
+      <variant name ="tied up"/>
+      <variant name ="tying up"/>
+    </entity_name>
+    <entity_name standard_form="tip over">
+      <variant name ="tips over"/>
+      <variant name ="tipped over"/>
+      <variant name ="tipping over"/>
+    </entity_name>
+    <entity_name standard_form="tone down">
+      <variant name ="tones down"/>
+      <variant name ="toned down"/>
+      <variant name ="toning down"/>
+    </entity_name>
+    <entity_name standard_form="tongue lash">
+      <variant name ="tongue lashes"/>
+      <variant name ="tongue lashed"/>
+      <variant name ="tongue lashing"/>
+    </entity_name>
+    <entity_name standard_form="trade off">
+      <variant name ="trades off"/>
+      <variant name ="traded off"/>
+      <variant name ="trading off"/>
+    </entity_name>
+    <entity_name standard_form="trail blaze">
+      <variant name ="trail blazes"/>
+      <variant name ="trail blazed"/>
+      <variant name ="trail blazing"/>
+    </entity_name>
+    <entity_name standard_form="trim down">
+      <variant name ="trims down"/>
+      <variant name ="trimmed down"/>
+      <variant name ="trimming down"/>
+    </entity_name>
+    <entity_name standard_form="try out">
+      <variant name ="tries out"/>
+      <variant name ="tried out"/>
+      <variant name ="trying out"/>
+    </entity_name>
+    <entity_name standard_form="type in">
+      <variant name ="types in"/>
+      <variant name ="typed in"/>
+      <variant name ="typing in"/>
+    </entity_name>
+    <entity_name standard_form="type out">
+      <variant name ="types out"/>
+      <variant name ="typed out"/>
+      <variant name ="typing out"/>
+    </entity_name>
+    <entity_name standard_form="tune up">
+      <variant name ="tunes up"/>
+      <variant name ="tuned up"/>
+      <variant name ="tuning up"/>
+    </entity_name>
+    <entity_name standard_form="turn back">
+      <variant name ="turns back"/>
+      <variant name ="turned back"/>
+      <variant name ="turning back"/>
+    </entity_name>
+    <entity_name standard_form="turn down">
+      <variant name ="turns down"/>
+      <variant name ="turned down"/>
+      <variant name ="turning down"/>
+    </entity_name>
+    <entity_name standard_form="turn in">
+      <variant name ="turns in"/>
+      <variant name ="turned in"/>
+      <variant name ="turning in"/>
+    </entity_name>
+    <entity_name standard_form="turn off">
+      <variant name ="turns off"/>
+      <variant name ="turned off"/>
+      <variant name ="turning off"/>
+    </entity_name>
+    <entity_name standard_form="turn on">
+      <variant name ="turns on"/>
+      <variant name ="turned on"/>
+      <variant name ="turning on"/>
+    </entity_name>
+    <entity_name standard_form="turn out">
+      <variant name ="turns out"/>
+      <variant name ="turned out"/>
+      <variant name ="turning out"/>
+    </entity_name>
+    <entity_name standard_form="turn over">
+      <variant name ="turns over"/>
+      <variant name ="turned over"/>
+      <variant name ="turning over"/>
+    </entity_name>
+    <entity_name standard_form="turn up">
+      <variant name ="turns up"/>
+      <variant name ="turned up"/>
+      <variant name ="turning up"/>
+    </entity_name>
+    <entity_name standard_form="use up">
+      <variant name ="uses up"/>
+      <variant name ="used up"/>
+      <variant name ="using up"/>
+    </entity_name>
+    <entity_name standard_form="usher in">
+      <variant name ="ushers in"/>
+      <variant name ="ushered in"/>
+      <variant name ="ushering in"/>
+    </entity_name>
+    <entity_name standard_form="wake up">
+      <variant name ="wakes up"/>
+      <variant name ="woke up"/>
+      <variant name ="waking up"/>
+      <variant name ="woken up"/>
+    </entity_name>
+    <entity_name standard_form="walk out">
+      <variant name ="walks out"/>
+      <variant name ="walked out"/>
+      <variant name ="walking out"/>
+    </entity_name>
+    <entity_name standard_form="ward off">
+      <variant name ="wards off"/>
+      <variant name ="warded off"/>
+      <variant name ="warding off"/>
+    </entity_name>
+    <entity_name standard_form="waste away">
+      <variant name ="wastes away"/>
+      <variant name ="wasted away"/>
+      <variant name ="wasting away"/>
+    </entity_name>
+    <entity_name standard_form="wear down">
+      <variant name ="wears down"/>
+      <variant name ="wore down"/>
+      <variant name ="wearing down"/>
+      <variant name ="worn down"/>
+    </entity_name>
+    <entity_name standard_form="wear out">
+      <variant name ="wears out"/>
+      <variant name ="wore out"/>
+      <variant name ="wearing out"/>
+      <variant name ="worn out"/>
+    </entity_name>
+    <entity_name standard_form="weigh down">
+      <variant name ="weighs down"/>
+      <variant name ="weighed down"/>
+      <variant name ="weighing down"/>
+    </entity_name>
+    <entity_name standard_form="whip up">
+      <variant name ="whips up"/>
+      <variant name ="whipped up"/>
+      <variant name ="whipping up"/>
+    </entity_name>
+    <entity_name standard_form="wind up">
+      <variant name ="winds up"/>
+      <variant name ="winded up"/>
+      <variant name ="wound up"/>
+      <variant name ="winding up"/>
+    </entity_name>
+    <entity_name standard_form="wipe out">
+      <variant name ="wipes out"/>
+      <variant name ="wiped out"/>
+      <variant name ="wiping out"/>
+    </entity_name>
+    <entity_name standard_form="work out">
+      <variant name ="works out"/>
+      <variant name ="worked out"/>
+      <variant name ="working out"/>
+    </entity_name>
+    <entity_name standard_form="wrap up">
+      <variant name ="wraps up"/>
+      <variant name ="wrapped up"/>
+      <variant name ="wrapping up"/>
+    </entity_name>
+    <entity_name standard_form="write down">
+      <variant name ="writes down"/>
+      <variant name ="wrote down"/>
+      <variant name ="writing down"/>
+      <variant name ="written down"/>
+    </entity_name>
+    <!--
+    <entity_name standard_form="write in">
+      <variant name ="writes in"/>
+      <variant name ="wrote in"/>
+      <variant name ="writing in"/>
+      <variant name ="written in"/>
+    </entity_name>
+    -->
+    <entity_name standard_form="write out">
+      <variant name ="writes out"/>
+      <variant name ="wrote out"/>
+      <variant name ="writing out"/>
+      <variant name ="written out"/>
+    </entity_name>
+    <entity_name standard_form="write up">
+      <variant name ="writes up"/>
+      <variant name ="wrote up"/>
+      <variant name ="writing up"/>
+      <variant name ="written up"/>
+    </entity_name>
+    <entity_name standard_form="zero in">
+      <variant name ="zeroes in"/>
+      <variant name ="zeroed in"/>
+      <variant name ="zeroing in"/>
+    </entity_name>
+  </entity_category>
+
+  <entity_category name="TIMEX">
+    <entity_name standard_form="today">
+    </entity_name>
+    <entity_name standard_form="yesterday">
+    </entity_name>
+    <entity_name standard_form="tomorrow">
+    </entity_name>
+    <entity_name standard_form="morning">
+    </entity_name>
+    <entity_name standard_form="afternoon">
+    </entity_name>
+    <entity_name standard_form="evening">
+    </entity_name>
+    <entity_name standard_form="night">
+    </entity_name>
+    <entity_name standard_form="this week">
+    </entity_name>
+    <entity_name standard_form="last week">
+    </entity_name>
+    <entity_name standard_form="next week">
+    </entity_name>
+    <entity_name standard_form="this year">
+    </entity_name>
+    <entity_name standard_form="last year">
+    </entity_name>
+    <entity_name standard_form="next year">
+    </entity_name>
+
+  </entity_category>
+
+</dictionary>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Standard text analysis configuration for grammatical role extraction
+-->
+<tasdk-configuration xmlns="http://www.sap.com/ta/config/4.0">
+
+  <configuration name="SAP.TextAnalysis.AnalysisModel.AggregateAnalyzer.Aggregator">
+  
+    <!-- Specify sequence of text analysis steps to perform.
+    -->
+    <property name="Analyzers" type="string-list">
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.Extraction.ExtractionAnalyzer.TF</string-list-value>
+      <string-list-value>SAP.TextAnalysis.DocumentAnalysis.GrammaticalRoles.GrammaticalRoleAnalyzer.GRA</string-list-value>
+    </property>
+    
+  </configuration>
+
+  <!-- Do not modify or remove. This section must appear exactly as described in the
+       HANA Developer Guide.
+  -->
+  <configuration name="CommonSettings" />
+
+  <!-- Do not modify or remove. This section must appear exactly as described in the
+       HANA Developer Guide.
+  -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.FormatConversion.FormatConversionAnalyzer.FC" based-on="CommonSettings" />
+  
+  <!-- Do not remove. This section must be present as described in the HANA Developer Guide. -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.StructureAnalysis.StructureAnalyzer.SA" based-on="CommonSettings">
+  
+    <!-- Minimum input length (in code units) for which automatic language identification
+         will be attempted. (The default language will be assigned to shorter inputs.)
+    -->
+    <property name="MinimumInputLength" type="integer">
+      <integer-value>30</integer-value>
+    </property>
+
+    <!-- Size (in code units) of the input sample used for language identification. -->
+    <property name="EvaluationSampleSize" type="integer">
+        <integer-value>300</integer-value>
+    </property>
+
+    <!-- Minimum confidence level required to accept the result of automatic language
+         detection. (Failing that, the default language will be used.)
+         Values must be in the range from 0 to 100.
+    -->
+    <property name="MinimumConfidence" type="integer">
+        <integer-value>50</integer-value>
+    </property>
+
+  </configuration>
+
+  <!-- Do not remove. This section must be present as described in the HANA Developer Guide. -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.LinguisticAnalysis.LinguisticAnalyzer.LX" based-on="CommonSettings">
+    
+    <!-- Determine the stems (base forms) for each token?  (default is 'true') -->
+    <property name="GetTokenStem" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Guess stems for tokens not found in a lexicon?  (default is 'false') -->
+    <property name="EnableStemGuesser" type="boolean">
+      <boolean-value>false</boolean-value>
+    </property>
+
+    <!-- Determine the part of speech for each token?  (default is 'true') -->
+    <property name="GetTokenPartOfSpeech" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Disambiguate the part of speech for each token? (default is 'true') -->
+    <property name="DisambiguatePartOfSpeech" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Disambiguate the stem for each token? (default is 'false') -->
+    <property name="DisambiguateStem" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Use custom linguistic dictionaries?  (default is 'false') -->
+    <property name="EnableCustomDictionaries" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+
+    <!-- Determine whether stemming flavor is standard or expanded? (default is 'std') -->
+    <property name="VariantString" type="string">
+      <string-value>expanded</string-value>
+    </property>
+
+  </configuration>
+
+  <!-- Configuration settings for entity and relationship extraction. Refer to the
+      HANA Developer Guide for more details.
+  -->
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.Extraction.ExtractionAnalyzer.TF" based-on="CommonSettings">
+
+    <!-- List of Text Analysis extraction dictionaries. -->
+    <property name="Dictionaries" type="string-list">
+      <string-list-value>mytextproj.mytexthdbmod::english-gra.hdbtextdict</string-list-value>
+    </property>
+    
+  </configuration>
+  
+  <configuration name="SAP.TextAnalysis.DocumentAnalysis.GrammaticalRoles.GrammaticalRoleAnalyzer.GRA" based-on="CommonSettings">
+      <property name="InputEntityCategories" type="string-list">
+        <string-list-value>ADDRESS1</string-list-value>
+        <string-list-value>ADDRESS2</string-list-value>
+        <string-list-value>CONTINENT</string-list-value>
+        <string-list-value>COUNTRY</string-list-value>
+        <string-list-value>CURRENCY</string-list-value>
+        <string-list-value>DATE</string-list-value>
+        <string-list-value>DAY</string-list-value>
+        <string-list-value>FACILITY/AIRPORT</string-list-value>
+        <string-list-value>FACILITY/BUILDGROUNDS</string-list-value>
+        <string-list-value>FACILITY/PATH</string-list-value>
+        <string-list-value>FACILITY/PLANT</string-list-value>
+        <string-list-value>FACILITY/SUBAREA</string-list-value>
+        <string-list-value>GEOCOORD</string-list-value>
+        <string-list-value>GEO_AREA/DOMESTIC</string-list-value>
+        <string-list-value>GEO_AREA/INTL</string-list-value>
+        <string-list-value>GEO_FEATURE/BOUNDARY</string-list-value>
+        <string-list-value>GEO_FEATURE/CELESTIAL</string-list-value>
+        <string-list-value>GEO_FEATURE/LAND</string-list-value>
+        <string-list-value>GEO_FEATURE/WATER</string-list-value>
+        <string-list-value>HOLIDAY</string-list-value>
+        <string-list-value>LANGUAGE</string-list-value>
+        <string-list-value>LOCALITY</string-list-value>
+        <string-list-value>MEASURE</string-list-value>
+        <string-list-value>MGRS</string-list-value>
+        <string-list-value>MONTH</string-list-value>
+        <string-list-value>MWT_ABBR</string-list-value>
+        <string-list-value>MWT_ADJ</string-list-value>
+        <string-list-value>MWT_ADJ_COMP</string-list-value>
+        <string-list-value>MWT_ADJ_ORD</string-list-value>
+        <string-list-value>MWT_ADJ_SUP</string-list-value>
+        <string-list-value>MWT_ADV</string-list-value>
+        <string-list-value>MWT_ADV_COMP</string-list-value>
+        <string-list-value>MWT_ADV_INT</string-list-value>
+        <string-list-value>MWT_ADV_SUP</string-list-value>
+        <string-list-value>MWT_AUX</string-list-value>
+        <string-list-value>MWT_CONJ_COORD</string-list-value>
+        <string-list-value>MWT_CONJ_SUB</string-list-value>
+        <string-list-value>MWT_DET</string-list-value>
+        <string-list-value>MWT_DET_DEF</string-list-value>
+        <string-list-value>MWT_DET_INDEF</string-list-value>
+        <string-list-value>MWT_DET_INT</string-list-value>
+        <string-list-value>MWT_DET_INTREL</string-list-value>
+        <string-list-value>MWT_DET_PL</string-list-value>
+        <string-list-value>MWT_DET_POSS</string-list-value>
+        <string-list-value>MWT_DET_REL</string-list-value>
+        <string-list-value>MWT_DET_SG</string-list-value>
+        <string-list-value>MWT_INTERJ</string-list-value>
+        <string-list-value>MWT_NN</string-list-value>
+        <string-list-value>MWT_NN_LETTER</string-list-value>
+        <string-list-value>MWT_NN_NET</string-list-value>
+        <string-list-value>MWT_NN_PL</string-list-value>
+        <string-list-value>MWT_NN_SG</string-list-value>
+        <string-list-value>MWT_NUM</string-list-value>
+        <string-list-value>MWT_PART_INF</string-list-value>
+        <string-list-value>MWT_PART_NEG</string-list-value>
+        <string-list-value>MWT_PART_POSS</string-list-value>
+        <string-list-value>MWT_PREP</string-list-value>
+        <string-list-value>MWT_PREP_AT</string-list-value>
+        <string-list-value>MWT_PREP_OF</string-list-value>
+        <string-list-value>MWT_PRON</string-list-value>
+        <string-list-value>MWT_PRON_INT</string-list-value>
+        <string-list-value>MWT_PRON_INTREL</string-list-value>
+        <string-list-value>MWT_PRON_REFL</string-list-value>
+        <string-list-value>MWT_PRON_REL</string-list-value>
+        <string-list-value>MWT_PROP</string-list-value>
+        <string-list-value>MWT_PUNCT</string-list-value>
+        <string-list-value>MWT_PUNCT_CLOSE</string-list-value>
+        <string-list-value>MWT_PUNCT_COMMA</string-list-value>
+        <string-list-value>MWT_PUNCT_OPEN</string-list-value>
+        <string-list-value>MWT_PUNCT_QUOTE</string-list-value>
+        <string-list-value>MWT_PUNCT_SENT</string-list-value>
+        <string-list-value>MWT_VERB</string-list-value>
+        <string-list-value>NAME_DESIGNATOR</string-list-value>
+        <string-list-value>NIN/US_SSN</string-list-value>
+        <string-list-value>ORGANIZATION/COMMERCIAL</string-list-value>
+        <string-list-value>ORGANIZATION/EDUCATIONAL</string-list-value>
+        <string-list-value>ORGANIZATION/ENTERTAINMENT</string-list-value>
+        <string-list-value>ORGANIZATION/GOVERNMENT</string-list-value>
+        <string-list-value>ORGANIZATION/MEDIA</string-list-value>
+        <string-list-value>ORGANIZATION/MEDICALSCIENCE</string-list-value>
+        <string-list-value>ORGANIZATION/OTHER</string-list-value>
+        <string-list-value>ORGANIZATION/RELIGIOUS</string-list-value>
+        <string-list-value>ORGANIZATION/SPORTS</string-list-value>
+        <string-list-value>PEOPLE</string-list-value>
+        <string-list-value>PERCENT</string-list-value>
+        <string-list-value>PERSON</string-list-value>
+        <string-list-value>PHONE</string-list-value>
+        <string-list-value>PRECURSOR/CHEMICAL</string-list-value>
+        <string-list-value>PRECURSOR/NUCLEAR</string-list-value>
+        <string-list-value>PRODUCT</string-list-value>
+        <string-list-value>REGION/MAJOR</string-list-value>
+        <string-list-value>REGION/MINOR</string-list-value>
+        <string-list-value>SOCIAL_MEDIA/ID_TWITTER</string-list-value>
+        <string-list-value>SOCIAL_MEDIA/TOPIC_TWITTER</string-list-value>
+        <string-list-value>TICKER</string-list-value>
+        <string-list-value>TIME</string-list-value>
+        <string-list-value>TIMEX</string-list-value>
+        <string-list-value>TIME_PERIOD</string-list-value>
+        <string-list-value>TITLE</string-list-value>
+        <string-list-value>URI/EMAIL</string-list-value>
+        <string-list-value>URI/IP</string-list-value>
+        <string-list-value>URI/URL</string-list-value>
+        <string-list-value>VEHICLE/AIR</string-list-value>
+        <string-list-value>VEHICLE/LAND</string-list-value>
+        <string-list-value>VEHICLE/LICENSE</string-list-value>
+        <string-list-value>VEHICLE/VIN</string-list-value>
+        <string-list-value>VEHICLE/WATER</string-list-value>
+        <string-list-value>WEAPON/BIOLOGICAL</string-list-value>
+        <string-list-value>WEAPON/CHEMICAL</string-list-value>
+        <string-list-value>WEAPON/EXPLODING</string-list-value>
+        <string-list-value>WEAPON/NUCLEAR</string-list-value>
+        <string-list-value>WEAPON/PROJECTILE</string-list-value>
+        <string-list-value>WEAPON/SHOOTING</string-list-value>
+        <string-list-value>YEAR</string-list-value>
+    </property>
+    <property name="EnableDependencyParser" type="boolean">
+      <boolean-value>true</boolean-value>
+    </property>
+  </configuration>
+ 
+</tasdk-configuration>

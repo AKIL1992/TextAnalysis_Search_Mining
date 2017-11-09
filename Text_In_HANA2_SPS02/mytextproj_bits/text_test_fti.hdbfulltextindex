@@ -1,0 +1,5 @@
+FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
+ON "mytextproj.mytexthdbmod::text_test" ("STRING")
+CONFIGURATION 'mytextproj.mytexthdbmod::dict_and_rule_config'
+-- LANGUAGE COLUMN "LANG" 
+TEXT ANALYSIS ON
