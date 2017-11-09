@@ -1,5 +1,0 @@
-FULLTEXT INDEX "mytextproj.mytexthdbmod::text_test_fti"
-ON "mytextproj.mytexthdbmod::text_test" ("STRING")
-CONFIGURATION 'mytextproj.mytexthdbmod::text_test_textconfig'
-LANGUAGE DETECTION ('EN')
-TEXT ANALYSIS ON
