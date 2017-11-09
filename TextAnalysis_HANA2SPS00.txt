@@ -145,13 +145,6 @@ ID,STRING
 33,Bob travelled to Berlin.
 34,Bob is 3500 miles west of Manchester.
 
-##############################################
-# Grammatical Role Analysis (using TA Index) #
-##############################################
-
-ID,STRING
-41,Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.
-
 ########################################
 # Linguistic Analysis (using TA Index) #
 ########################################
@@ -159,6 +152,13 @@ ID,STRING
 ID,STRING
 51,Bob used to live just off Kantstraße in Berlin
 52,Bobs loves Herrenhäuser Gärten in Hannover
+
+##############################################
+# Grammatical Role Analysis (using TA Index) #
+##############################################
+
+ID,STRING
+41,Oracle was rumored to buy marketing-software maker Responsys Inc. for $1.5 billion.
 
 ######################
 ## TA_TYPE_EXPANDED ##
