@@ -225,7 +225,6 @@ ID,STRING
 111,Please send part AB-654327
 112,Can you ask about part AB-654327
 
--- anotherrulesrequest.hdbtextrule --
 ! Rule to identify credit card numbers -- including the card company --
 ! American Express examples: 371449635398431, 343434343434343, 371144371144376
 #group CREDIT_CARD@AMERICAN_EXPRESS: <3[47][0-9]{13,13}>
@@ -236,7 +235,6 @@ ID,STRING
 123,371144371144376
 124,676265444256762
 
--- yetanotherrulesrequest.hdbtextrule --
 ! The extraction process picks this label up as the entity name for the string that is output
 ! If the input is Mister Clooney, Clooney will be extracted and labeled LastName
 #group Name: <Sir|Mr|Mister> [OD LastName] <POS: Prop> [/OD]
@@ -244,16 +242,29 @@ ID,STRING
 ID,STRING
 131,Mister Clooney
 132,Sir Beckham
+133,Mrs Smith
 
--- finalrulesrequest.hdbtextrule --
 ! Matches any entity of type PERSON with Bush, Clinton, Obama & Trump as its last element
 #group President: [TE PERSON] < >* <Bush|Clinton|Obama|Trump> [/TE]
 
 ID,STRING
 141,George Bush
-142,D. Trump
+142,Donald Trump
 143,Don Trump
-144,Madman Trump
+144,Businessman Trump
+145,Bill Clinton
+146,Senator Clinton
+
+! No need to recreate patterns for PERSON, DATE, CURRENCY, etc. Simply use [TE] expression markers
+#subgroup MyPerson: ( [TE PERSON] <>+ [/TE] | [TE TITLE] <>+ [/TE] | [TE PEOPLE] <>+ [/TE] )
+#group QuoteAuthor: <STEM:say|announce|blurt|contradict> <>* %(MyPerson)
+
+ID,STRING
+141,\"To be or not to be\" said William Shakespeare
+142,\"Everything in life is luck !\" said President Trump
+143,\"Fact !\" blurted Rafa Benitez
+144,\"Off with his head\" said the crowd
+145,\"Off with his head\" said the British
 
 ################
 ## TA_ANALYZE ##
